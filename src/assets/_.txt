@@ -1,0 +1,1 @@
+Empty file to export assets folder. Delete / replace with actual assets in prod.
