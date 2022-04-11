@@ -12,8 +12,13 @@ const csp = require("./middleware/csp.js");
 const verifyRequest = require("./middleware/verifyRequest.js");
 const isActiveShop = require("./middleware/isActiveShop.js");
 const applyAuthMiddleware = require("./middleware/auth.js");
-const { appUninstallHandler } = require("./webhooks/app_uninstalled.js");
 const userRoutes = require("./routes/index.js");
+const { appUninstallHandler } = require("./webhooks/app_uninstalled.js");
+const {
+  customerDataRequest,
+  customerRedact,
+  shopRedact,
+} = require("./webhooks/gdpr.js");
 
 const PORT = parseInt(process.env.PORT, 10) || 8081;
 const isTest = process.env.NODE_ENV === "dev";
@@ -45,9 +50,23 @@ Shopify.Context.initialize({
 
 //MARK:- Add handlers for webhooks here.
 
-Shopify.Webhooks.Registry.addHandler("APP_UNINSTALLED", {
-  path: "/webhooks/app_uninstalled",
-  webhookHandler: appUninstallHandler,
+Shopify.Webhooks.Registry.addHandlers({
+  APP_UNINSTALLED: {
+    path: "/webhooks/app_uninstalled",
+    webhookHandler: appUninstallHandler,
+  },
+  CUSTOMERS_DATA_REQUEST: {
+    path: "/webhooks/gdpr/customers_data_request",
+    webhookHandler: customerDataRequest,
+  },
+  CUSTOMERS_REDACT: {
+    path: "/webhooks/gdpr/customers_redact",
+    webhookHandler: customerRedact,
+  },
+  SHOP_REDACT: {
+    path: "/webhooks/gdpr/shop_redact",
+    webhookHandler: shopRedact,
+  },
 });
 
 const createServer = async (root = process.cwd()) => {

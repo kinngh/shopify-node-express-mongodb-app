@@ -1,56 +1,93 @@
 const gdprRoutes = require("express").Router();
+/**
+ *
+ * CUSTOMER_DATA_REQUEST
+ *
+ */
+
+const customerDataRequest = async (topic, shop, webhookRequestBody) => {
+  try {
+    const {
+      shop_domain,
+      customer: { id, email },
+      orders_requested,
+    } = JSON.parse(webhookRequestBody);
+
+    console.log("Handle customer_data_request");
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 gdprRoutes.post("/gdpr/customers_data_request", async (req, res) => {
-  /*
-    Payload
-    {
-    shop_id: 954889,
-    shop_domain: "snowdevil.myshopify.com",
-    orders_requested: [299938, 280263, 220458],
-    customer: {
-        id: 191167,
-        email: "john@email.com",
-        phone: "555-625-1199",
-    },
-    data_request: {
-        id: 9999,
-    },
-    };
-*/
-  console.log("---> GDPR request for Customer data request");
-  res.status(200).send("Route processed");
+  try {
+    await Shopify.Webhooks.Registry.process(req, res);
+    console.log("--> CUSTOMER_DATA_REQUEST processed");
+  } catch (error) {
+    console.log("--> Error in processing CUSTOMER_DATA_REQUEST:", error);
+    res.status(500).send(error.message);
+  }
 });
+
+/**
+ *
+ * CUSTOMER_REDACT
+ *
+ */
+
+const customerRedact = async (topic, shop, webhookRequestBody) => {
+  try {
+    const {
+      shop_domain,
+      customer: { id, email },
+      orders_to_redact,
+    } = JSON.parse(webhookRequestBody);
+
+    console.log("Handle customer_redact");
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 gdprRoutes.post("/gdpr/customer_redact", async (req, res) => {
-  /*
-    Payload
-    {
-    shop_id: 954889,
-    shop_domain: "snowdevil.myshopify.com",
-    customer: {
-        id: 191167,
-        email: "john@email.com",
-        phone: "555-625-1199",
-    },
-    orders_to_redact: [299938, 280263, 220458],
-    };
-*/
-
-  console.log("---> GDPR request for Customer redact");
-  res.status(200).send("Route processed");
+  try {
+    await Shopify.Webhooks.Registry.process(req, res);
+    console.log("--> CUSTOMER_REDACT processed");
+  } catch (error) {
+    console.log("--> Error in processing CUSTOMER_REDACT:", error);
+    res.status(500).send(error.message);
+  }
 });
+
+/**
+ *
+ * SHOP_REDACT
+ *
+ */
+
+const shopRedact = async (topic, shop, webhookRequestBody) => {
+  try {
+    const { shop_domain } = JSON.parse(webhookRequestBody);
+
+    console.log("Handle shop_redact");
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 gdprRoutes.post("/gdpr/shop_redact", async (req, res) => {
-  /*
-    Payload
-    {
-    shop_id: 954889,
-    shop_domain: "snowdevil.myshopify.com",
-    };
-*/
-
-  console.log("---> GDPR request for Shop redact");
-  res.status(200).send("Route processed");
+  try {
+    await Shopify.Webhooks.Registry.process(req, res);
+    console.log("--> SHOP_REDACT processed");
+  } catch (error) {
+    console.log("--> Error in processing SHOP_REDACT:", error);
+    res.status(500).send(error.message);
+  }
 });
 
-module.exports = gdprRoutes;
+module.exports = {
+  gdprRoutes,
+  customerDataRequest,
+  customerRedact,
+  shopRedact,
+};
