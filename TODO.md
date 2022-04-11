@@ -2,7 +2,7 @@
 
 ## Short term
 
-- [ ] (S) Finish GDPR hooks
+- [x] (S) Finish GDPR hooks
 - [ ] (C) Get active subscriptions and webhooks for debugging purposes.
 - [ ] (S) The whole Session storage model needs a refresh since the current active session can just be pulled in.
 
