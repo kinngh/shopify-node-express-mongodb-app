@@ -39,6 +39,10 @@ This is an in-depth guide on using this repo. This goes over getting the base re
     - App URL: `https://<your-url>.local.lt`
     - Allowed Redirection URL(s): `https://<your-url>.local.lt/auth/callback`
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
+  - GPDR routes are available at `server/webhooks/gdpr.js` and the URLs to register are:
+    - Customer Data Request: `{appurl}/webhooks/gdpr/customer_data_request`
+    - Customer Redact: `{appurl}/webhooks/gdpr/customer_redact`
+    - Shop Redact: `{appurl}/webhooks/gdpr/shop_redact`
 
 - [ ] Running App
   - I prefer running a local `mongo` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
