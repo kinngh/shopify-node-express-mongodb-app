@@ -18,7 +18,19 @@ const HomePage = () => {
                 },
               }}
             >
-              <p>Subscribe your merchant to a recurring subscription plan</p>
+              <p>Subscribe your merchant to a recurring subscription plan.</p>
+            </Card>
+            <Card
+              title="Registered Webhooks"
+              sectioned
+              primaryFooterAction={{
+                content: "Webhooks",
+                onAction: () => {
+                  navigate("/activeWebhooks");
+                },
+              }}
+            >
+              <p>Check for registered webhooks and their relative paths.</p>
             </Card>
           </Layout.Section>
         </Layout>

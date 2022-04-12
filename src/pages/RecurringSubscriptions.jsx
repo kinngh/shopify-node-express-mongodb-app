@@ -55,22 +55,15 @@ const RecurringSubscriptions = () => {
   }
 
   return (
-    <Page>
-      <Card sectioned title="Subscribe Merchant to $10 plan">
-        <p>
-          Subscribe your merchant to a test $10 plan and redirect to your home
-          page.
-        </p>
-        <br />
-        <Button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Home
-        </Button>{" "}
-        <Button
-          onClick={() => {
+    <Page
+      title="Subscribe Merchant to $10 plan"
+      breadcrumbs={[{ content: "Home", onAction: () => navigate("/") }]}
+    >
+      <Card
+        sectioned
+        primaryFooterAction={{
+          content: "Subscribe",
+          onAction: () => {
             subMerchant({
               variables: {
                 returnString: returnUrl,
@@ -78,10 +71,13 @@ const RecurringSubscriptions = () => {
                 planPrice: 10.0,
               },
             });
-          }}
-        >
-          Subscribe Merchant
-        </Button>
+          },
+        }}
+      >
+        <p>
+          Subscribe your merchant to a test $10 plan and redirect to your home
+          page.
+        </p>
       </Card>
     </Page>
   );

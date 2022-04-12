@@ -1,6 +1,7 @@
 import React from "react";
-import { Page, Card, Layout, Button } from "@shopify/polaris";
+import { Page, Card, DataTable, Button } from "@shopify/polaris";
 import { useQuery, gql } from "@apollo/client";
+import { navigate } from "hookrouter";
 
 const ActiveWebhooks = () => {
   const getInstalledWebhooks = gql`
@@ -26,31 +27,43 @@ const ActiveWebhooks = () => {
 
   const { loading, error, data } = useQuery(getInstalledWebhooks);
 
+  let rows = [];
+
   if (loading) {
     console.log("loading", loading);
   }
   if (data) {
-    console.log("data");
-    console.log(data);
+    console.log("Rendering Data");
+    Object.entries(data.webhookSubscriptions.edges).map(([key, value]) => {
+      const { topic, callbackUrl } = value.node;
+      rows.push([topic, callbackUrl]);
+    });
   }
 
   if (error) {
+    rows.push(["Error", "Check console for more info"]);
     console.log("error", error.message);
   }
 
   return (
-    <React.Fragment>
-      <Page>
-        <Layout>
-          <Layout.Section>
-            <Card title="Getting webhook subscriptions" sectioned>
-              <p>Check console</p>
-            </Card>
-          </Layout.Section>
-        </Layout>
-      </Page>
-    </React.Fragment>
+    <Page
+      title="Registered Webhooks"
+      breadcrumbs={[{ content: "Home", onAction: () => navigate("/") }]}
+    >
+      <Card>
+        <DataTable
+          columnContentTypes={["text", "text"]}
+          headings={["Topic", "Callback Url"]}
+          rows={rows}
+        />
+      </Card>
+    </Page>
   );
 };
 
 export default ActiveWebhooks;
+
+//0.node.callbackUrl / topic
+const WebhookDataComponent = (caalbackUrl, topic) => {
+  return <React.Fragment></React.Fragment>;
+};
