@@ -62,8 +62,3 @@ const ActiveWebhooks = () => {
 };
 
 export default ActiveWebhooks;
-
-//0.node.callbackUrl / topic
-const WebhookDataComponent = (caalbackUrl, topic) => {
-  return <React.Fragment></React.Fragment>;
-};
