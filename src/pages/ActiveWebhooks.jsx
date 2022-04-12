@@ -1,5 +1,5 @@
 import React from "react";
-import { Page, Card, DataTable, Button } from "@shopify/polaris";
+import { Page, Card, DataTable } from "@shopify/polaris";
 import { useQuery, gql } from "@apollo/client";
 import { navigate } from "hookrouter";
 

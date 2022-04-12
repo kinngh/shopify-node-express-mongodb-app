@@ -21,6 +21,18 @@ const HomePage = () => {
               <p>Subscribe your merchant to a recurring subscription plan.</p>
             </Card>
             <Card
+              title="Active Subscriptions"
+              sectioned
+              primaryFooterAction={{
+                content: "View",
+                onAction: () => {
+                  navigate("/activeSubscriptions");
+                },
+              }}
+            >
+              <p>View currently active subscriptions for your app.</p>
+            </Card>
+            <Card
               title="Registered Webhooks"
               sectioned
               primaryFooterAction={{
