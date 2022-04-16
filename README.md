@@ -6,7 +6,8 @@ I've also included [notes](/NOTES.md) on this repo which goes over the repo on w
 
 Other repos:
 
-- [Koa x Next.js](https://github.com/kinngh/shopify-node-mongodb-next-app)
+- [Koa x Next.js](https://github.com/kinngh/shopify-node-mongodb-next-app): Starter template based on Shopify's older tech stack of using Koa and Next.js.
+- [Shopify Playground](https://github.com/kinngh/shopify-polaris-playground): A playground for Shopify Polaris to allow for building App UI locally and drag/drop directly into this repo to speed up development.
 
 ## Tech Stack
 
