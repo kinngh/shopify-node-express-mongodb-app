@@ -21,8 +21,7 @@ const {
 } = require("./webhooks/gdpr.js");
 
 const PORT = parseInt(process.env.PORT, 10) || 8081;
-const isTest = process.env.NODE_ENV === "dev";
-const isProd = process.env.NODE_ENV === "prod";
+const isDev = process.env.NODE_ENV === "dev";
 
 const mongoUrl =
   process.env.MONGO_URL || "mongodb://127.0.0.1:27017/shopify-express-app";
@@ -94,11 +93,11 @@ const createServer = async (root = process.cwd()) => {
   app.use(isActiveShop);
 
   let vite;
-  if (!isProd) {
+  if (isDev) {
     vite = await import("vite").then(({ createServer }) =>
       createServer({
         root,
-        logLevel: isTest ? "error" : "info",
+        logLevel: isDev ? "error" : "info",
         server: {
           port: PORT,
           hmr: {
@@ -137,11 +136,9 @@ const createServer = async (root = process.cwd()) => {
   return { app, vite };
 };
 
-if (!isTest) {
-  createServer().then(({ app }) => {
-    app.listen(PORT, () => {
-      console.log(`Running on ${PORT}`);
-    });
+createServer().then(({ app }) => {
+  app.listen(PORT, () => {
+    console.log(`Running on ${PORT}`);
   });
-}
+});
 module.exports = createServer;
