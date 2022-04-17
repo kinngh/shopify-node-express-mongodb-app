@@ -95,7 +95,7 @@ const createServer = async (root = process.cwd()) => {
 
   let vite;
   if (!isProd) {
-    vite = await import("vite").then(({ createServer }) => {
+    vite = await import("vite").then(({ createServer }) =>
       createServer({
         root,
         logLevel: isTest ? "error" : "info",
@@ -109,8 +109,8 @@ const createServer = async (root = process.cwd()) => {
           },
           middlewareMode: "html",
         },
-      });
-    });
+      })
+    );
 
     app.use(vite.middlewares);
   } else {
