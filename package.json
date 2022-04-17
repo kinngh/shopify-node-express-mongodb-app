@@ -14,7 +14,7 @@
     "update": "ncu -u",
     "update:check": "ncu",
     "test": "echo \"--> No test specified\"",
-    "dev": "NODE_ENV=dev nodemon server/index.js --watch ./server",
+    "dev": "echo \"--> Dev mode is currently broken, run \"npm run build\" and then \"npm run start\" to start in production mode\"",
     "build": "vite build --outDir dist/client",
     "start": "NODE_ENV=prod node server/index.js",
     "pretty": "prettier --write .",
