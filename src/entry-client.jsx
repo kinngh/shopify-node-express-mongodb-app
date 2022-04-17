@@ -1,5 +1,5 @@
-import ReactDOM from "react-dom";
-
+import { createRoot } from "react-dom/client";
 import App from "./App";
 
-ReactDOM.render(<App />, document.getElementById("shopify-app"));
+const root = createRoot(document.getElementById("shopify-app"));
+root.render(<App />);
