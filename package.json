@@ -30,7 +30,7 @@
     "@shopify/shopify-api": "^3.0.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
-    "cryptr": "^6.0.2",
+    "cryptr": "^6.0.3",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "graphql": "^16.3.0",
