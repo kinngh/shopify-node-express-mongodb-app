@@ -8,7 +8,9 @@ const webhookRegistrar = require("../webhooks/_webhookRegistrar");
 const applyAuthMiddleware = (app) => {
   app.get("/auth", async (req, res) => {
     if (!req.signedCookies[app.get("top-level-oauth-cookie")]) {
-      return res.redirect(`/auth/toplevel?shop=${req.query.shop}&host=${req.query.host}`);
+      return res.redirect(
+        `/auth/toplevel?shop=${req.query.shop}&host=${req.query.host}`
+      );
     }
 
     const redirectUrl = await Shopify.Auth.beginAuth(
@@ -36,7 +38,7 @@ const applyAuthMiddleware = (app) => {
         apiKey: Shopify.Context.API_KEY,
         hostName: Shopify.Context.HOST_NAME,
         shop: req.query.shop,
-        host: req.query.host
+        host: req.query.host,
       })
     );
   });
