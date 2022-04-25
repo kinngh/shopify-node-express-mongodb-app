@@ -1,4 +1,4 @@
-const topLevelAuthRedirect = ({ apiKey, hostName, shop }) => {
+const topLevelAuthRedirect = ({ apiKey, hostName, shop, host }) => {
   return `<!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +6,7 @@ const topLevelAuthRedirect = ({ apiKey, hostName, shop }) => {
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         if (window.top === window.self) {
-          window.location.href = '/auth?shop=${shop}';
+          window.location.href = '/auth?shop=${shop}&host=${host}';
         } else {
           var AppBridge = window['app-bridge'];
           var createApp = AppBridge.default;
@@ -15,13 +15,14 @@ const topLevelAuthRedirect = ({ apiKey, hostName, shop }) => {
           const app = createApp({
             apiKey: '${apiKey}',
             shopOrigin: '${shop}',
+            host: '${host}',
           });
 
           const redirect = Redirect.create(app);
 
           redirect.dispatch(
             Redirect.Action.REMOTE,
-            'https://${hostName}/auth/toplevel?shop=${shop}',
+            'https://${hostName}/auth/toplevel?shop=${shop}&host=${host}',
           );
         }
       });

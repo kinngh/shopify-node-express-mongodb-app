@@ -8,7 +8,7 @@ const webhookRegistrar = require("../webhooks/_webhookRegistrar");
 const applyAuthMiddleware = (app) => {
   app.get("/auth", async (req, res) => {
     if (!req.signedCookies[app.get("top-level-oauth-cookie")]) {
-      return res.redirect(`/auth/toplevel?shop=${req.query.shop}`);
+      return res.redirect(`/auth/toplevel?shop=${req.query.shop}&host=${req.query.host}`);
     }
 
     const redirectUrl = await Shopify.Auth.beginAuth(
@@ -36,6 +36,7 @@ const applyAuthMiddleware = (app) => {
         apiKey: Shopify.Context.API_KEY,
         hostName: Shopify.Context.HOST_NAME,
         shop: req.query.shop,
+        host: req.query.host
       })
     );
   });
@@ -68,7 +69,7 @@ const applyAuthMiddleware = (app) => {
           // Delete sessions and restart installation
           await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
           await SessionModel.deleteMany({ shop });
-          res.redirect(`/auth?shop=${req.query.shop}`);
+          res.redirect(`/auth?shop=${req.query.shop}&host=${req.query.host}`);
           break;
         default:
           res.status(500);

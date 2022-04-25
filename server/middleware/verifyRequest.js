@@ -15,19 +15,23 @@ const verifyRequest = (app, { returnHeader = true } = {}) => {
       app.get("use-online-tokens")
     );
 
-    let shop = req.query.shop;
+    let { shop, host } = req.query;
 
     if (session && shop && session.shop !== shop) {
-      return res.redirect(`/auth?shop=${shop}`);
+      return res.redirect(`/auth?shop=${shop}&host=${host}`);
     }
 
     //session.isActive() doesn't work when using Redis, MongoDB or other forms of custom session storage. Replace it.
     const isSessionActive = (session) => {
-      return (
-        Shopify.Context.SCOPES.equals(session.scope) &&
-        session.accessToken &&
-        (!session.expires || session.expires >= new Date())
-      );
+      if (!session) {
+        return false;
+      } else {
+        return (
+          Shopify.Context.SCOPES.equals(session.scope) &&
+          session.accessToken &&
+          (!session.expires || session.expires >= new Date())
+        );
+      }
     };
 
     if (isSessionActive(session)) {
@@ -79,7 +83,7 @@ const verifyRequest = (app, { returnHeader = true } = {}) => {
       );
       res.end();
     } else {
-      res.redirect(`/auth?shop=${shop}`);
+      res.redirect(`/auth?shop=${shop}&host=${host}`);
     }
   };
 };

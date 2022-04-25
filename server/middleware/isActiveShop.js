@@ -1,7 +1,7 @@
 const StoreModel = require("../../utils/models/StoreModel.js");
 
 const isActiveShop = async (req, res, next) => {
-  const { shop } = req.query;
+  const { shop, host } = req.query;
 
   if (!shop) {
     next();
@@ -16,7 +16,7 @@ const isActiveShop = async (req, res, next) => {
     } else if (!isShopAvaialble.isActive) {
       await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
     }
-    res.redirect(`/auth?shop=${shop}`);
+    res.redirect(`/auth?shop=${shop}&host=${host}`);
   } else {
     next();
   }
