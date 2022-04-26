@@ -17,6 +17,8 @@ import "@shopify/polaris/build/esm/styles.css";
 import routes from "./GlobalRoutes";
 import { useRoutes } from "hookrouter";
 
+const hostParam = new URL(location).searchParams.get("host");
+
 export default function App() {
   const RouteComponents = useRoutes(routes);
   return (
@@ -24,7 +26,7 @@ export default function App() {
       <AppBridgeProvider
         config={{
           apiKey: process.env.SHOPIFY_API_KEY,
-          host: new URL(location).searchParams.get("host"),
+          host: hostParam,
           forceRedirect: true,
         }}
       >
