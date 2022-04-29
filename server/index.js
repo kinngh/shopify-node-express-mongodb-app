@@ -78,6 +78,7 @@ const createServer = async (root = process.cwd()) => {
   applyAuthMiddleware(app);
 
   app.use("/webhooks", webhookRoutes); //webhookRotues
+  app.use("/apps", verifyRequest(app), userRoutes); //Verify user route requests
 
   app.post("/graphql", verifyRequest(app), async (req, res) => {
     try {
@@ -130,8 +131,6 @@ const createServer = async (root = process.cwd()) => {
         .send(fs.readFileSync(`${root}/dist/client/index.html`));
     });
   }
-
-  app.use("/", userRoutes);
 
   return { app, vite };
 };

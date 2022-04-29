@@ -5,8 +5,22 @@ import { navigate } from "hookrouter";
 const HomePage = () => {
   return (
     <React.Fragment>
-      <Page>
+      <Page title="Debug Cards">
         <Layout>
+          <Layout.Section>
+            <Card
+              title="Making API Calls"
+              sectioned
+              primaryFooterAction={{
+                content: "Get Data",
+                onAction: () => {
+                  navigate("/getData");
+                },
+              }}
+            >
+              <p>Grab data from an Express route in React</p>
+            </Card>
+          </Layout.Section>
           <Layout.Section>
             <Card
               title="Susbcribe Merchant"
@@ -20,6 +34,8 @@ const HomePage = () => {
             >
               <p>Subscribe your merchant to a recurring subscription plan.</p>
             </Card>
+          </Layout.Section>
+          <Layout.Section>
             <Card
               title="Active Subscriptions"
               sectioned
@@ -32,6 +48,8 @@ const HomePage = () => {
             >
               <p>View currently active subscriptions for your app.</p>
             </Card>
+          </Layout.Section>
+          <Layout.Section>
             <Card
               title="Registered Webhooks"
               sectioned
