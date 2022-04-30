@@ -17,19 +17,17 @@ import "@shopify/polaris/build/esm/styles.css";
 import routes from "./GlobalRoutes";
 import { useRoutes } from "hookrouter";
 
-const hostParam = new URL(location).searchParams.get("host");
+const appBridgeConfig = {
+  apiKey: process.env.SHOPIFY_API_KEY,
+  host: new URL(location).searchParams.get("host"),
+  forceRedirect: true,
+};
 
 export default function App() {
   const RouteComponents = useRoutes(routes);
   return (
     <PolarisProvider i18n={translations}>
-      <AppBridgeProvider
-        config={{
-          apiKey: process.env.SHOPIFY_API_KEY,
-          host: hostParam,
-          forceRedirect: true,
-        }}
-      >
+      <AppBridgeProvider config={appBridgeConfig}>
         <MyProvider>{RouteComponents}</MyProvider>
       </AppBridgeProvider>
     </PolarisProvider>

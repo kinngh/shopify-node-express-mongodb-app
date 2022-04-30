@@ -11,11 +11,12 @@ import { useAppBridge } from "@shopify/app-bridge-react";
 import { userLoggedInFetch } from "../App";
 
 const GetData = () => {
-  const [responseData, setResponseData] = useState("loading...");
+  const [responseData, setResponseData] = useState("");
   const app = useAppBridge();
   const fetch = userLoggedInFetch(app);
 
   async function fetchContent() {
+    setResponseData("loading...");
     const res = await fetch("/apps/api"); //fetch instance of userLoggedInFetch(app) and not the regular fetchAPI that we're used to
     const { text } = await res.json();
     setResponseData(text);
@@ -32,7 +33,15 @@ const GetData = () => {
     >
       <Layout>
         <Layout.Section>
-          <Card sectioned>
+          <Card
+            sectioned
+            primaryFooterAction={{
+              content: "Refetch",
+              onAction: () => {
+                fetchContent();
+              },
+            }}
+          >
             <p>The data we get from "/apps/api" is : {responseData}</p>
           </Card>
         </Layout.Section>
