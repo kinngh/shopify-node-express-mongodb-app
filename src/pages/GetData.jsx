@@ -12,6 +12,7 @@ import { userLoggedInFetch } from "../App";
 
 const GetData = () => {
   const [responseData, setResponseData] = useState("");
+  const [responseDataGQL, setResponseDataGQL] = useState("");
   const app = useAppBridge();
   const fetch = userLoggedInFetch(app);
 
@@ -22,8 +23,16 @@ const GetData = () => {
     setResponseData(text);
   }
 
+  async function fetchContentGQL() {
+    setResponseDataGQL("loading...");
+    const res = await fetch("/apps/api/gql"); //fetch instance of userLoggedInFetch(app) and not the regular fetchAPI that we're used to
+    const response = await res.json();
+    setResponseDataGQL(response.body.data.shop.name);
+  }
+
   useEffect(() => {
     fetchContent();
+    fetchContentGQL();
   }, []);
 
   return (
@@ -43,6 +52,19 @@ const GetData = () => {
             }}
           >
             <p>The data we get from "/apps/api" is : {responseData}</p>
+          </Card>
+        </Layout.Section>
+        <Layout.Section>
+          <Card
+            sectioned
+            primaryFooterAction={{
+              content: "Refetch GQL",
+              onAction: () => {
+                fetchContentGQL();
+              },
+            }}
+          >
+            <p>The data we get from "/apps/api/gql" is : {responseDataGQL}</p>
           </Card>
         </Layout.Section>
       </Layout>

@@ -22,7 +22,7 @@
     "tunnel": "lt --port 8081"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.1",
+    "@apollo/client": "^3.6.2",
     "@shopify/app-bridge": "^2.0.26",
     "@shopify/app-bridge-react": "^2.0.26",
     "@shopify/app-bridge-utils": "^2.0.26",
