@@ -13,7 +13,7 @@
 
 ## Long Term
 
-- [ ] (M) Indepth notes and setup guide.
+- [x] (M) Indepth notes and setup guide.
 
 ---
 
