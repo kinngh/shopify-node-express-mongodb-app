@@ -23,19 +23,19 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.2",
-    "@shopify/app-bridge": "^2.0.26",
-    "@shopify/app-bridge-react": "^2.0.26",
-    "@shopify/app-bridge-utils": "^2.0.26",
-    "@shopify/polaris": "^9.6.0",
+    "@shopify/app-bridge": "^2.0.27",
+    "@shopify/app-bridge-react": "^2.0.27",
+    "@shopify/app-bridge-utils": "^2.0.27",
+    "@shopify/polaris": "^9.7.0",
     "@shopify/shopify-api": "^3.0.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cryptr": "^6.0.3",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "graphql": "^16.4.0",
+    "graphql": "^16.5.0",
     "hookrouter": "^1.2.5",
-    "mongoose": "^6.3.2",
+    "mongoose": "^6.3.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "serve-static": "^1.15.0"
@@ -46,6 +46,6 @@
     "nodemon": "^2.0.16",
     "npm-check-updates": "^12.5.11",
     "prettier": "^2.6.2",
-    "vite": "^2.9.7"
+    "vite": "^2.9.9"
   }
 }
