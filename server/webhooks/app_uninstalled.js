@@ -7,9 +7,7 @@ const appUninstallRoute = require("express").Router();
 
 const appUninstallHandler = async (topic, shop, webhookRequestBody) => {
   await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
-
-  var regexp = new RegExp("^" + shop);
-  await SessionModel.deleteMany({ shop: regexp });
+  await SessionModel.deleteMany({ shop });
 };
 
 appUninstallRoute.post("/app_uninstalled", async (req, res) => {

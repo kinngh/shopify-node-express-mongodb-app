@@ -15,6 +15,22 @@ const applyAuthMiddleware = (app) => {
       req,
       res,
       req.query.shop,
+      "/auth/tokens",
+      false
+    );
+
+    res.redirect(redirectUrl);
+  });
+
+  app.get("/auth/tokens", async (req, res) => {
+    if (!req.signedCookies[app.get("top-level-oauth-cookie")]) {
+      return res.redirect(`/auth/toplevel?shop=${req.query.shop}`);
+    }
+
+    const redirectUrl = await Shopify.Auth.beginAuth(
+      req,
+      res,
+      req.query.shop,
       "/auth/callback",
       app.get("use-online-tokens")
     );

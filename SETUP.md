@@ -37,7 +37,9 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - Open Shopify Partner Dashboard > Apps > _Your App Name_ > App Setup
   - In the URLs section
     - App URL: `https://<your-url>.local.lt`
-    - Allowed Redirection URL(s): `https://<your-url>.local.lt/auth/callback`
+    - Allowed Redirection URL(s): 
+      - `https://<your-url>.local.lt/auth/callback`
+      - `https://<your-url>.local.lt/auth/tokens`
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
   - GPDR routes are available at `server/webhooks/gdpr.js` and the URLs to register are:
     - Customer Data Request: `{appurl}/webhooks/gdpr/customer_data_request`
