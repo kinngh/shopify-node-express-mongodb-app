@@ -38,6 +38,12 @@
 - Add all your routes to `src/GlobalRoutes.jsx` and then you can use `navigate("/path")` to navigate around, just like Next.js' good ol' `router.push("/path")`
 - You can refer to hookrouter [documentation](https://github.com/Paratron/hookrouter/blob/master/src-docs/pages/en/README.md), and a [quickstart guide](https://blog.logrocket.com/how-react-hooks-can-replace-react-router/) to understand how it works, passing props and other good stuff.
 
+### GraphQL
+
+- In `src/pages/RecurringSubscriptions.jsx`, the `returnUrl` can also be replaced with `const returnUrl = `https://${shopOrigin}/admin/apps/${process.env.SHOPIFY_API_KEY};`.
+  - The reason I personally don't prefer this is because Shopify will be moving the admin URL from `store-name.myshopify.com/admin` to `admin.shopify.com` and this specific implementation could break things in the future. Re-running the auth workflow means the redirection would be handled by Shopify and would take us to the right URL directly.
+  - Also I find this super interesting on how the API Key can be used as an alternative to redirect the user to the app.
+
 ---
 
 ## Tips and Tricks
