@@ -4,9 +4,8 @@ An embedded app starter template to get up and ready with Shopify app developmen
 
 I've also included [notes](/NOTES.md) on this repo which goes over the repo on why certain choices were made.
 
-Other repos:
+Other Shopify based repos:
 
-- [TypeScript Edition - Node.js x Express.js x React.js](https://github.com/kinngh/shopify-typescript-express-mongodb-app): This repo but in `TypeScript`
 - [Koa x Next.js](https://github.com/kinngh/shopify-node-mongodb-next-app): Starter template based on Shopify's older tech stack of using Koa and Next.js.
 - [Polaris Playground](https://github.com/kinngh/shopify-polaris-playground): A playground for Shopify Polaris to allow for building App UI locally and drag/drop directly into this repo to speed up development.
 
