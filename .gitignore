@@ -1,3 +1,7 @@
+# Temp
+# Bug introduced in @shopify/shopify-api package v.3.1.0
+server/database.sqlite
+
 # Non-production folders
 # __templates/
 # docs/
