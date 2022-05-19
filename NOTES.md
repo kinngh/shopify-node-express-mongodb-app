@@ -50,6 +50,13 @@
 
 This section is a collection of tips and tricks I use to speed up my workflow. If you have any, please feel free to add 'em. I use `macOS` so if you're on Windows, this may/may not work.
 
+### GitHub Codespaces
+
+- If you're running this project on GitHub Codespaces and want to run MongoDB on the platform, run the following command in terminal:
+  `wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -;sudo apt-get install gnupg;wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -;echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list;sudo apt-get update`
+  - The above code will install MongoDB. Alternatively, you can follow the official installation guide available [here](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
+  - MongoDB won't run with `mongod --dbpath mongo/` without root permissions. Run `sudo mongod --dbpath mongo/` instead and it'll work as intended.
+
 ### NPM Scripts
 
 - `"env": "cp -R .env.example .env"`: This is to copy the `.env.example` and create a `.env` file (or overwrite it). I usually jump between apps to test functionality or have to switch out variables and this comes really handy in resetting `.env` files.
