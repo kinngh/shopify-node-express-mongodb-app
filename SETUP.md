@@ -25,9 +25,11 @@ This is an in-depth guide on using this repo. This goes over getting the base re
 
   - `update` and `update:check`: Depends on `npm-check-updates` to force update packages to the latest available version. Can potentially break things.
   - `test`: Tests have been ommited in the repo since everyone likes to use their own testing library.
-  - `dev`: Run in dev mode. Please run `npm run build` before to compile client side.
+  - `dev`: Run in dev mode.
+  - `dev:win`: [Windows Only] Run in dev mode.
   - `build`: Use Vite to build React into `dist/client`. If you don't run build, you cannot serve anything in dev / production modes.
   - `start`: Run in production mode. Please run `npm run build` before to compile client side.
+  - `start:win`: [Windows Only] Run in production mode. Please run `npm run build` before to compile client side.
   - `pretty`: Run prettier across the entire project. I personally like my code to be readable and using prettier CLI makes things easier. Refer to `.prettierrc` for configuration and `.prettierignore` to ignore files and folders.
   - `tunnel`: Open source alternative to Ngrok. Localtunnel is used to expose specific ports of your machine to the internet and serve over https. The `--port` parameter exposes a specific port (8081) over https to allow connections. Running `npm run tunnel` auto generates a URL for you. If you need a specific subdomain add `--subdomain <your-url>` to the script and generate if it's available. The URL that's generated here goes in `SHOPIFY_APP_URL` and in the URL section of your app in Partner Dashboard.
 
@@ -47,6 +49,6 @@ This is an in-depth guide on using this repo. This goes over getting the base re
     - Shop Redact: `{appurl}/webhooks/gdpr/shop_redact`
 
 - [ ] Running App
-  - I prefer running a local `mongo` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
+  - I prefer running a local `mongod` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
   - In your second terminal window, run `npm run tunnel` to create a Local tunnel instance if you haven't already.
   - In your third terminal window (preferrably in your IDE), `npm run dev` or `npm run start` depending on how you want to test your app. Make sure to add the generated URL to `SHOPIFY_APP_URL` in `.env` file.

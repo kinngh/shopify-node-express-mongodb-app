@@ -23,7 +23,7 @@ const HomePage = () => {
           </Layout.Section>
           <Layout.Section>
             <Card
-              title="Susbcribe Merchant"
+              title="Subcribe Merchant"
               sectioned
               primaryFooterAction={{
                 content: "Subscribe",
