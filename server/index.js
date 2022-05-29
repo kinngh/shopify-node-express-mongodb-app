@@ -78,7 +78,6 @@ const createServer = async (root = process.cwd()) => {
   applyAuthMiddleware(app);
 
   app.use("/webhooks", webhookRoutes); //webhookRotues
-  app.use("/apps", verifyRequest(app), userRoutes); //Verify user route requests
 
   app.post("/graphql", verifyRequest(app), async (req, res) => {
     try {
@@ -92,6 +91,7 @@ const createServer = async (root = process.cwd()) => {
   app.use(Express.json());
   app.use(csp);
   app.use(isActiveShop);
+  app.use("/apps", verifyRequest(app), userRoutes); //Verify user route requests
 
   let vite;
   if (isDev) {
