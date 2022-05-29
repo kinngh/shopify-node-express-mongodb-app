@@ -4,10 +4,13 @@ An embedded app starter template to get up and ready with Shopify app developmen
 
 I've also included [notes](/NOTES.md) on this repo which goes over the repo on why certain choices were made.
 
-Other Shopify based repos:
+### Supporting Repositories:
 
-- [Koa x Next.js](https://github.com/kinngh/shopify-node-mongodb-next-app): Starter template based on Shopify's older tech stack of using Koa and Next.js.
-- [Polaris Playground](https://github.com/kinngh/shopify-polaris-playground): A playground for Shopify Polaris to allow for building App UI locally and drag/drop directly into this repo to speed up development.
+- [Polaris Playground](https://github.com/kinngh/shopify-polaris-playground): A Shopify Polaris playground to build your interfaces and directly drop them in this repo, with the exception of `App.jsx`.
+
+### WIP:
+
+- `Example production grade app`: ETA June End.
 
 ## Tech Stack
 
@@ -17,7 +20,7 @@ Other Shopify based repos:
 - MongoDB
 - Vite
 - Localtunnel
-  - Localtunnel replaces use of commercial software like `ngrok`, also because `ngrok` doesn't really work well with slower connections
+  - Localtunnel replaces `ngrok` to avoid use of commercial / paid software.
 - Apollo/Client
 
 ## Why I made this
