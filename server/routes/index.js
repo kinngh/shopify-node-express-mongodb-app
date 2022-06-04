@@ -1,6 +1,8 @@
 const { default: Shopify } = require("@shopify/shopify-api");
-
 const userRoutes = require("express").Router();
+
+const subscriptionRoute = require("./recurringSubscriptions");
+userRoutes.use(subscriptionRoute);
 
 userRoutes.get("/api", (req, res) => {
   const sendData = { text: "This is coming from /apps/api route." };

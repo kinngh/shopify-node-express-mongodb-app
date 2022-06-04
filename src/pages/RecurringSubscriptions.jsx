@@ -1,4 +1,9 @@
-import { Page, Card, Button } from "@shopify/polaris";
+/*
+  This is left in JUST AS A DEMO. You should not run recurring subscriptions client side because the merchant can meddle with the code.
+  Refer: server/routes/recurringSubscriptions.js
+*/
+
+import { Page, Card } from "@shopify/polaris";
 import { useMutation, gql } from "@apollo/client";
 import { navigate } from "hookrouter";
 import { Redirect } from "@shopify/app-bridge/actions";

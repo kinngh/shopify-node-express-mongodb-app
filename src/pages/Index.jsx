@@ -28,7 +28,7 @@ const HomePage = () => {
               primaryFooterAction={{
                 content: "Subscribe",
                 onAction: () => {
-                  navigate("/recurringSubscriptions");
+                  navigate("/subscribe-server");
                 },
               }}
             >
