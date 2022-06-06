@@ -1,10 +1,5 @@
-# Hosting
+# Docs
 
-- [Northflank](hosting/northflank.md)
+Any feedback on the docs is appreciated.
 
-### In progress
-
-- Heroku
-- AWS
-- Google Cloud Platform
-- Microsoft Azure
+- [Engineering](./engineering/)

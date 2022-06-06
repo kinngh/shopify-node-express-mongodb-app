@@ -15,11 +15,9 @@
     "update:check": "ncu",
     "test": "echo \"--> No test specified\"",
     "dev": "NODE_ENV=dev nodemon server/index.js --watch ./server",
-    "dev:win": "set NODE_ENV=dev && nodemon server/index.js --watch ./server",
     "preserve": "npm run build",
     "build": "vite build --outDir dist/client",
     "start": "NODE_ENV=prod node server/index.js",
-    "start:win": "set NODE_ENV=prod && node server/index.js",
     "pretty": "prettier --write .",
     "tunnel": "lt --port 8081"
   },
