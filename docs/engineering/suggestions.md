@@ -12,5 +12,4 @@ Checking for uptime can get quite cumbersome. I prefer creating a route that mak
 
 ## Database
 
-- Redis + Your technology
-  Don't just rely on MongoDB / SQL for your database needs. Use a Redis instance to store frequently fetched content like session storage and other app specific content.
+Don't just rely on MongoDB / SQL for your database needs. Use a Redis instance to store frequently fetched content like session storage and other app specific content.
