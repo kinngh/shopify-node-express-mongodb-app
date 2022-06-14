@@ -66,7 +66,7 @@ This section is a collection of tips and tricks I use to speed up my workflow. I
 ### Terminals
 
 - `clear; npm run dev`: Dev instance.
-- `clear; npm run tunnel`: Localtunnel.
+- `clear; npm run ngrok`: Tunnel localhost to https server.
 - `mongod --dbpath mongo/`: Local mongo server that runs locally in the `mongo/` directory.
 - `clear; npm run pretty`: This is usually a spare window that is open depending on what stage of dev I'm in. I like to write the whole code and format for that specific section to be isolated with extra new lines and spaces so it's in focus, then a quick prettify to bring it all together.
 

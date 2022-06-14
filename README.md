@@ -19,8 +19,7 @@ I've also included [notes](/NOTES.md) on this repo which goes over the repo on w
 - Express.js
 - MongoDB
 - Vite
-- Localtunnel
-  - Localtunnel replaces `ngrok` to avoid use of commercial / paid software.
+- Ngrok
 - Apollo/Client
 
 ## Why I made this
@@ -29,7 +28,6 @@ The Shopify CLI generates an amazing starter app but it still needs some more bo
 
 - MongoDB based session and database management.
 - Monetization (recurring subscriptions) ready to go.
-- Local Tunnel instead of Ngrok.
 - Webhooks isolated and setup.
 - React routing taken care of (I miss Next.js mostly because of routing and under the hood improvements).
 - Misc boilerplate code and templates to quickly setup inApp subscriptions, routes, webhooks and more.

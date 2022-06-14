@@ -15,11 +15,11 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - `SHOPIFY_API_KEY`: App API key.
   - `SHOPIFY_API_SECRET`: App secret.
   - `SHOPIFY_API_SCOPES`: Scopes required by your Shopify app. A list of access scopes can be found [here](https://shopify.dev/api/usage/access-scopes)
-  - `SHOPIFY_APP_URL`: URL generated from Localtunnel.
+  - `SHOPIFY_APP_URL`: URL generated from Ngrok.
   - `SHOPIFY_API_VERSION`: Pre-filled to the latest version. All the calls in the repo are based off this API version so if you're downgrading please refer to the official docs instead. The repo is always kept up to date with the newest practices so you can rely on the basic repo to almost always work without depriciation errors popping up.
   - `MONGO_URL`: Mongo connection URL. If you're using a locally hosted version, you can leave it blank or use `mongodb://127.0.0.1:27017/app-name-here`
   - `ENCRYPTION_STRING`: String to use for Cryption for encrypting sessions token. Add a random salt (or a random string of letters and numbers) and save it. If you loose the string you cannot decrypt your sessions and must be kept safely.
-  - `PORT`: Defaults to 8081. If you're using a different port, please update `tunnel` script in `package.json` too.
+  - `PORT`: Defaults to 8081. If you're using a different port, please update `ngrok` script in `package.json` too.
 
 - [ ] NPM Scripts
 
@@ -31,17 +31,18 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - `start`: Run in production mode. Please run `npm run build` before to compile client side.
   - `start:win`: [Windows Only] Run in production mode. Please run `npm run build` before to compile client side.
   - `pretty`: Run prettier across the entire project. I personally like my code to be readable and using prettier CLI makes things easier. Refer to `.prettierrc` for configuration and `.prettierignore` to ignore files and folders.
-  - `tunnel`: Open source alternative to Ngrok. Localtunnel is used to expose specific ports of your machine to the internet and serve over https. The `--port` parameter exposes a specific port (8081) over https to allow connections. Running `npm run tunnel` auto generates a URL for you. If you need a specific subdomain add `--subdomain <your-url>` to the script and generate if it's available. The URL that's generated here goes in `SHOPIFY_APP_URL` and in the URL section of your app in Partner Dashboard.
+  - `ngrok`: Ngrok is used to expose specific ports of your machine to the internet and serve over https. Running `npm run ngrok` auto generates a URL for you. The URL that's generated here goes in `SHOPIFY_APP_URL` and in the URL section of your app in Partner Dashboard.
+  - `ngrok:auth`: Add in your auth token from [Ngrok](https://ngrok.com) to use the service.
 
 - [ ] Setup Partner Dashboard
 
-  - Run `npm run tunnel` to generate your subdomain. Copy the `https://<your-url>.loca.lt` domain and add it in `SHOPIFY_APP_URL` in your `.env` file.
+  - Run `npm run ngrok` to generate your subdomain. Copy the `https://<your-url>/` domain and add it in `SHOPIFY_APP_URL` in your `.env` file.
   - Open Shopify Partner Dashboard > Apps > _Your App Name_ > App Setup
   - In the URLs section
-    - App URL: `https://<your-url>.local.lt`
+    - App URL: `https://<your-url>/`
     - Allowed Redirection URL(s):
-      - `https://<your-url>.local.lt/auth/callback`
-      - `https://<your-url>.local.lt/auth/tokens`
+      - `https://<your-url>/auth/callback`
+      - `https://<your-url>/auth/tokens`
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
   - GPDR routes are available at `server/webhooks/gdpr.js` and the URLs to register are:
     - Customer Data Request: `{appurl}/webhooks/gdpr/customer_data_request`
@@ -50,5 +51,5 @@ This is an in-depth guide on using this repo. This goes over getting the base re
 
 - [ ] Running App
   - I prefer running a local `mongod` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
-  - In your second terminal window, run `npm run tunnel` to create a Local tunnel instance if you haven't already.
+  - In your second terminal window, run `npm run ngrok` to create a ngrok instance if you haven't already.
   - In your third terminal window (preferrably in your IDE), `npm run dev` or `npm run start` depending on how you want to test your app. Make sure to add the generated URL to `SHOPIFY_APP_URL` in `.env` file.
