@@ -10,14 +10,15 @@ If you don't see a solution, please open an issue and it'll be added to the list
 
 ## Paths
 
-Path joining fails the way it's written in the repo for some users. Use the `path.join()` API to get around this issue. Currently, the path fails when serving static files generated from Vite, available in `server/index.js` at 
+Path joining fails the way it's written in the repo for some users. Use the `path.join()` API to get around this issue. Currently, the path fails when serving static files generated from Vite, available in `server/index.js` at
+
 ```javascript
 app.use("/*", (req, res, next) => {
-      res
-        .status(200)
-        .set("Content-Type", "text/html")
-        .send(fs.readFileSync(`${root}/dist/client/index.html`));
-    });
+  res
+    .status(200)
+    .set("Content-Type", "text/html")
+    .send(fs.readFileSync(`${root}/dist/client/index.html`));
+});
 ```
 
 ## Dev mode

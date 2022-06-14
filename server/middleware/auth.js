@@ -27,15 +27,47 @@ const applyAuthMiddleware = (app) => {
       return res.redirect(`/auth/toplevel?shop=${req.query.shop}`);
     }
 
-    const redirectUrl = await Shopify.Auth.beginAuth(
-      req,
-      res,
-      req.query.shop,
-      "/auth/callback",
-      app.get("use-online-tokens")
-    );
+    try {
+      const session = await Shopify.Auth.validateAuthCallback(
+        req,
+        res,
+        req.query
+      );
 
-    res.redirect(redirectUrl);
+      const { shop } = session;
+      const { host } = req.query;
+
+      await webhookRegistrar(session); //Register all webhooks using offline tokens
+
+      //Move on to get online tokens
+      const redirectUrl = await Shopify.Auth.beginAuth(
+        req,
+        res,
+        req.query.shop,
+        "/auth/callback",
+        true
+      );
+
+      res.redirect(redirectUrl);
+    } catch (e) {
+      switch (true) {
+        case e instanceof Shopify.Errors.InvalidOAuthError:
+          res.status(400);
+          res.send(e.message);
+          break;
+        case e instanceof Shopify.Errors.CookieNotFound:
+        case e instanceof Shopify.Errors.SessionNotFound:
+          // This is likely because the OAuth session cookie expired before the merchant approved the request
+          // Delete sessions and restart installation
+          await SessionModel.deleteMany({ shop });
+          res.redirect(`/auth?shop=${req.query.shop}&host=${req.query.host}`);
+          break;
+        default:
+          res.status(500);
+          res.send(e.message);
+          break;
+      }
+    }
   });
 
   app.get("/auth/toplevel", (req, res) => {
@@ -68,7 +100,7 @@ const applyAuthMiddleware = (app) => {
       const host = req.query.host;
       const { shop } = session;
 
-      await webhookRegistrar(session); //Register all webhooks
+      await webhookRegistrar(session); //Register all webhooks using online tokens
       await StoreModel.findOneAndUpdate({ shop }, { isActive: true }); //Update store to true after auth has happened, or it'll cause reinstall issues.
 
       // Redirect to app with shop parameter upon auth

@@ -14,7 +14,8 @@ userRoutes.post("/api", (req, res) => {
 });
 
 userRoutes.get("/api/gql", async (req, res) => {
-  const session = await Shopify.Utils.loadCurrentSession(req, res);
+  //false for offline session, true for online session
+  const session = await Shopify.Utils.loadCurrentSession(req, res, false);
   const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
 
   const shop = await client.query({
