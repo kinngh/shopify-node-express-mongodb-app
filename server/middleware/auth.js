@@ -27,47 +27,24 @@ const applyAuthMiddleware = (app) => {
       return res.redirect(`/auth/toplevel?shop=${req.query.shop}`);
     }
 
-    try {
-      const session = await Shopify.Auth.validateAuthCallback(
-        req,
-        res,
-        req.query
-      );
+    const session = await Shopify.Auth.validateAuthCallback(
+      req,
+      res,
+      req.query
+    );
 
-      const { shop } = session;
-      const { host } = req.query;
+    await webhookRegistrar(session); //Register all webhooks using offline tokens
 
-      await webhookRegistrar(session); //Register all webhooks using offline tokens
+    //Move on to get online tokens
+    const redirectUrl = await Shopify.Auth.beginAuth(
+      req,
+      res,
+      req.query.shop,
+      "/auth/callback",
+      true
+    );
 
-      //Move on to get online tokens
-      const redirectUrl = await Shopify.Auth.beginAuth(
-        req,
-        res,
-        req.query.shop,
-        "/auth/callback",
-        true
-      );
-
-      res.redirect(redirectUrl);
-    } catch (e) {
-      switch (true) {
-        case e instanceof Shopify.Errors.InvalidOAuthError:
-          res.status(400);
-          res.send(e.message);
-          break;
-        case e instanceof Shopify.Errors.CookieNotFound:
-        case e instanceof Shopify.Errors.SessionNotFound:
-          // This is likely because the OAuth session cookie expired before the merchant approved the request
-          // Delete sessions and restart installation
-          await SessionModel.deleteMany({ shop });
-          res.redirect(`/auth?shop=${req.query.shop}&host=${req.query.host}`);
-          break;
-        default:
-          res.status(500);
-          res.send(e.message);
-          break;
-      }
-    }
+    res.redirect(redirectUrl);
   });
 
   app.get("/auth/toplevel", (req, res) => {

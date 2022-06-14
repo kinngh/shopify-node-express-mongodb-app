@@ -9,7 +9,7 @@ const subscriptionRoute = require("express").Router();
 subscriptionRoute.get("/api/recurringSubscription", async (req, res) => {
   const session = await Shopify.Utils.loadCurrentSession(req, res);
   const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
-  const returnUrl = `${process.env.SHOPIFY_APP_URL}/auth?shop=${session.shop}`;
+  const returnUrl = `${process.env.SHOPIFY_APP_URL}/auth/toplevel?shop=${session.shop}`;
 
   const planName = "$10.25 plan";
   const planPrice = 10.25; //Always a decimal
