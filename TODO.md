@@ -1,19 +1,15 @@
 # To Do
 
-## Short term
+- [ ] (M) Setup hosting docs.
 
-- [x] (S) Setup pulling data from Express route.
-  - [ ] (C) When running `npm run dev`, making any changes to the React side of things crashes the app when in the route pulling component.
-- [ ] Setup hosting docs
+  - [ ] Northflank
   - [ ] Heroku
-  - [x] Northflank
   - [ ] AWS
   - [ ] Google Cloud Platform
   - [ ] Microsoft Azure
 
-## Long Term
-
-- [x] (M) Indepth notes and setup guide.
+- [ ] (C) Deal with `` issue.
+- [ ] (S)(C) Make the repo compatible with Windows systems out-of-the-box.
 
 ---
 

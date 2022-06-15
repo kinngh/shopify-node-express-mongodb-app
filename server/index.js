@@ -19,6 +19,8 @@ const {
   customerRedact,
   shopRedact,
 } = require("./webhooks/gdpr.js");
+const proxyRouter = require("./routes/app_proxy/index.js");
+const proxyVerification = require("./middleware/proxyVerification.js");
 
 const PORT = parseInt(process.env.PORT, 10) || 8081;
 const isDev = process.env.NODE_ENV === "dev";
@@ -92,6 +94,7 @@ const createServer = async (root = process.cwd()) => {
   app.use(csp);
   app.use(isActiveShop);
   app.use("/apps", verifyRequest(app), userRoutes); //Verify user route requests
+  app.use("/proxy_route", proxyVerification, proxyRouter); //App Proxy routes
 
   let vite;
   if (isDev) {

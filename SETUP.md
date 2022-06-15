@@ -39,15 +39,24 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - Run `npm run ngrok` to generate your subdomain. Copy the `https://<your-url>/` domain and add it in `SHOPIFY_APP_URL` in your `.env` file.
   - Open Shopify Partner Dashboard > Apps > _Your App Name_ > App Setup
   - In the URLs section
-    - App URL: `https://<your-url>/`
+    - App URL: `https://<your-url>`
     - Allowed Redirection URL(s):
       - `https://<your-url>/auth/callback`
       - `https://<your-url>/auth/tokens`
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
   - GPDR routes are available at `server/webhooks/gdpr.js` and the URLs to register are:
-    - Customer Data Request: `{appurl}/webhooks/gdpr/customer_data_request`
-    - Customer Redact: `{appurl}/webhooks/gdpr/customer_redact`
-    - Shop Redact: `{appurl}/webhooks/gdpr/shop_redact`
+    - Customer Data Request: `https://<your-url>/webhooks/gdpr/customer_data_request`
+    - Customer Redact: `https://<your-url>/webhooks/gdpr/customer_redact`
+    - Shop Redact: `https://<your-url>/webhooks/gdpr/shop_redact`
+  - App Proxy routes are setup to allow accessing data from your app directly from the store. An example proxy route has been setup and is available at `server/index.js` at `//App Proxy routes` and the routes are available in `server/routes/app_proxy/`. First you need to setup your base urls. For example:
+
+    - Subpath Prefix: `apps`
+    - Subpath: `express-repo`
+    - Proxy URL: `https://<your-url>/proxy_route`
+
+    - So when a merchant visits `https://shop-url.com/apps/express-repo/`, the response to that request will come from `https://<your-url>/proxy_route`. A middleware has already been setup to check signatures so you don't have to worry about authenticating proxy calls, and is available at `server/middleware/proxyVerification.js`.
+    - Subsequently, any child requests will be mapped the same way. A call to `https://shop-url.com/apps/express-repo/json` will be routed to `https://<your-url>/proxy_route/json`.
+    - To confirm if you've setup app proxy properly, head over to `https://shop-url.myshopify.com/apps/express-proxy/json` to confirm if you get a JSON being returned with the configuration set above^
 
 - [ ] Running App
   - I prefer running a local `mongod` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
