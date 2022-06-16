@@ -51,11 +51,11 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - App Proxy routes are setup to allow accessing data from your app directly from the store. An example proxy route has been setup and is available at `server/index.js` at `//App Proxy routes` and the routes are available in `server/routes/app_proxy/`. First you need to setup your base urls. For example:
 
     - Subpath Prefix: `apps`
-    - Subpath: `express-repo`
+    - Subpath: `express-proxy`
     - Proxy URL: `https://<your-url>/proxy_route`
 
-    - So when a merchant visits `https://shop-url.com/apps/express-repo/`, the response to that request will come from `https://<your-url>/proxy_route`. A middleware has already been setup to check signatures so you don't have to worry about authenticating proxy calls, and is available at `server/middleware/proxyVerification.js`.
-    - Subsequently, any child requests will be mapped the same way. A call to `https://shop-url.com/apps/express-repo/json` will be routed to `https://<your-url>/proxy_route/json`.
+    - So when a merchant visits `https://shop-url.com/apps/express-proxy/`, the response to that request will come from `https://<your-url>/proxy_route`. A middleware has already been setup to check signatures so you don't have to worry about authenticating proxy calls, and is available at `server/middleware/proxyVerification.js`.
+    - Subsequently, any child requests will be mapped the same way. A call to `https://shop-url.com/apps/express-proxy/json` will be routed to `https://<your-url>/proxy_route/json`.
     - To confirm if you've setup app proxy properly, head over to `https://shop-url.myshopify.com/apps/express-proxy/json` to confirm if you get a JSON being returned with the configuration set above^
 
 - [ ] Running App

@@ -15,7 +15,7 @@ I've also included [notes](/NOTES.md) on this repo which goes over the repo on w
 ## Tech Stack
 
 - React.js
-  - `hookrouter` for easier routing.
+  - `raviger` for easier routing.
 - Express.js
 - MongoDB
 - Vite

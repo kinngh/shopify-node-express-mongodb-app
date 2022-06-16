@@ -1,7 +1,7 @@
 import React from "react";
 import { Page, Card, DataTable } from "@shopify/polaris";
 import { useQuery, gql } from "@apollo/client";
-import { navigate } from "hookrouter";
+import { navigate } from "raviger";
 
 const ActiveSubscriptions = () => {
   const getActiveSubscriptions = gql`

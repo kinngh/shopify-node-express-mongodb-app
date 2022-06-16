@@ -34,9 +34,9 @@
 
 ### Routing
 
-- Using a new package `hookrouter` to add in navigation and routing. I've found it to be much easier to work with, since there's no unnecessary need to use Switches and other boilerpate code.
+- Using a new package `raviger` to add in navigation and routing. I've found it to be much easier to work with, since there's no unnecessary need to use Switches and other boilerpate code.
 - Add all your routes to `src/GlobalRoutes.jsx` and then you can use `navigate("/path")` to navigate around, just like Next.js' good ol' `router.push("/path")`
-- You can refer to hookrouter [documentation](https://github.com/Paratron/hookrouter/blob/master/src-docs/pages/en/README.md), and a [quickstart guide](https://blog.logrocket.com/how-react-hooks-can-replace-react-router/) to understand how it works, passing props and other good stuff.
+- You can refer to raviger [documentation](https://github.com/Paratron/raviger/blob/master/src-docs/pages/en/README.md), and a [quickstart guide](https://blog.logrocket.com/how-react-hooks-can-replace-react-router/) to understand how it works, passing props and other good stuff.
 
 ### GraphQL
 

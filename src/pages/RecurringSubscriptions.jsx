@@ -5,7 +5,7 @@
 
 import { Page, Card } from "@shopify/polaris";
 import { useMutation, gql } from "@apollo/client";
-import { navigate } from "hookrouter";
+import { navigate } from "raviger";
 import { Redirect } from "@shopify/app-bridge/actions";
 import { useAppBridge } from "@shopify/app-bridge-react";
 

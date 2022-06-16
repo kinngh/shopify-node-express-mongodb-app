@@ -1,11 +1,5 @@
-/**
- * Known bug:
- * While `npm run dev` if you make changes to this component, it causes the host to become null and crashes the React app.
- * This has no effect in production.
- */
-
 import React, { useEffect, useState } from "react";
-import { navigate } from "hookrouter";
+import { navigate } from "raviger";
 import { Page, Card, Layout } from "@shopify/polaris";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { userLoggedInFetch } from "../App";

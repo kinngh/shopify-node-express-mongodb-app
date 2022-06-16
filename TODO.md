@@ -8,7 +8,7 @@
   - [ ] Google Cloud Platform
   - [ ] Microsoft Azure
 
-- [ ] (C) Deal with `` issue.
+- [ ] (C) Deal with `Failed to execute 'postMessage' on 'DOMWindow'` issue.
 - [ ] (S)(C) Make the repo compatible with Windows systems out-of-the-box.
 
 ---

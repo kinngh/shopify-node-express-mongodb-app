@@ -15,7 +15,7 @@ import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 
 import routes from "./GlobalRoutes";
-import { useRoutes } from "hookrouter";
+import { useRoutes } from "raviger";
 
 const appBridgeConfig = {
   apiKey: process.env.SHOPIFY_API_KEY,
