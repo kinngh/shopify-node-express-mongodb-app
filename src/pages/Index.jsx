@@ -1,12 +1,31 @@
 import React from "react";
 import { Page, Card, Layout } from "@shopify/polaris";
 import { navigate } from "raviger";
+import { useAppBridge } from "@shopify/app-bridge-react";
+import { Fullscreen } from "@shopify/app-bridge/actions";
 
 const HomePage = () => {
+  const app = useAppBridge();
+  const fullscreen = Fullscreen.create(app);
   return (
     <React.Fragment>
       <Page title="Debug Cards">
         <Layout>
+          <Layout.Section>
+            <Card
+              title="Fullscreen UI"
+              sectioned
+              primaryFooterAction={{
+                content: "Go Fullscreen",
+                onAction: () => {
+                  fullscreen.dispatch(Fullscreen.Action.ENTER);
+                  navigate("/fullscreen");
+                },
+              }}
+            >
+              <p>Grab data from an Express route in React</p>
+            </Card>
+          </Layout.Section>
           <Layout.Section>
             <Card
               title="Making API Calls"

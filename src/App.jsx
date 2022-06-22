@@ -5,6 +5,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import {
+  NavigationMenu,
   Provider as AppBridgeProvider,
   useAppBridge,
 } from "@shopify/app-bridge-react";
@@ -28,6 +29,18 @@ export default function App() {
   return (
     <PolarisProvider i18n={translations}>
       <AppBridgeProvider config={appBridgeConfig}>
+        <NavigationMenu
+          navigationLinks={[
+            {
+              label: "Home",
+              destination: "/",
+            },
+            {
+              label: "Get Data",
+              destination: "/getData",
+            },
+          ]}
+        />
         <MyProvider>{RouteComponents}</MyProvider>
       </AppBridgeProvider>
     </PolarisProvider>
