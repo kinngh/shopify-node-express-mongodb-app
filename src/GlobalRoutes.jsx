@@ -15,7 +15,7 @@ const routes = {
   "/activeWebhooks": () => <ActiveWebhooks />,
   "/getData": () => <GetData />,
   "/subscribe-server": () => <ServerSideRecurringSubscriptions />,
-  "/fullscreen": () => <FullScreen />
+  "/fullscreen": () => <FullScreen />,
 };
 
 export default routes;
