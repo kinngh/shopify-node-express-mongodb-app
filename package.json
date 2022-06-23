@@ -1,6 +1,6 @@
 {
   "name": "shopify-express-boilerplate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
   "author": {
     "name": "Harshdeep Singh Hura",
@@ -14,7 +14,7 @@
     "update": "ncu -u",
     "update:check": "ncu",
     "test": "echo \"--> No test specified\"",
-    "dev": "NODE_ENV=dev nodemon server/index.js --watch ./server",
+    "dev": "NODE_ENV=dev nodemon server/index.js --ignore ./src",
     "preserve": "npm run build",
     "build": "vite build --outDir dist/client",
     "start": "NODE_ENV=prod node server/index.js",
@@ -23,7 +23,7 @@
     "ngrok": "ngrok http 8081"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.8",
+    "@apollo/client": "^3.6.9",
     "@shopify/app-bridge": "^3.1.1",
     "@shopify/app-bridge-react": "^3.1.1",
     "@shopify/app-bridge-utils": "^3.1.1",
@@ -44,8 +44,8 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^1.3.2",
     "ngrok": "^4.3.1",
-    "nodemon": "^2.0.16",
-    "npm-check-updates": "^14.0.1",
+    "nodemon": "^2.0.18",
+    "npm-check-updates": "^14.1.1",
     "prettier": "^2.7.1",
     "vite": "^2.9.12"
   }

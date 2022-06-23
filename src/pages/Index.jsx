@@ -7,6 +7,7 @@ import { Fullscreen } from "@shopify/app-bridge/actions";
 const HomePage = () => {
   const app = useAppBridge();
   const fullscreen = Fullscreen.create(app);
+  fullscreen.dispatch(Fullscreen.Action.EXIT);
   return (
     <React.Fragment>
       <Page title="Debug Cards">

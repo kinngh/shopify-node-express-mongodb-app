@@ -9,16 +9,13 @@ const ActiveWebhooks = () => {
       webhookSubscriptions(first: 10) {
         edges {
           node {
-            id
-            callbackUrl
-            createdAt
+            topic
             endpoint {
+              __typename
               ... on WebhookHttpEndpoint {
-                __typename
+                callbackUrl
               }
             }
-            format
-            topic
           }
         }
       }
@@ -35,7 +32,8 @@ const ActiveWebhooks = () => {
   if (data) {
     console.log("Rendering Data");
     Object.entries(data.webhookSubscriptions.edges).map(([key, value]) => {
-      const { topic, callbackUrl } = value.node;
+      const topic = value.node.topic;
+      const callbackUrl = value.node.endpoint.callbackUrl;
       rows.push([topic, callbackUrl]);
     });
   }

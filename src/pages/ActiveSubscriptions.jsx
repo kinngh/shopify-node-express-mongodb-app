@@ -37,15 +37,18 @@ const ActiveSubscriptions = () => {
     console.log("loading", loading);
   }
   if (data) {
-    console.log("Rendering Data");
-    Object.entries(data.appInstallation.activeSubscriptions).map(
-      ([key, value]) => {
+    const activeSubscriptions = data.appInstallation.activeSubscriptions;
+    if (activeSubscriptions.length === 0) {
+      rows.push(["No Plan", "N/A", "N/A", "USD 0.00"]);
+    } else {
+      console.log("Rendering Data");
+      Object.entries(activeSubscriptions).map(([key, value]) => {
         const { name, status, test } = value;
         const { amount, currencyCode } =
           value.lineItems[0].plan.pricingDetails.price;
         rows.push([name, status, `${test}`, `${currencyCode} ${amount}`]);
-      }
-    );
+      });
+    }
   }
 
   if (error) {

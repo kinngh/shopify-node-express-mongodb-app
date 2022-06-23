@@ -7,13 +7,13 @@ const { resolve } = require("path");
 require("dotenv").config();
 
 const sessionStorage = require("../utils/sessionStorage.js");
-const webhookRoutes = require("./webhooks/_routes.js");
+// const webhookRoutes = require("./webhooks/_routes.js");
 const csp = require("./middleware/csp.js");
 const verifyRequest = require("./middleware/verifyRequest.js");
 const isActiveShop = require("./middleware/isActiveShop.js");
 const applyAuthMiddleware = require("./middleware/auth.js");
 const userRoutes = require("./routes/index.js");
-const { appUninstallHandler } = require("./webhooks/app_uninstalled.js");
+const appUninstallHandler = require("./webhooks/app_uninstalled.js");
 const {
   customerDataRequest,
   customerRedact,
@@ -44,6 +44,7 @@ Shopify.Context.initialize({
   API_SECRET_KEY: process.env.SHOPIFY_API_SECRET,
   SCOPES: process.env.SHOPIFY_API_SCOPES,
   HOST_NAME: process.env.SHOPIFY_APP_URL.replace(/https:\/\//, ""),
+  HOST_SCHEME: "https",
   API_VERSION: process.env.SHOPIFY_API_VERSION,
   IS_EMBEDDED_APP: true,
   SESSION_STORAGE: sessionStorage,
@@ -57,29 +58,41 @@ Shopify.Webhooks.Registry.addHandlers({
     webhookHandler: appUninstallHandler,
   },
   CUSTOMERS_DATA_REQUEST: {
-    path: "/webhooks/gdpr/customers_data_request",
+    path: "/webhooks/customers_data_request",
     webhookHandler: customerDataRequest,
   },
   CUSTOMERS_REDACT: {
-    path: "/webhooks/gdpr/customers_redact",
+    path: "/webhooks/customers_redact",
     webhookHandler: customerRedact,
   },
   SHOP_REDACT: {
-    path: "/webhooks/gdpr/shop_redact",
+    path: "/webhooks/shop_redact",
     webhookHandler: shopRedact,
   },
 });
 
 const createServer = async (root = process.cwd()) => {
   const app = Express();
-  app.set("top-level-oauth-cookie", "shopify_top_level_oauth");
-  app.set("use-online-tokens", true);
 
+  app.set("top-level-oauth-cookie", "shopify_top_level_oauth");
   app.use(cookieParser(Shopify.Context.API_SECRET_KEY));
 
   applyAuthMiddleware(app);
 
-  app.use("/webhooks", webhookRoutes); //webhookRotues
+  //Handle all webhooks in one route
+  app.post("/webhooks/:topic", async (req, res) => {
+    try {
+      const { topic } = req.params;
+      await Shopify.Webhooks.Registry.process(req, res);
+      console.log(`Processed ${topic} webhook `);
+    } catch (e) {
+      console.log(`Error while registering ${topic} webhook`, e);
+
+      if (!res.headersSent) {
+        res.status(500).send(e.message);
+      }
+    }
+  });
 
   app.post("/graphql", verifyRequest(app), async (req, res) => {
     try {
@@ -94,7 +107,7 @@ const createServer = async (root = process.cwd()) => {
   app.use(csp);
   app.use(isActiveShop);
   app.use("/apps", verifyRequest(app), userRoutes); //Verify user route requests
-  app.use("/proxy_route", proxyVerification, proxyRouter); //App Proxy routes
+  app.use("/proxy_route", proxyVerification, proxyRouter); //MARK:- App Proxy routes
 
   let vite;
   if (isDev) {

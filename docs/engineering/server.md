@@ -39,33 +39,9 @@ A thing to note here is since `verifyRequest` middleware is called every single 
 
 ## Webhooks
 
-Dealing with webhooks is a three point strategy, as defined in `__templates/webhooks.js`. A common problem I see is dealing with the `app_uninstalled` webhook, since most apps fail to pass the check in reinstallation because they're storing active shops in memory and fail to deal with it in a proper manner. Using the required `app_uninstalled` implementation as an example, here's how to deal with webhooks:
+Working with webhooks is now only a matter of setting up a handler function (the function that runs when the webhook is triggered) and registering it in `server/index.js` at `//MARK:- Add handlers for webhooks here.` As an example, the `app_uninstalled` and the three GDPR webhooks are registered and you can just add to that list. All webhooks are routed to `/webhooks/topic`, including GDPR routes. To keep things tidy, all webhook handler functions are at `server/webhooks` and the files are named after the webhooks they handle.
 
-1. Register webhook in `server/index.js` in the `Shopify.Webhooks.Registry.addHandlers()` function.
-2. Check for webhook registration status in `server/webhooks/_webhookRegistrar.js` by creating a dedicated route for the webhook and checking for response.
-   - I've seen developers use one route for all webhooks and cycle through the topic, but I like to keep my logs extremely clear and this redundancy is required for easier debugging. Irritating, but works great on the longer run especially for debugging.
-3. Create a new file with the subscription topic in `server/webhook` folder. Here we have the `app_uninstalled.js` file that creates a handler function that defines what to do when the webhook is called, and a route to log if the webhook was processed successfully or not.
-
-There's a lot of redundancy here but I've personally experienced it to be much easier to debug, since we only do this once and then deal with the handler functions.
-
-An alternate way of _streamlining_ the process (for the lack of a better term) is to use case/switch statements for handler functions.
-
-- In `server/index.js`, add `handlerFunction(TOPIC)` as your webhook handler for the topics.
-- Create a new file called `handler_functions.js` in `server/`:
-
-```javascript
-const handlerFunction = (webhook_topic) => {
-  switch (webhook_topic) {
-    case TOPIC:
-      handlerFunction();
-      break;
-    default:
-      console.log("Unknown webhook topic", webhook_topic);
-  }
-};
-```
-
-I still don't see this as a better option, but just in case you want all your handlers in one place, this is one way to go. I still recommend sticking to isolating handlers into their topic files so it's easier to maintain and debug, the way it's setup in the repo.
+`webhookRegistrar` handles webhook registration at `server/middleware/auth.js` and the routes are available in `server/index.js`.
 
 ## Session Storage
 

@@ -9,11 +9,7 @@ const TEST_GRAPHQL_QUERY = `
 
 const verifyRequest = (app, { returnHeader = true } = {}) => {
   return async (req, res, next) => {
-    const session = await Shopify.Utils.loadCurrentSession(
-      req,
-      res,
-      app.get("use-online-tokens")
-    );
+    const session = await Shopify.Utils.loadCurrentSession(req, res, true);
 
     let { shop, host } = req.query;
 
@@ -21,7 +17,7 @@ const verifyRequest = (app, { returnHeader = true } = {}) => {
       return res.redirect(`/auth?shop=${shop}&host=${host}`);
     }
 
-    //session.isActive() doesn't work when using Redis, MongoDB or other forms of custom session storage. Replace it.
+    //session.isActive() doesn't work when using custom session storage.
     const isSessionActive = (session) => {
       if (!session) {
         return false;
@@ -58,10 +54,9 @@ const verifyRequest = (app, { returnHeader = true } = {}) => {
         if (session) {
           shop = session.shop;
         } else if (Shopify.Context.IS_EMBEDDED_APP) {
-          const authHeader = req.headers.authorization;
-          const matches = authHeader?.match(/Bearer (.*)/);
-          if (matches) {
-            const payload = Shopify.Utils.decodeSessionToken(matches[1]);
+          const authHeader = req.headers.authorization?.match(/Bearer (.*)/);
+          if (authHeader) {
+            const payload = Shopify.Utils.decodeSessionToken(authHeader[1]);
             shop = payload.dest.replace("https://", "");
           }
         }
@@ -87,4 +82,5 @@ const verifyRequest = (app, { returnHeader = true } = {}) => {
     }
   };
 };
+
 module.exports = verifyRequest;

@@ -26,10 +26,8 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - `update` and `update:check`: Depends on `npm-check-updates` to force update packages to the latest available version. Can potentially break things.
   - `test`: Tests have been ommited in the repo since everyone likes to use their own testing library.
   - `dev`: Run in dev mode.
-  - `dev:win`: [Windows Only] Run in dev mode.
   - `build`: Use Vite to build React into `dist/client`. If you don't run build, you cannot serve anything in dev / production modes.
   - `start`: Run in production mode. Please run `npm run build` before to compile client side.
-  - `start:win`: [Windows Only] Run in production mode. Please run `npm run build` before to compile client side.
   - `pretty`: Run prettier across the entire project. I personally like my code to be readable and using prettier CLI makes things easier. Refer to `.prettierrc` for configuration and `.prettierignore` to ignore files and folders.
   - `ngrok`: Ngrok is used to expose specific ports of your machine to the internet and serve over https. Running `npm run ngrok` auto generates a URL for you. The URL that's generated here goes in `SHOPIFY_APP_URL` and in the URL section of your app in Partner Dashboard.
   - `ngrok:auth`: Add in your auth token from [Ngrok](https://ngrok.com) to use the service.
@@ -44,11 +42,11 @@ This is an in-depth guide on using this repo. This goes over getting the base re
       - `https://<your-url>/auth/callback`
       - `https://<your-url>/auth/tokens`
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
-  - GPDR routes are available at `server/webhooks/gdpr.js` and the URLs to register are:
-    - Customer Data Request: `https://<your-url>/webhooks/gdpr/customer_data_request`
-    - Customer Redact: `https://<your-url>/webhooks/gdpr/customer_redact`
-    - Shop Redact: `https://<your-url>/webhooks/gdpr/shop_redact`
-  - App Proxy routes are setup to allow accessing data from your app directly from the store. An example proxy route has been setup and is available at `server/index.js` at `//App Proxy routes` and the routes are available in `server/routes/app_proxy/`. First you need to setup your base urls. For example:
+  - GPDR handlers are available at `server/webhooks/gdpr.js` and the URLs to register are:
+    - Customer Data Request: `https://<your-url>/webhooks/customers_data_request`
+    - Customer Redact: `https://<your-url>/webhooks/customers_redact`
+    - Shop Redact: `https://<your-url>/webhooks/shop_redact`
+  - App Proxy routes are setup to allow accessing data from your app directly from the store. An example proxy route has been setup and is available at `server/index.js` at `//MARK:- App Proxy routes` and the routes are available in `server/routes/app_proxy/`. First you need to setup your base urls. Here's how to get it working:
 
     - Subpath Prefix: `apps`
     - Subpath: `express-proxy`

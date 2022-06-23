@@ -1,5 +1,4 @@
 // Session store model to preserve sessions across restarts.
-// MARK:- Needs updating.
 const mongoose = require("mongoose");
 
 const sessionSchema = new mongoose.Schema({

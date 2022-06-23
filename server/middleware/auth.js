@@ -1,9 +1,12 @@
 const { Shopify } = require("@shopify/shopify-api");
+const {
+  gdprTopic,
+  gdprTopics,
+} = require("@shopify/shopify-api/dist/webhooks/registry");
 
 const SessionModel = require("../../utils/models/SessionModel");
 const StoreModel = require("../../utils/models/StoreModel");
 const topLevelAuthRedirect = require("../../utils/topLevelAuthRedirect");
-const webhookRegistrar = require("../webhooks/_webhookRegistrar");
 
 const applyAuthMiddleware = (app) => {
   app.get("/auth", async (req, res) => {
@@ -16,7 +19,7 @@ const applyAuthMiddleware = (app) => {
       res,
       req.query.shop,
       "/auth/tokens",
-      false
+      false //offline token
     );
 
     res.redirect(redirectUrl);
@@ -33,15 +36,30 @@ const applyAuthMiddleware = (app) => {
       req.query
     );
 
-    await webhookRegistrar(session); //Register all webhooks using offline tokens
+    const { shop, accessToken } = session;
 
-    //Move on to get online tokens
+    const webhookRegistrar = await Shopify.Webhooks.Registry.registerAll({
+      shop,
+      accessToken,
+    });
+
+    Object.entries(webhookRegistrar).map(([topic, response]) => {
+      if (!response.success && !gdprTopics.includes(topic)) {
+        console.error(
+          `--> Failed to register ${topic}.`,
+          resopnse.result.errors[0].message
+        );
+      } else if (!gdprTopics.includes(topic)) {
+        console.log(`--> Registered ${topic} for ${shop}`);
+      }
+    });
+
     const redirectUrl = await Shopify.Auth.beginAuth(
       req,
       res,
       req.query.shop,
       "/auth/callback",
-      true
+      true //online tokens
     );
 
     res.redirect(redirectUrl);
@@ -61,7 +79,6 @@ const applyAuthMiddleware = (app) => {
         apiKey: Shopify.Context.API_KEY,
         hostName: Shopify.Context.HOST_NAME,
         shop: req.query.shop,
-        host: req.query.host,
       })
     );
   });
@@ -77,7 +94,6 @@ const applyAuthMiddleware = (app) => {
       const host = req.query.host;
       const { shop } = session;
 
-      await webhookRegistrar(session); //Register all webhooks using online tokens
       await StoreModel.findOneAndUpdate({ shop }, { isActive: true }); //Update store to true after auth has happened, or it'll cause reinstall issues.
 
       // Redirect to app with shop parameter upon auth
