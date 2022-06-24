@@ -1,8 +1,5 @@
 const { Shopify } = require("@shopify/shopify-api");
-const {
-  gdprTopic,
-  gdprTopics,
-} = require("@shopify/shopify-api/dist/webhooks/registry");
+const { gdprTopics } = require("@shopify/shopify-api/dist/webhooks/registry");
 
 const SessionModel = require("../../utils/models/SessionModel");
 const StoreModel = require("../../utils/models/StoreModel");
@@ -21,15 +18,10 @@ const applyAuthMiddleware = (app) => {
       "/auth/tokens",
       false //offline token
     );
-
     res.redirect(redirectUrl);
   });
 
   app.get("/auth/tokens", async (req, res) => {
-    if (!req.signedCookies[app.get("top-level-oauth-cookie")]) {
-      return res.redirect(`/auth/toplevel?shop=${req.query.shop}`);
-    }
-
     const session = await Shopify.Auth.validateAuthCallback(
       req,
       res,
@@ -110,7 +102,7 @@ const applyAuthMiddleware = (app) => {
           // Delete sessions and restart installation
           await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
           await SessionModel.deleteMany({ shop });
-          res.redirect(`/auth?shop=${req.query.shop}&host=${req.query.host}`);
+          res.redirect(`/auth?shop=${req.query.shop}`);
           break;
         default:
           res.status(500);

@@ -1,4 +1,4 @@
-function topLevelAuthRedirect({ apiKey, hostName, shop }) {
+const topLevelAuthRedirect = ({ apiKey, hostName, shop }) => {
   return `<!DOCTYPE html>
 <html>
   <head>
@@ -33,6 +33,6 @@ function topLevelAuthRedirect({ apiKey, hostName, shop }) {
   </head>
   <body></body>
 </html>`;
-}
+};
 
 module.exports = topLevelAuthRedirect;

@@ -43,6 +43,7 @@ const verifyRequest = (app, { returnHeader = true } = {}) => {
           e instanceof Shopify.Errors.HttpResponseError &&
           e.response.code === 401
         ) {
+          res.redirect(`/auth?shop=${shop}`);
         } else {
           throw e;
         }

@@ -7,7 +7,6 @@ const { resolve } = require("path");
 require("dotenv").config();
 
 const sessionStorage = require("../utils/sessionStorage.js");
-// const webhookRoutes = require("./webhooks/_routes.js");
 const csp = require("./middleware/csp.js");
 const verifyRequest = require("./middleware/verifyRequest.js");
 const isActiveShop = require("./middleware/isActiveShop.js");
@@ -153,7 +152,7 @@ const createServer = async (root = process.cwd()) => {
 
 createServer().then(({ app }) => {
   app.listen(PORT, () => {
-    console.log(`Running on ${PORT}`);
+    console.log(`--> Running on ${PORT}`);
   });
 });
 module.exports = createServer;

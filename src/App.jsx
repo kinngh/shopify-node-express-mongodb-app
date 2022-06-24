@@ -26,6 +26,7 @@ const appBridgeConfig = {
 
 export default function App() {
   const RouteComponents = useRoutes(routes);
+
   return (
     <PolarisProvider i18n={translations}>
       <AppBridgeProvider config={appBridgeConfig}>
