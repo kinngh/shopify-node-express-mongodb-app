@@ -80,12 +80,17 @@ const createServer = async (root = process.cwd()) => {
 
   //Handle all webhooks in one route
   app.post("/webhooks/:topic", async (req, res) => {
+    const { topic } = req.params;
+    const shop = req.headers["x-shopify-shop-domain"];
+
     try {
-      const { topic } = req.params;
       await Shopify.Webhooks.Registry.process(req, res);
-      console.log(`Processed ${topic} webhook `);
+      console.log(`--> Processed ${topic} webhook for ${shop}`);
     } catch (e) {
-      console.log(`Error while registering ${topic} webhook`, e);
+      console.log(
+        `--> Error while registering ${topic} webhook for ${shop}`,
+        e
+      );
 
       if (!res.headersSent) {
         res.status(500).send(e.message);
