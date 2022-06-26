@@ -39,7 +39,7 @@ const applyAuthMiddleware = (app) => {
       if (!response.success && !gdprTopics.includes(topic)) {
         console.error(
           `--> Failed to register ${topic}.`,
-          resopnse.result.errors[0].message
+          response.result.errors[0].message
         );
       } else if (!gdprTopics.includes(topic)) {
         console.log(`--> Registered ${topic} for ${shop}`);
