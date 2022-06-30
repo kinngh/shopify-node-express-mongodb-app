@@ -12,12 +12,12 @@ const verifyRequest = require("./middleware/verifyRequest.js");
 const isActiveShop = require("./middleware/isActiveShop.js");
 const applyAuthMiddleware = require("./middleware/auth.js");
 const userRoutes = require("./routes/index.js");
-const appUninstallHandler = require("./webhooks/app_uninstalled.js");
 const {
+  appUninstallHandler,
   customerDataRequest,
   customerRedact,
   shopRedact,
-} = require("./webhooks/gdpr.js");
+} = require("./webhooks/");
 const proxyRouter = require("./routes/app_proxy/index.js");
 const proxyVerification = require("./middleware/proxyVerification.js");
 
