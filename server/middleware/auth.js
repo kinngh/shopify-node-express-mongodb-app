@@ -38,7 +38,7 @@ const applyAuthMiddleware = (app) => {
     Object.entries(webhookRegistrar).map(([topic, response]) => {
       if (!response.success && !gdprTopics.includes(topic)) {
         console.error(
-          `--> Failed to register ${topic}.`,
+          `--> Failed to register ${topic} for ${shop}.`,
           response.result.errors[0].message
         );
       } else if (!gdprTopics.includes(topic)) {

@@ -5,6 +5,7 @@ const { Shopify } = require("@shopify/shopify-api");
 const { resolve } = require("path");
 
 require("dotenv").config();
+require("../utils/setupCheck.js")(); //Run a check to see if everything is setup properly.
 
 const sessionStorage = require("../utils/sessionStorage.js");
 const csp = require("./middleware/csp.js");
