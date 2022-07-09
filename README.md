@@ -1,6 +1,6 @@
 # Shopify Node.js x Express.js x React.js Boilerplate
 
-An embedded app starter template to get up and ready with Shopify app development with JavaScript. This is heavily influenced by the choices Shopify Engineering team made in building their [starter template](https://github.com/shopify/shopify-app-node) to ensure smooth transition between templates.
+An embedded app starter template to get up and ready with Shopify app development with JavaScript. This is heavily influenced by the choices Shopify Engineering team made in building their [starter template](https://github.com/Shopify/shopify-app-template-node) to ensure smooth transition between templates.
 
 I've also included [notes](/NOTES.md) on this repo which goes over the repo on why certain choices were made.
 

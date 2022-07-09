@@ -91,6 +91,7 @@ const applyAuthMiddleware = (app) => {
       // Redirect to app with shop parameter upon auth
       res.redirect(`/?shop=${shop}&host=${host}`);
     } catch (e) {
+      const { shop } = req.query;
       switch (true) {
         case e instanceof Shopify.Errors.InvalidOAuthError:
           res.status(400);
@@ -102,7 +103,7 @@ const applyAuthMiddleware = (app) => {
           // Delete sessions and restart installation
           await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
           await SessionModel.deleteMany({ shop });
-          res.redirect(`/auth?shop=${req.query.shop}`);
+          res.redirect(`/auth?shop=${shop}`);
           break;
         default:
           res.status(500);
