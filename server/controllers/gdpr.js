@@ -11,10 +11,11 @@ const customerDataRequest = async (topic, shop, webhookRequestBody) => {
       customer: { id, email },
       orders_requested,
     } = JSON.parse(webhookRequestBody);
-
     console.log(`Handle ${topic} for ${shop}`);
+    return { success: true };
   } catch (e) {
     console.error(e);
+    return { success: false };
   }
 };
 
@@ -31,10 +32,11 @@ const customerRedact = async (topic, shop, webhookRequestBody) => {
       customer: { id, email },
       orders_to_redact,
     } = JSON.parse(webhookRequestBody);
-
     console.log(`Handle ${topic} for ${shop}`);
+    return { success: true };
   } catch (e) {
     console.error(e);
+    return { success: false };
   }
 };
 
@@ -47,10 +49,11 @@ const customerRedact = async (topic, shop, webhookRequestBody) => {
 const shopRedact = async (topic, shop, webhookRequestBody) => {
   try {
     const { shop_domain } = JSON.parse(webhookRequestBody);
-
     console.log(`Handle ${topic} for ${shop}`);
+    return { success: true };
   } catch (e) {
     console.error(e);
+    return { success: false };
   }
 };
 

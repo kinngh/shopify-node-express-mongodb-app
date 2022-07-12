@@ -12,13 +12,14 @@ const csp = require("./middleware/csp.js");
 const verifyRequest = require("./middleware/verifyRequest.js");
 const isActiveShop = require("./middleware/isActiveShop.js");
 const applyAuthMiddleware = require("./middleware/auth.js");
+const hmacVerify = require("./middleware/hmacVerify.js");
 const userRoutes = require("./routes/index.js");
+const { appUninstallHandler } = require("./webhooks/");
 const {
-  appUninstallHandler,
   customerDataRequest,
   customerRedact,
   shopRedact,
-} = require("./webhooks/");
+} = require("./controllers/gdpr.js");
 const proxyRouter = require("./routes/app_proxy/index.js");
 const proxyVerification = require("./middleware/proxyVerification.js");
 
@@ -56,18 +57,6 @@ Shopify.Webhooks.Registry.addHandlers({
   APP_UNINSTALLED: {
     path: "/webhooks/app_uninstalled",
     webhookHandler: appUninstallHandler,
-  },
-  CUSTOMERS_DATA_REQUEST: {
-    path: "/webhooks/customers_data_request",
-    webhookHandler: customerDataRequest,
-  },
-  CUSTOMERS_REDACT: {
-    path: "/webhooks/customers_redact",
-    webhookHandler: customerRedact,
-  },
-  SHOP_REDACT: {
-    path: "/webhooks/shop_redact",
-    webhookHandler: shopRedact,
   },
 });
 
@@ -113,6 +102,39 @@ const createServer = async (root = process.cwd()) => {
   app.use(isActiveShop);
   app.use("/apps", verifyRequest(app), userRoutes); //Verify user route requests
   app.use("/proxy_route", proxyVerification, proxyRouter); //MARK:- App Proxy routes
+
+  //MARK:- THIS IS A PROVISIONAL COMMIT. AWAITING CONFIRMATION FROM INDEPENDANT DEVELOPERS IF IT'S WORKING AS INTENDED
+  app.post("/gdpr/:topic", hmacVerify, async (req, res) => {
+    const { body } = req;
+    const { topic } = req.params;
+    const shop = req.body.shop_domain;
+
+    let response;
+    switch (topic) {
+      case "customers_data_request":
+        response = await customerDataRequest(topic, shop, body);
+        break;
+      case "customers_redact":
+        response = await customerRedact(topic, shop, body);
+        break;
+      case "shop_redact":
+        response = await shopRedact(topic, shop, body);
+        break;
+      default:
+        console.error(
+          "--> Congratulations on breaking the GDPR route! Here's the topic that broke it: ",
+          topic
+        );
+        response = "broken";
+        break;
+    }
+
+    if (response.success) {
+      res.status(200).send();
+    } else {
+      res.status(400).send("An error occured");
+    }
+  });
 
   let vite;
   if (isDev) {
