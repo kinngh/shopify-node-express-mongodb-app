@@ -103,11 +103,12 @@ const createServer = async (root = process.cwd()) => {
   app.use("/apps", verifyRequest(app), userRoutes); //Verify user route requests
   app.use("/proxy_route", proxyVerification, proxyRouter); //MARK:- App Proxy routes
 
-  //MARK:- THIS IS A PROVISIONAL COMMIT. AWAITING CONFIRMATION FROM INDEPENDANT DEVELOPERS IF IT'S WORKING AS INTENDED
   app.post("/gdpr/:topic", hmacVerify, async (req, res) => {
     const { body } = req;
     const { topic } = req.params;
     const shop = req.body.shop_domain;
+
+    console.warn(`--> GDPR request for ${shop} / ${topic} recieved.`);
 
     let response;
     switch (topic) {
