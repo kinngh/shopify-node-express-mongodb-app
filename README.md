@@ -10,7 +10,7 @@ I've also included [notes](/NOTES.md) on this repo which goes over the repo on w
 
 ### WIP:
 
-- `Example production grade app`: ETA June End.
+- `Example production grade app`: ETA July End.
 
 ## Tech Stack
 
