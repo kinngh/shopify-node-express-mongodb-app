@@ -6,7 +6,6 @@ const proxyVerification = (req, res, next) => {
   const queryURI = req._parsedUrl.query
     .replace("/?", "")
     .replace(/&signature=[^&]*/, "")
-    .replace(/&logged_in_customer_id=[^&]*/, "")
     .split("&")
     .map((x) => decodeURIComponent(x))
     .sort()
