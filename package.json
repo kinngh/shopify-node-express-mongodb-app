@@ -27,32 +27,32 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
-    "@shopify/app-bridge": "^3.1.1",
-    "@shopify/app-bridge-react": "^3.1.1",
-    "@shopify/app-bridge-utils": "^3.1.1",
-    "@shopify/polaris": "^9.19.0",
-    "@shopify/shopify-api": "^4.0.0",
+    "@shopify/app-bridge": "^3.1.3",
+    "@shopify/app-bridge-react": "^3.1.3",
+    "@shopify/app-bridge-utils": "^3.1.3",
+    "@shopify/polaris": "^9.20.0",
+    "@shopify/shopify-api": "^4.1.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cryptr": "^6.0.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "graphql": "^16.5.0",
-    "mongoose": "^6.4.4",
+    "mongoose": "^6.4.5",
     "raviger": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@shopify/app": "^3.3.1",
+    "@shopify/app": "^3.3.2",
     "@shopify/cli": "^3.3.2",
-    "@shopify/cli-kit": "^3.3.1",
-    "@vitejs/plugin-react": "^1.3.2",
+    "@shopify/cli-kit": "^3.3.2",
+    "@vitejs/plugin-react": "^2.0.0",
     "ngrok": "^4.3.1",
     "nodemon": "^2.0.19",
-    "npm-check-updates": "^15.2.2",
+    "npm-check-updates": "^15.3.4",
     "prettier": "^2.7.1",
-    "vite": "^2.9.14"
+    "vite": "^3.0.2"
   }
 }
