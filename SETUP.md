@@ -38,7 +38,6 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - `s:e:create`: Create extension scaffolding using CLI 3.0. A new folder called `extensions` is created at root that uses the new folder structure.
   - `s:e:deploy`: Deploy extension(s) to Shopify.
 
-
 - [ ] Setup Partner Dashboard
 
   - Run `npm run ngrok` to generate your subdomain. Copy the `https://<your-url>` domain and add it in `SHOPIFY_APP_URL` in your `.env` file.

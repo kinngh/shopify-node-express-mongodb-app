@@ -9,28 +9,10 @@ const TEST_GRAPHQL_QUERY = `
 
 const verifyRequest = (app, { returnHeader = true } = {}) => {
   return async (req, res, next) => {
+    let { shop, host } = req.query;
     const session = await Shopify.Utils.loadCurrentSession(req, res, true);
 
-    let { shop, host } = req.query;
-
-    if (session && shop && session.shop !== shop) {
-      return res.redirect(`/auth?shop=${shop}&host=${host}`);
-    }
-
-    //session.isActive() doesn't work when using custom session storage.
-    const isSessionActive = (session) => {
-      if (!session) {
-        return false;
-      } else {
-        return (
-          Shopify.Context.SCOPES.equals(session.scope) &&
-          session.accessToken &&
-          (!session.expires || session.expires >= new Date())
-        );
-      }
-    };
-
-    if (isSessionActive(session)) {
+    if (session.isActive()) {
       try {
         const client = new Shopify.Clients.Graphql(
           session.shop,
