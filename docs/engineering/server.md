@@ -33,9 +33,7 @@ Here is where we check for active installation of the app in the shop.
 
 ### verifyRequest
 
-`verifyRequest` is for validating current sessions, that allows for checking if the shop is still active. A thing to note here is if you're using a custom storage strategy `session.isActive()` doesn't work and is replaced by a custom `isSessionActive` function. It also allows to cross check for updated scopes and the user is redirected to auth to ensure the updated scopes take effect.
-
-A thing to note here is since `verifyRequest` middleware is called every single time you create a query, it is quite redundant but a check needs to happen at every step to ensure the app isn't being fiddled around with.
+`verifyRequest` is for validating current sessions, that allows for checking if the shop is still active. Something to note here is since `verifyRequest` middleware is called every single time you create a query, it is quite redundant but a check needs to happen at every step to ensure the app isn't being fiddled around with.
 
 ## Webhooks
 
