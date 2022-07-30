@@ -93,7 +93,8 @@ const createServer = async (root = process.cwd()) => {
       const response = await Shopify.Utils.graphqlProxy(req, res);
       res.status(200).send(response.body);
     } catch (err) {
-      res.status(500).send(err.message);
+      console.error(err.response);
+      res.status(500).send(err.response);
     }
   });
 
