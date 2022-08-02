@@ -10,7 +10,7 @@ I've also included [notes](/NOTES.md) on this repo which goes over the repo on w
 
 ### WIP:
 
-- `Example production grade app`: ETA July End.
+- [Learning how to build Shopify apps](https://github.com/kinngh/learning-shopify-app): A repo with webhooks, scopes, basic controllers and more setup so newcomers on the Shopify platform can learn what's called and what's required when planning out their build.
 
 ## Tech Stack
 
