@@ -15,6 +15,7 @@ const setupCheck = () => {
     MONGO_URL: dbCon,
     ENCRYPTION_STRING: encString,
     PORT: port,
+    NPM_CONFIG_FORCE: forceInstall,
   } = process.env;
   let errorCount = 0;
 
@@ -54,11 +55,21 @@ const setupCheck = () => {
       "--> Port is undefined. Using 8081. If you're hosting on Northflank / Heroku, you can safely ignore this error."
     );
   }
+  if (!forceInstall) {
+    console.error(
+      `--> Set NPM_CONFIG_FORCE to true so server uses "npm i --froce" and install dependencies successfully`
+    );
+    errorCount++;
+  }
 
-  if (errorCount > 5) {
+  if (errorCount > 4) {
     console.error(
       "\n\n\n\n--> .env file is either not reachable or not setup properly. Please refer to .env.example file for the setup.\n\n\n\n"
     );
+  }
+
+  if (errorCount == 0) {
+    console.log("--> Setup checks passed successfully.");
   }
 };
 
