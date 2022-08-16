@@ -26,7 +26,7 @@ const ServerSideRecurringSubscriptions = () => {
 
   return (
     <Page
-      title="Get data from Express route"
+      title="Subscribe Merchant"
       breadcrumbs={[{ content: "Home", onAction: () => navigate("/") }]}
     >
       <Layout>
