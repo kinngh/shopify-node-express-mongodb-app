@@ -12,6 +12,14 @@ const verifyRequest = (app, { returnHeader = true } = {}) => {
     let { shop, host } = req.query;
     const session = await Shopify.Utils.loadCurrentSession(req, res, true);
 
+    if (!session) {
+      return res
+        .status(400)
+        .send(
+          `Could not find a shop to authenticate with. Make sure you are making your XHR request with App Bridge's authenticatedFetch method.`
+        );
+    }
+
     if (session.isActive()) {
       try {
         const client = new Shopify.Clients.Graphql(
