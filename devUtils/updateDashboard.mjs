@@ -74,19 +74,22 @@ const getApp = async (apiKey, accessToken) => {
 const updateDashboardURLs = async (apiKey, appUrl) => {
   const accessToken = await session.ensureAuthenticatedPartners();
 
-  const variables = {
-    apiKey,
-    appUrl,
-    redir: [`${appUrl}/auth/tokens`, `${appUrl}/auth/callback`],
+  const urls = {
+    applicationUrl: appUrl,
+    redirectUrlWhitelist: [`${appUrl}/auth/tokens`, `${appUrl}/auth/callback`],
   };
 
   const query = cliAPI.graphql.UpdateURLsQuery;
-  const response = await cliAPI.partners.request(query, accessToken, variables);
-  if (response.appUpdate.userErrors.length > 0) {
-    const errors = response.appUpdate.userErrors
+  const result = await cliAPI.partners.request(query, accessToken, {
+    apiKey,
+    ...urls,
+  });
+  if (result.appUpdate.userErrors.length > 0) {
+    const errors = result.appUpdate.userErrors
       .map((error) => error.message)
       .join(", ");
-    throw new cliError.Abort(errors);
+
+    throw new errors.Abort(errors);
   }
 };
 
