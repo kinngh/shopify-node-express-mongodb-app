@@ -2,8 +2,8 @@ const topLevelAuthRedirect = ({ apiKey, hostName, shop }) => {
   return `<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://unpkg.com/@shopify/app-bridge@3.1.0"></script>
-    <script src="https://unpkg.com/@shopify/app-bridge-utils@3.1.0"></script>
+    <script src="https://unpkg.com/@shopify/app-bridge@3.2.5"></script>
+    <script src="https://unpkg.com/@shopify/app-bridge-utils@3.2.5"></script>
 
     <script>
       document.addEventListener('DOMContentLoaded', function () {

@@ -45,9 +45,9 @@
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@shopify/app": "^3.10.1",
-    "@shopify/cli": "^3.10.1",
-    "@shopify/cli-kit": "^3.10.1",
+    "@shopify/app": "^3.11.0",
+    "@shopify/cli": "^3.11.0",
+    "@shopify/cli-kit": "^3.11.0",
     "@vitejs/plugin-react": "^2.1.0",
     "ngrok": "^4.3.3",
     "nodemon": "^2.0.19",

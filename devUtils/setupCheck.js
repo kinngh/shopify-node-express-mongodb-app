@@ -1,10 +1,3 @@
-/*
-  The setup check is put in place for 3 reasons:
-  - Experienced developers sometimes completely forgetting to set things up.
-  - Ensure when deploying on server everything is working as expected.
-  - Easier debugging for unexperienced developers / just starting out.
-*/
-
 const setupCheck = () => {
   const {
     SHOPIFY_API_KEY: apiKey,
@@ -12,11 +5,12 @@ const setupCheck = () => {
     SHOPIFY_API_SCOPES: apiScopes,
     SHOPIFY_APP_URL: appUrl,
     SHOPIFY_API_VERSION: apiVersion,
-    MONGO_URL: dbCon,
     ENCRYPTION_STRING: encString,
     PORT: port,
     NPM_CONFIG_FORCE: forceInstall,
+    MONGO_URL: databaseURL,
   } = process.env;
+
   let errorCount = 0;
 
   if (typeof apiKey === "undefined") {
@@ -45,19 +39,18 @@ const setupCheck = () => {
     console.error("--> Encryption String is undefined.");
     errorCount++;
   }
-  if (typeof dbCon === "undefined") {
-    console.warn(
-      "--> Mongo Connection URL is undefined. Using 'mongodb://127.0.0.1:27017/shopify-express-app' instead."
-    );
-  }
   if (typeof port === "undefined") {
-    console.warn(
-      "--> Port is undefined. Using 8081. If you're hosting on Northflank / Heroku, you can safely ignore this error."
-    );
+    console.warn("--> Port is undefined. Using 8081");
+    errorCount++;
+  }
+
+  if (typeof databaseURL === "undefined") {
+    console.error("--> Database string is undefined.");
+    errorCount++;
   }
   if (!forceInstall) {
     console.error(
-      `--> Set NPM_CONFIG_FORCE to true so server uses "npm i --froce" and install dependencies successfully`
+      `--> Set NPM_CONFIG_FORCE to true so server uses "npm i --force" and install dependencies successfully`
     );
     errorCount++;
   }

@@ -1,9 +1,6 @@
 /*
 
-  DEV ONLY
-  `npm run update:url`
-
-  It got really annoying having to update App URL and Redirect URLs manually everytime. Using the Partner API to update the URLs from here instead. 
+  DEV ONLY --> `npm run update:url`
 
   LIMITATION:
   - [OEM] Cannot update GDPR URLs.
@@ -33,7 +30,7 @@ const getOrgs = async (accessToken) => {
   );
   const orgs = response.organizations.nodes;
   if (orgs.length === 0) {
-    return new error.Abort(
+    return new cliError.Abort(
       `There was a problem connecting to the org. Please check that the org exists and/or you have access. You can logout using\n npm run shopify auth logout`
     );
   }
