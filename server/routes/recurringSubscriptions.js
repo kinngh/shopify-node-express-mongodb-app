@@ -44,7 +44,7 @@ subscriptionRoute.get("/api/recurringSubscription", async (req, res) => {
 `,
   });
 
-  if (response.body.data.appSubscriptionCreate.userErrors) {
+  if (response.body.data.appSubscriptionCreate.userErrors.length > 0) {
     console.log(
       `--> Error subscribing ${session.shop} to plan:`,
       response.body.data.appSubscriptionCreate.userErrors
