@@ -2,6 +2,8 @@
 
 This is an in-depth guide on using this repo. This goes over getting the base repo up and running, to understand how to add your own customizations server side like registering webhooks, routes, etc, refer to [Notes](./NOTES.md).
 
+For deploying to servers, refer to [Deployment](./docs/Deployment.md).
+
 - [ ] Run `npm i --force` to install dependencies.
 
   - Substantial efforts have gone into ensuring we're using the latest package versions, and some incompatibility issues always pop up while installing. There are no negative effects on the functionality just yet, but if you find anything please open an issue.
