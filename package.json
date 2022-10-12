@@ -22,7 +22,7 @@
     "ngrok": "ngrok http 8081",
     "update:url": "node devUtils/updateDashboard.mjs",
     "shopify": "shopify",
-    "s:e:create": "shopify app scaffold extension",
+    "s:e:create": "shopify app generate extension",
     "s:e:deploy": "shopify app deploy"
   },
   "dependencies": {
