@@ -1,20 +1,7 @@
-# To Do
+# Dev To Do
 
-- [ ] (M) Setup hosting docs.
-
-  - [ ] Northflank
-  - [ ] Heroku
-  - [ ] AWS
-  - [ ] Google Cloud Platform
-  - [ ] Microsoft Azure
-
-- [ ] (C) Deal with `Failed to execute 'postMessage' on 'DOMWindow'` issue.
-- [ ] (S)(C) Make the repo compatible with Windows systems out-of-the-box.
-
----
-
-### Legend
-
-- (S): Server
-- (C): Client
-- (M): Misc
+- [ ] Switch from Common JS to Module.
+- [ ] Update the auth flow.
+- [ ] Rewrite middlewares with new naming convention.
+- [ ] Update Vite to support HMR.
+- [ ] Update documentation, deployment notes.

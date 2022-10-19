@@ -1,3 +1,9 @@
+# DEV Branch - Not for production
+
+Refer [ToDo](./TODO.md) for notes on what's being updated.
+
+Estimated Update: 31 October, 2022.
+
 # Shopify Node.js x Express.js x React.js Boilerplate
 
 An embedded app starter template to get up and ready with Shopify app development with JavaScript. This is heavily influenced by the choices Shopify Engineering team made in building their [starter template](https://github.com/Shopify/shopify-app-template-node) to ensure smooth transition between templates.
@@ -7,10 +13,6 @@ I've also included [notes](/NOTES.md) on this repo which goes over the repo on w
 ### Supporting Repositories:
 
 - [Polaris Playground](https://github.com/kinngh/shopify-polaris-playground): A Shopify Polaris playground to build your interfaces and directly drop them in this repo, with the exception of `App.jsx`.
-
-### WIP:
-
-- [Learning how to build Shopify apps](https://github.com/kinngh/learning-shopify-app): A repo with webhooks, scopes, basic controllers and more setup so newcomers on the Shopify platform can learn what's called and what's required when planning out their build.
 
 ## Tech Stack
 
