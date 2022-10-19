@@ -14,16 +14,16 @@
   "scripts": {
     "update": "ncu -u",
     "update:check": "ncu",
-    "dev": "NODE_ENV=dev nodemon server/index.js --ignore ./src",
-    "preserve": "npm run build",
-    "build": "vite build --outDir dist/client",
-    "start": "NODE_ENV=prod node server/index.js",
+    "dev": "",
+    "preserve": "",
+    "build": "",
+    "start": "",
     "pretty": "prettier --write .",
     "ngrok:auth": "ngrok authtoken <your-auth-token>",
     "ngrok": "ngrok http 8081",
     "update:url": "node devUtils/updateDashboard.mjs",
     "shopify": "shopify",
-    "s:e:create": "shopify app scaffold extension",
+    "s:e:create": "shopify app generate extension",
     "s:e:deploy": "shopify app deploy"
   },
   "dependencies": {
