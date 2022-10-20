@@ -27,23 +27,18 @@
     "s:e:deploy": "shopify app deploy"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.0",
-    "@shopify/app-bridge": "^3.4.2",
-    "@shopify/app-bridge-react": "^3.4.2",
-    "@shopify/app-bridge-utils": "^3.4.2",
+    "@shopify/app-bridge": "^3.4.3",
+    "@shopify/app-bridge-react": "^3.4.3",
+    "@shopify/app-bridge-utils": "^3.4.3",
     "@shopify/polaris": "^10.8.0",
     "@shopify/shopify-api": "^5.2.0",
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.6",
     "cryptr": "^6.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "graphql": "^16.6.0",
     "mongoose": "^6.6.5",
     "raviger": "^4.1.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "serve-static": "^1.15.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@shopify/app": "^3.18.0",
