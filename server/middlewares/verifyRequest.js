@@ -1,4 +1,4 @@
-import Shopify from "@shopify/shopify-api";
+import { Shopify } from "@shopify/shopify-api";
 
 const TEST_GRAPHQL_QUERY = `
 {

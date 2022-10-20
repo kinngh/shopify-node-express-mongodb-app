@@ -5,30 +5,34 @@ import { defineConfig } from "vite";
 dotenv.config();
 
 const PORT = process.env.PORT || 8081;
+const HOST = process.env.SHOPIFY_APP_URL.replace(/https:\/\//, "");
+const proxyConfig = {
+  target: `https://${HOST}`,
+  changeOrigin: false,
+  ws: false,
+};
 
 export default defineConfig({
   plugins: [react()],
   define: {
     "process.env.SHOPIFY_API_KEY": JSON.stringify(process.env.SHOPIFY_API_KEY),
-    appOrigin: JSON.stringify(process.env.SHOPIFY_APP_URL).replace(
-      /https:\/\//,
-      ""
-    ),
+    appOrigin: JSON.stringify(HOST),
   },
   server: {
+    host: "localhost",
+    port: PORT,
+    hmr: {
+      protocol: "wss",
+      host: HOST,
+      port: process.env.PORT,
+      clientPort: 443,
+    },
     proxy: {
-      "/apps": {
-        target: `http://localhost:${PORT}`,
-        changeOrigin: true,
-      },
-      "/api": {
-        target: `http://localhost:${PORT}`,
-        changeOrigin: true,
-      },
-      "/proxy_route": {
-        target: `http://localhost:${PORT}`,
-        changeOrigin: true,
-      },
+      "/apps": proxyConfig,
+      "/api": proxyConfig,
+      "/proxy_route": proxyConfig,
+      //"^/(\\?.*)?$": proxyConfig,
+      //"^/apps(/|(\\?.*)?$)": proxyConfig,
     },
   },
   build: {

@@ -1,4 +1,4 @@
-import Shopify from "@shopify/shopify-api";
+import { Shopify } from "@shopify/shopify-api";
 import crypto from "crypto";
 
 const verifyHmac = (req, res, next) => {

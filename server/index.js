@@ -1,7 +1,8 @@
-import Shopify from "@shopify/shopify-api";
+import { Shopify } from "@shopify/shopify-api";
 import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
+import path from "path";
 
 import setupCheck from "../devUtils/setupCheck.js";
 import sessionStorage from "../utils/sessionStorage.js";
@@ -18,6 +19,7 @@ import verifyHmac from "./middlewares/verifyHmac.js";
 import verifyProxy from "./middlewares/verifyProxy.js";
 import verifyRequest from "./middlewares/verifyRequest.js";
 import userRoutes from "./routes/_index.js";
+import webhookRegistrar from "./webhooks/_index.js";
 
 setupCheck();
 
@@ -50,22 +52,10 @@ Shopify.Context.initialize({
   SESSION_STORAGE: sessionStorage,
 });
 
-// MARK:- Only call the reigstrar here and shift webhook registry to webhooks/_index.js for easier understanding
-//Register your webhooks here.
-
-// webhookRegistrar();
-
-Shopify.Webhooks.Registry.addHandlers({
-  APP_UNINSTALLED: {
-    path: "/webhooks/app_uninstalled",
-    webhookHandler: appUninstallHandler,
-  },
-});
-
-//END
+// Webhook registrar adds all handlers
+webhookRegistrar();
 
 const app = express();
-
 authMiddleware(app);
 
 // Handle all webhooks in one route
@@ -138,15 +128,21 @@ app.post("/gdpr/:topic", verifyHmac, async (req, res) => {
   }
 });
 
-//MARK:- Experimental Vite build referenced from `https://github.com/kinngh/vite-express-react-app`.
-// If this works, we have HMR on Safari and Firefox. If not, fallback to old implementation and figure something out from there
 app.use(express.static("dist/"));
-app.get("/*", (req, res) => {
-  res.sendFile("../dist/index.html");
+app.get("*/", (req, res, next) => {
+  //MARK:- The official template checks for app installation and redirect accordingly.
+  // Build a better way to do that.
+
+  const isDev = process.env.NODE_ENV === "dev";
+  let clientPath;
+  if (isDev) {
+    path.join(process.cwd(), "index.html");
+  } else {
+    path.join(process.cwd(), "dist", "index.html");
+  }
+  res.status(200).set("Content-Type", "text/html").sendFile(clientPath);
 });
 
 app.listen(PORT, () => {
   console.log(`--> Server is running on localhost:${PORT}`);
 });
-
-//END
