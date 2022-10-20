@@ -9,7 +9,7 @@ import "@shopify/polaris/build/esm/styles.css";
 import translations from "@shopify/polaris/locales/en.json";
 
 import { useRoutes } from "raviger";
-import routes from "./GlobalRoutes";
+import routes from "./Routes";
 
 // MARK:- Handle app bridge config persistence better
 const appBridgeConfig = {
@@ -22,19 +22,20 @@ export default function App() {
   const RouteComponents = useRoutes(routes);
 
   return (
-    <PolarisProvider i18n={translations}>
-      <AppBridgeProvider config={appBridgeConfig}>
-        <NavigationMenu
-          navigationLinks={[
-            {
-              label: "Home",
-              destination: "/",
-            },
-          ]}
-        />
-        {RouteComponents}
-      </AppBridgeProvider>
-    </PolarisProvider>
+    <>{RouteComponents}</>
+    // <PolarisProvider i18n={translations}>
+    //   <AppBridgeProvider config={appBridgeConfig}>
+    //     <NavigationMenu
+    //       navigationLinks={[
+    //         {
+    //           label: "Home",
+    //           destination: "/",
+    //         },
+    //       ]}
+    //     />
+    // {RouteComponents}
+    //   </AppBridgeProvider>
+    // </PolarisProvider>
   );
 }
 
