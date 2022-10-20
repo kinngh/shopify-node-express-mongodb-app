@@ -1,5 +1,5 @@
 import Shopify from "@shopify/shopify-api";
-import { gdprTopics } from "@shopify/shopify-api/dist/webhooks/registry";
+import { gdprTopics } from "@shopify/shopify-api/dist/webhooks/registry.js";
 import StoreModel from "../../utils/models/StoreModel.js";
 
 const authMiddleware = (app) => {

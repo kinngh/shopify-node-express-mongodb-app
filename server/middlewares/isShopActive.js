@@ -22,4 +22,4 @@ const isShopActive = async (req, res, next) => {
   }
 };
 
-module.exports = isShopActive;
+export default isShopActive;

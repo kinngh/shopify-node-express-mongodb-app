@@ -1,5 +1,5 @@
-import customerDataRequest from "./customerDataRequest";
-import customerRedact from "./customerRedact";
-import shopRedact from "./shopRedact";
+import customerDataRequest from "./customerDataRequest.js";
+import customerRedact from "./customerRedact.js";
+import shopRedact from "./shopRedact.js";
 
-exports = { customerDataRequest, customerRedact, shopRedact };
+export { customerDataRequest, customerRedact, shopRedact };
