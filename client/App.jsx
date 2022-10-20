@@ -43,7 +43,7 @@ export default function App() {
 //   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 // }
 
-//Convert this into a hook 
+//Convert this into a hook
 export function userLoggedInFetch(app) {
   const fetchFunction = authenticatedFetch(app);
 
