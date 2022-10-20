@@ -3,6 +3,7 @@
 - [ ] Update the auth flow.
 - [ ] Update documentation, deployment notes.
 - [ ] Finish all `//MARK:-` checks.
+- [ ] Update README.
 
 - [x] Update Vite to support HMR.
 - [x] Switch from Common JS to Module.

@@ -114,7 +114,7 @@ app.post("/gdpr/:topic", verifyHmac, async (req, res) => {
       break;
     default:
       console.error(
-        "--> Congratulations on breaking the GDPR route! Here's the topic that broke it: ",
+        "---> Congratulations on breaking the GDPR route! Here's the topic that broke it: ",
         topic
       );
       response = "broken";
