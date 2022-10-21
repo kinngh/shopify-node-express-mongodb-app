@@ -22,20 +22,19 @@ export default function App() {
   const RouteComponents = useRoutes(routes);
 
   return (
-    <>{RouteComponents}</>
-    // <PolarisProvider i18n={translations}>
-    //   <AppBridgeProvider config={appBridgeConfig}>
-    //     <NavigationMenu
-    //       navigationLinks={[
-    //         {
-    //           label: "Home",
-    //           destination: "/",
-    //         },
-    //       ]}
-    //     />
-    // {RouteComponents}
-    //   </AppBridgeProvider>
-    // </PolarisProvider>
+    <PolarisProvider i18n={translations}>
+      <AppBridgeProvider config={appBridgeConfig}>
+        <NavigationMenu
+          navigationLinks={[
+            {
+              label: "Home",
+              destination: "/",
+            },
+          ]}
+        />
+        {RouteComponents}
+      </AppBridgeProvider>
+    </PolarisProvider>
   );
 }
 

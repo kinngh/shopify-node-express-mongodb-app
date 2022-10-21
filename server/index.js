@@ -129,16 +129,22 @@ app.post("/gdpr/:topic", verifyHmac, async (req, res) => {
 });
 
 app.use(express.static("dist/"));
-app.get("*/", (req, res, next) => {
+app.use("/*", (req, res, next) => {
   //MARK:- The official template checks for app installation and redirect accordingly.
   // Build a better way to do that.
+
+  const session = Shopify.Utils.loadCurrentSession(req, res, true);
+
+  if (!session) {
+    return authRedirect(req, res);
+  }
 
   const isDev = process.env.NODE_ENV === "dev";
   let clientPath;
   if (isDev) {
-    path.join(process.cwd(), "index.html");
+    clientPath = path.join(process.cwd(), "index.html");
   } else {
-    path.join(process.cwd(), "dist", "index.html");
+    clientPath = path.join(process.cwd(), "dist", "index.html");
   }
   res.status(200).set("Content-Type", "text/html").sendFile(clientPath);
 });

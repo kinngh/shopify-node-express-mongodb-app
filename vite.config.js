@@ -1,3 +1,4 @@
+//MARK:- Config is broken. Doesn't allow for middlewares to work.
 import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import { defineConfig } from "vite";

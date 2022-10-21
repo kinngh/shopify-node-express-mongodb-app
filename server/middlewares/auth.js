@@ -1,5 +1,6 @@
 import { Shopify } from "@shopify/shopify-api";
 import { gdprTopics } from "@shopify/shopify-api/dist/webhooks/registry.js";
+import authRedirect from "../../utils/authRedirect.js";
 import StoreModel from "../../utils/models/StoreModel.js";
 
 const authMiddleware = (app) => {
@@ -9,31 +10,7 @@ const authMiddleware = (app) => {
     }
 
     try {
-      if (req.query.embedded === "1") {
-        const shop = Shopify.Utils.sanitizeShop(req.query.shop);
-
-        const redirectUriParams = new URLSearchParams({
-          shop,
-          host: req.query.host,
-        }).toString();
-
-        const queryParams = new URLSearchParams({
-          ...req.query,
-          shop,
-          redirectUri: `https://${Shopify.Context.HOST_NAME}/auth?${redirectUriParams}`,
-        }).toString();
-
-        return res.redirect(`/exitiframe?${queryParams}`);
-      }
-
-      const redirectUrl = await Shopify.Auth.beginAuth(
-        req,
-        res,
-        req.query.shop,
-        "/auth/tokens",
-        false //offline tokens
-      );
-      return res.redirect(redirectUrl);
+      return await authRedirect(req, res);
     } catch (e) {
       //TODO: Better error handling
       console.log(e);
