@@ -1,28 +1,14 @@
-const { Shopify } = require("@shopify/shopify-api");
-const { gdprTopics } = require("@shopify/shopify-api/dist/webhooks/registry");
+import { Shopify } from "@shopify/shopify-api";
+import { gdprTopics } from "@shopify/shopify-api/dist/webhooks/registry.js";
 
-const SessionModel = require("../../utils/models/SessionModel");
-const StoreModel = require("../../utils/models/StoreModel");
-const topLevelAuthRedirect = require("../../utils/topLevelAuthRedirect");
+import authRedirect from "../../utils/authRedirect.js";
+import SessionModel from "../../utils/models/SessionModel.js";
+import StoreModel from "../../utils/models/StoreModel.js";
 
-const applyAuthMiddleware = (app) => {
+const authMiddleware = (app) => {
   app.get("/auth", async (req, res) => {
     try {
-      if (!req.signedCookies[app.get("top-level-oauth-cookie")]) {
-        return res.redirect(`/auth/toplevel?shop=${req.query.shop}`);
-      }
-      if (!req.query.shop) {
-        return res.send("No shop defined");
-      }
-
-      const redirectUrl = await Shopify.Auth.beginAuth(
-        req,
-        res,
-        req.query.shop,
-        "/auth/tokens",
-        false //offline token
-      );
-      return res.redirect(redirectUrl);
+      await authRedirect(req, res);
     } catch (e) {
       const { shop } = req.query;
       switch (true) {
@@ -103,24 +89,6 @@ const applyAuthMiddleware = (app) => {
     }
   });
 
-  app.get("/auth/toplevel", (req, res) => {
-    res.cookie(app.get("top-level-oauth-cookie"), "1", {
-      signed: true,
-      httpOnly: true,
-      sameSite: "strict",
-    });
-
-    res.set("Content-Type", "text/html");
-
-    res.send(
-      topLevelAuthRedirect({
-        apiKey: Shopify.Context.API_KEY,
-        hostName: Shopify.Context.HOST_NAME,
-        shop: req.query.shop,
-      })
-    );
-  });
-
   app.get("/auth/callback", async (req, res) => {
     try {
       const session = await Shopify.Auth.validateAuthCallback(
@@ -160,4 +128,4 @@ const applyAuthMiddleware = (app) => {
   });
 };
 
-module.exports = applyAuthMiddleware;
+export default authMiddleware;

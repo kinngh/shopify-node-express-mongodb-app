@@ -1,6 +1,14 @@
 //Combine all your webhooks here
-const appUninstallHandler = require("./app_uninstalled.js");
+import { Shopify } from "@shopify/shopify-api";
+import appUninstallHandler from "./app_uninstalled.js";
 
-module.exports = {
-  appUninstallHandler,
+const webhookRegistrar = async () => {
+  Shopify.Webhooks.Registry.addHandlers({
+    APP_UNINSTALLED: {
+      path: "/webhooks/app_uninstalled",
+      webhookHandler: appUninstallHandler,
+    },
+  });
 };
+
+export default webhookRegistrar;

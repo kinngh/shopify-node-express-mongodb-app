@@ -51,7 +51,7 @@ I see a lot of devs getting confused with setting up Billing API and recurring s
 
 ### Server
 
-The setup is available at `server/routes/recurringSubscriptions.js` and `src/pages/ServerSideRecurringSubscriptions.jsx`.
+The setup is available at `server/routes/recurringSubscriptions.js` and `client/pages/ServerSideRecurringSubscriptions.jsx`.
 
 - First we create a route. I prefer making GET requests here so I can build a separate route for each tier, making it easier to manage and avoid unnecessary fiddling with code from poky merchants / developers (like me).
 - Create a GraphQL client by loading current session.

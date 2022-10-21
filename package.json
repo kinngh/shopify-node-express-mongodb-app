@@ -2,6 +2,7 @@
   "name": "shopify-express-boilerplate",
   "version": "0.0.3",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
+  "type": "module",
   "author": {
     "name": "Harshdeep Singh Hura",
     "url": "https://harshdeephura.com"
@@ -13,24 +14,24 @@
   "scripts": {
     "update": "ncu -u",
     "update:check": "ncu",
-    "dev": "NODE_ENV=dev nodemon server/index.js --ignore ./src",
+    "dev": "NODE_ENV=dev nodemon server/index.js --ignore ./client",
     "preserve": "npm run build",
-    "build": "vite build --outDir dist/client",
+    "build": "vite build",
     "start": "NODE_ENV=prod node server/index.js",
     "pretty": "prettier --write .",
     "ngrok:auth": "ngrok authtoken <your-auth-token>",
     "ngrok": "ngrok http 8081",
-    "update:url": "node devUtils/updateDashboard.mjs",
+    "update:url": "node devUtils/updateDashboard.js",
     "shopify": "shopify",
-    "s:e:create": "shopify app scaffold extension",
+    "s:e:create": "shopify app generate extension",
     "s:e:deploy": "shopify app deploy"
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
-    "@shopify/app-bridge": "^3.3.2",
-    "@shopify/app-bridge-react": "^3.3.2",
-    "@shopify/app-bridge-utils": "^3.3.2",
-    "@shopify/polaris": "^10.7.0",
+    "@shopify/app-bridge": "^3.4.3",
+    "@shopify/app-bridge-react": "^3.4.3",
+    "@shopify/app-bridge-utils": "^3.4.3",
+    "@shopify/polaris": "^10.8.0",
     "@shopify/shopify-api": "^5.2.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -38,21 +39,21 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "graphql": "^16.6.0",
-    "mongoose": "^6.6.5",
+    "mongoose": "^6.6.6",
     "raviger": "^4.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@shopify/app": "^3.16.3",
-    "@shopify/cli": "^3.16.3",
-    "@shopify/cli-kit": "^3.16.3",
+    "@shopify/app": "^3.19.0",
+    "@shopify/cli": "^3.19.0",
+    "@shopify/cli-kit": "^3.19.0",
     "@vitejs/plugin-react": "^2.1.0",
     "ngrok": "^4.3.3",
     "nodemon": "^2.0.20",
-    "npm-check-updates": "^16.3.11",
+    "npm-check-updates": "^16.3.14",
     "prettier": "^2.7.1",
-    "vite": "^3.1.7"
+    "vite": "^3.1.8"
   }
 }

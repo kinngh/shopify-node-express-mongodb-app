@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const StoreSchema = new mongoose.Schema({
   shop: { type: String, required: true, unique: true },
@@ -7,4 +7,4 @@ const StoreSchema = new mongoose.Schema({
 
 const StoreModel = mongoose.model("Active_Stores", StoreSchema);
 
-module.exports = StoreModel;
+export default StoreModel;

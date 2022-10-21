@@ -1,7 +1,7 @@
-const crypto = require("crypto");
-const { default: Shopify } = require("@shopify/shopify-api");
+import crypto from "crypto";
+import { Shopify } from "@shopify/shopify-api";
 
-const hmacVerify = (req, res, next) => {
+const verifyHmac = (req, res, next) => {
   try {
     const generateHash = crypto
       .createHmac("SHA256", process.env.SHOPIFY_API_SECRET)
@@ -20,4 +20,4 @@ const hmacVerify = (req, res, next) => {
   }
 };
 
-module.exports = hmacVerify;
+export default verifyHmac;

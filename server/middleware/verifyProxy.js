@@ -1,6 +1,6 @@
-const crypto = require("crypto");
+import crypto from "crypto";
 
-const proxyVerification = (req, res, next) => {
+const verifyProxy = (req, res, next) => {
   const { signature } = req.query;
 
   const queryURI = req._parsedUrl.query
@@ -23,4 +23,4 @@ const proxyVerification = (req, res, next) => {
   }
 };
 
-module.exports = proxyVerification;
+export default verifyProxy;

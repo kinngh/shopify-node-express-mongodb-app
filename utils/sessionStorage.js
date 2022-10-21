@@ -7,12 +7,10 @@
   
 */
 
-const SessionModel = require("./models/SessionModel.js");
-const { Shopify } = require("@shopify/shopify-api");
-const Cryptr = require("cryptr");
-const {
-  Session,
-} = require("@shopify/shopify-api/dist/auth/session/session.js");
+import { Shopify } from "@shopify/shopify-api";
+import { Session } from "@shopify/shopify-api/dist/auth/session/session.js";
+import Cryptr from "cryptr";
+import SessionModel from "./models/SessionModel.js";
 const cryption = new Cryptr(process.env.ENCRYPTION_STRING);
 
 const storeCallback = async (session) => {
@@ -39,6 +37,9 @@ const storeCallback = async (session) => {
 
 const loadCallback = async (id) => {
   const sessionResult = await SessionModel.findOne({ id });
+  if (sessionResult === null) {
+    return undefined;
+  }
   if (sessionResult.content.length > 0) {
     const sessionObj = JSON.parse(cryption.decrypt(sessionResult.content));
     return Session.cloneSession(sessionObj, sessionObj.id);
@@ -57,4 +58,4 @@ const sessionStorage = new Shopify.Session.CustomSessionStorage(
   deleteCallback
 );
 
-module.exports = sessionStorage;
+export default sessionStorage;

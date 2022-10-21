@@ -1,5 +1,7 @@
-const { default: Shopify } = require("@shopify/shopify-api");
-const subscriptionRoute = require("express").Router();
+import { Shopify } from "@shopify/shopify-api";
+import { Router } from "express";
+
+const subscriptionRoute = Router();
 
 // Note:
 // I would recommend creating a seaprate route for every plan you have, to avoid users meddling with React side of code.
@@ -60,4 +62,4 @@ subscriptionRoute.get("/api/recurringSubscription", async (req, res) => {
   });
 });
 
-module.exports = subscriptionRoute;
+export default subscriptionRoute;

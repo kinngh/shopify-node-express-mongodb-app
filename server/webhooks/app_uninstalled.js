@@ -1,9 +1,9 @@
-const SessionModel = require("../../utils/models/SessionModel");
-const StoreModel = require("../../utils/models/StoreModel");
+import SessionModel from "../../utils/models/SessionModel.js";
+import StoreModel from "../../utils/models/StoreModel.js";
 
 const appUninstallHandler = async (topic, shop, webhookRequestBody) => {
   await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
   await SessionModel.deleteMany({ shop });
 };
 
-module.exports = appUninstallHandler;
+export default appUninstallHandler;

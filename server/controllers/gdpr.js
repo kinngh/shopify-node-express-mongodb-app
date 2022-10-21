@@ -84,8 +84,4 @@ const shopRedact = async (topic, shop, webhookRequestBody) => {
   }
 };
 
-module.exports = {
-  customerDataRequest,
-  customerRedact,
-  shopRedact,
-};
+export { customerDataRequest, customerRedact, shopRedact };

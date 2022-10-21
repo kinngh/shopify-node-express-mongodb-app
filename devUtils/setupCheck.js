@@ -66,4 +66,4 @@ const setupCheck = () => {
   }
 };
 
-module.exports = setupCheck;
+export default setupCheck;

@@ -1,4 +1,4 @@
-const { default: Shopify } = require("@shopify/shopify-api");
+import { Shopify } from "@shopify/shopify-api";
 
 const csp = (req, res, next) => {
   const { shop } = req.query;
@@ -14,4 +14,4 @@ const csp = (req, res, next) => {
   next();
 };
 
-module.exports = csp;
+export default csp;

@@ -9,4 +9,7 @@ export default {
     ),
   },
   plugins: [react()],
+  build: {
+    outDir: "dist/client/",
+  },
 };

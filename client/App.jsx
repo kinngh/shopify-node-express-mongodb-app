@@ -15,7 +15,7 @@ import { AppProvider as PolarisProvider } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 
-import routes from "./GlobalRoutes";
+import routes from "./Routes";
 import { useRoutes } from "raviger";
 
 const appBridgeConfig = {

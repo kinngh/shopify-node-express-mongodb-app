@@ -1,6 +1,6 @@
-const StoreModel = require("../../utils/models/StoreModel.js");
+import StoreModel from "../../utils/models/StoreModel.js";
 
-const isActiveShop = async (req, res, next) => {
+const isShopActive = async (req, res, next) => {
   const { shop, host } = req.query;
 
   if (!shop) {
@@ -22,4 +22,4 @@ const isActiveShop = async (req, res, next) => {
   }
 };
 
-module.exports = isActiveShop;
+export default isShopActive;
