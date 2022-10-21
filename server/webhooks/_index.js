@@ -1,6 +1,6 @@
 import { Shopify } from "@shopify/shopify-api";
 
-import appUninstallHandler from "./app_uninstalled";
+import appUninstallHandler from "./app_uninstalled.js";
 
 const webhookRegistrar = async () => {
   Shopify.Webhooks.Registry.addHandlers({
