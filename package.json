@@ -14,7 +14,7 @@
   "scripts": {
     "update": "ncu -u",
     "update:check": "ncu",
-    "dev": "NODE_ENV=dev nodemon server/index.js --ignore client/ --ignore package.json --ignore vite.config.**",
+    "dev": "NODE_ENV=dev nodemon server/index.js --ignore client/ --ignore package.json --ignore vite.config.** --ignore *.mjs",
     "preserve": "npm run build",
     "build": "vite build",
     "start": "NODE_ENV=prod node server/index.js",
