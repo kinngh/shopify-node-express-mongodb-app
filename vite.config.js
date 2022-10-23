@@ -1,7 +1,8 @@
 import react from "@vitejs/plugin-react";
 import "dotenv/config";
+import { defineConfig } from "vite";
 
-export default {
+export default defineConfig({
   define: {
     "process.env.SHOPIFY_API_KEY": JSON.stringify(process.env.SHOPIFY_API_KEY),
     appOrigin: JSON.stringify(
@@ -12,4 +13,4 @@ export default {
   build: {
     outDir: "dist/client/",
   },
-};
+});
