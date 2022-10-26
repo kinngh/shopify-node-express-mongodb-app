@@ -1,13 +1,10 @@
 import { Shopify } from "@shopify/shopify-api";
-import cookieParser from "cookie-parser";
 import "dotenv/config";
 import Express from "express";
 import mongoose from "mongoose";
 import { resolve } from "path";
 
 import setupCheck from "../devUtils/setupCheck.js";
-import webhookRegistrar from "./webhooks/index.js";
-
 import sessionStorage from "../utils/sessionStorage.js";
 import {
   customerDataRequest,
@@ -16,12 +13,13 @@ import {
 } from "./controllers/gdpr.js";
 import applyAuthMiddleware from "./middleware/auth.js";
 import csp from "./middleware/csp.js";
-import verifyHmac from "./middleware/verifyHmac.js";
 import isShopActive from "./middleware/isShopActive.js";
+import verifyHmac from "./middleware/verifyHmac.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import verifyRequest from "./middleware/verifyRequest.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 import userRoutes from "./routes/index.js";
+import webhookRegistrar from "./webhooks/index.js";
 
 setupCheck(); // Run a check to ensure everything is setup properly
 
@@ -60,9 +58,6 @@ webhookRegistrar();
 
 const createServer = async (root = process.cwd()) => {
   const app = Express();
-
-  app.set("top-level-oauth-cookie", "shopify_top_level_oauth");
-  app.use(cookieParser(Shopify.Context.API_SECRET_KEY));
 
   applyAuthMiddleware(app);
 
