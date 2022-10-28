@@ -27,11 +27,11 @@
     "s:e:deploy": "shopify app deploy"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.0",
+    "@apollo/client": "^3.7.1",
     "@shopify/app-bridge": "^3.4.3",
     "@shopify/app-bridge-react": "^3.4.3",
     "@shopify/app-bridge-utils": "^3.4.3",
-    "@shopify/polaris": "^10.8.0",
+    "@shopify/polaris": "^10.10.1",
     "@shopify/shopify-api": "^5.2.0",
     "compression": "^1.7.4",
     "cryptr": "^6.0.3",
@@ -45,14 +45,19 @@
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@shopify/app": "^3.20.0",
-    "@shopify/cli": "^3.20.0",
-    "@shopify/cli-kit": "^3.20.0",
-    "@vitejs/plugin-react": "^2.1.0",
+    "@shopify/app": "^3.20.1",
+    "@shopify/cli": "^3.20.1",
+    "@shopify/cli-kit": "^3.20.1",
+    "@vitejs/plugin-react": "^2.2.0",
     "ngrok": "^4.3.3",
     "nodemon": "^2.0.20",
     "npm-check-updates": "^16.3.15",
     "prettier": "^2.7.1",
-    "vite": "^3.1.8"
+    "vite": "^3.2.1"
+  },
+  "overrides": {
+    "@shopify/cli-kit": {
+      "react": "18.2.0"
+    }
   }
 }
