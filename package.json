@@ -58,6 +58,12 @@
   "overrides": {
     "@shopify/cli-kit": {
       "react": "18.2.0"
+    },
+    "@shopify/cli": {
+      "react": "18.2.0"
+    },
+    "@shopify/app": {
+      "react": "18.2.0"
     }
   }
 }
