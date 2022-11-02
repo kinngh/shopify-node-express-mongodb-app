@@ -20,7 +20,7 @@ This is to embed the React app in `./index.html`
 
 We're using `raviger` for navigation to have a Next.js like experience. I highly recommend checking out `raviger` docs for a better understanding of the package.
 
-The `GlobalRoutes.jsx` is to define all our routes and telling what component to render. The export is sent over to `App.jsx`, creating an instance of the `useRoutes()` hook to render our routes.
+The `Routes.jsx` is to define all our routes and telling what component to render. The export is sent over to `App.jsx`, creating an instance of the `useRoutes()` hook to render our routes.
 
 ## Fetching Data
 
