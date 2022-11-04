@@ -32,8 +32,8 @@ const mongoUrl =
 
 mongoose.connect(mongoUrl, (err) => {
   if (err) {
-    console.log(
-      "--> An error occured while connecting to MongoDB",
+    console.error(
+      "---> An error occured while connecting to MongoDB",
       err.message
     );
   } else {

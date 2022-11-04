@@ -10,7 +10,6 @@
 
 ### Boilerplate
 
-- The boilerplate is based off off Shopify's tech stack and follows their baseline practices to ensure easy migration between templates. One major difference is we're not treating the server side as a module, so you cannot use `import` statements, instead you're using `require`.
 - The template uses MongoDB (`mongoose`) as it's database. MongoDB is starter friendly since a lot of tutorials on the internet are based on the MERN stack, it's easier for newbies to understand the structure of the project and working with basic APIs and understand how auth works.
 
 ### Middlewares
