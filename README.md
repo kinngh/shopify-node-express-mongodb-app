@@ -4,6 +4,11 @@ An embedded app starter template to get up and ready with Shopify app developmen
 
 I've also included [notes](/NOTES.md) on this repo which goes over the repo on why certain choices were made.
 
+I also did make a video going over the entire repo as of November 4, 2022. If there's any substantial changes, the video here will be updated to reflect it. 
+
+
+[![Creating a Shopify app from scratch](https://img.youtube.com/vi/iV_3ENCraaM/0.jpg)](https://www.youtube.com/watch?v=iV_3ENCraaM)
+
 ### Supporting Repositories:
 
 - [Polaris Playground](https://github.com/kinngh/shopify-polaris-playground): A Shopify Polaris playground to build your interfaces and directly drop them in this repo, with the exception of `App.jsx`.
