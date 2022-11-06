@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { navigate } from "raviger";
-import { Page, Card, Layout } from "@shopify/polaris";
 import { useAppBridge } from "@shopify/app-bridge-react";
-import { userLoggedInFetch } from "../App";
 import { Redirect } from "@shopify/app-bridge/actions";
+import { Card, Layout, Page } from "@shopify/polaris";
+import { navigate } from "raviger";
+import React, { useState } from "react";
+import useFetch from "../hooks/useFetch";
 
 const ServerSideRecurringSubscriptions = () => {
   const [responseData, setResponseData] = useState("");
   const app = useAppBridge();
-  const fetch = userLoggedInFetch(app);
+  const fetch = useFetch();
   const redirect = Redirect.create(app);
 
   async function fetchContent() {
     setResponseData("loading...");
-    const res = await fetch("/apps/api/recurringSubscription"); //fetch instance of userLoggedInFetch(app)
+    const res = await fetch("/api/recurringSubscription"); //fetch instance of useFetch()
     const data = await res.json();
     if (data.error) {
       setResponseData(data.error);

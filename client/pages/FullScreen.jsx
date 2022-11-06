@@ -1,12 +1,12 @@
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { Fullscreen } from "@shopify/app-bridge/actions";
 import {
-  Layout,
-  Page,
+  Button,
   Card,
   FullscreenBar,
-  DisplayText,
-  Button,
+  Layout,
+  Page,
+  Text,
 } from "@shopify/polaris";
 import { navigate } from "raviger";
 import React from "react";
@@ -32,7 +32,7 @@ const FullScreen = () => {
             paddingRight: "1rem",
           }}
         >
-          <DisplayText>Page Title</DisplayText>
+          <Text>Page Title</Text>
           <Button onClick={() => alert("Button is pressed")}>Button</Button>
         </div>
       </FullscreenBar>

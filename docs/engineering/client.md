@@ -14,7 +14,7 @@ This is to embed the React app in `./index.html`
 - `App()` renders the final app that we see.
   - `RouteComponents` is imported from `GlobalRoutes.jsx` to render the right page.
 - `MyProvider()` builds our Apollo client.
-- `userLoggedInFetch` is how we fetch content from our server. This is easy since it uses a similar structure `fetch` API that most JS developers are familiar with, and takes care of headers so no more unnecessary code.
+- `useFetch()` is how we fetch content from our server. This is easy since it uses a similar structure `fetch` API that most JS developers are familiar with, and takes care of headers so no more unnecessary code.
 
 ## Routing
 
@@ -24,4 +24,4 @@ The `GlobalRoutes.jsx` is to define all our routes and telling what component to
 
 ## Fetching Data
 
-Fetching data from the server is easier when using an instance of `userLoggedInFetch()`. An example for this is setup in `client/pages/GetData.jsx`, demonstrating GET and POST requests. A thing to note here is to POST JSON data to the server, you have to manually add headers in the request for it to function properly, as added in `fetchContentPost()`.
+Fetching data from the server is easier when using an instance of `useFetch()`. An example for this is setup in `client/pages/GetData.jsx`, demonstrating GET and POST requests. A thing to note here is to POST JSON data to the server, you have to manually add headers in the request for it to function properly, as added in `fetchContentPost()`.

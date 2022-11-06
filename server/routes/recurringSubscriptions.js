@@ -51,9 +51,7 @@ subscriptionRoute.get("/api/recurringSubscription", async (req, res) => {
       `--> Error subscribing ${session.shop} to plan:`,
       response.body.data.appSubscriptionCreate.userErrors
     );
-    res
-      .status(400)
-      .send({ error: "An error occured." });
+    res.status(400).send({ error: "An error occured." });
     return;
   }
 
