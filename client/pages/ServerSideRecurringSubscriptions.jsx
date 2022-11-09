@@ -13,7 +13,7 @@ const ServerSideRecurringSubscriptions = () => {
 
   async function fetchContent() {
     setResponseData("loading...");
-    const res = await fetch("/api/recurringSubscription"); //fetch instance of useFetch()
+    const res = await fetch("api/recurringSubscription"); //fetch instance of useFetch()
     const data = await res.json();
     if (data.error) {
       setResponseData(data.error);
