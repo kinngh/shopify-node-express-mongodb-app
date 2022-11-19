@@ -1,5 +1,5 @@
 # Bug being investigated
-vite.config.js*
+vite.config.js.*
 
 # Non-production folders
 # __templates/
