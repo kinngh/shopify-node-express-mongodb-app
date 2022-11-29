@@ -5,6 +5,7 @@
  */
 
 const customerDataRequest = async (topic, shop, webhookRequestBody) => {
+  // Payload
   // {
   //   "shop_id": 123456,
   //   "shop_domain": "store.myshopify.com",
@@ -39,6 +40,7 @@ const customerDataRequest = async (topic, shop, webhookRequestBody) => {
  */
 
 const customerRedact = async (topic, shop, webhookRequestBody) => {
+  // Payload
   // {
   //   "shop_id": 123456,
   //   "shop_domain": "store.myshopify.com",
@@ -70,6 +72,7 @@ const customerRedact = async (topic, shop, webhookRequestBody) => {
  */
 
 const shopRedact = async (topic, shop, webhookRequestBody) => {
+  // Payload
   // {
   //   "shop_id": 123456,
   //   "shop_domain": "store.myshopify.com"

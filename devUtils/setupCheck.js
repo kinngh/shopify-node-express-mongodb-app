@@ -14,29 +14,29 @@ const setupCheck = () => {
   let errorCount = 0;
 
   if (typeof apiKey === "undefined") {
-    console.error("--> API Key is undefined.");
+    console.error("---> API Key is undefined.");
     errorCount++;
   }
   if (typeof apiSecret === "undefined") {
-    console.error("--> API Secret is undefined.");
+    console.error("---> API Secret is undefined.");
     errorCount++;
   }
   if (typeof apiScopes === "undefined") {
-    console.error("--> API Scopes are undefined.");
+    console.error("---> API Scopes are undefined.");
     errorCount++;
   }
   if (typeof appUrl === "undefined") {
-    console.error("--> App URL is undefined.");
+    console.error("---> App URL is undefined.");
     errorCount++;
   } else if (!appUrl.includes("https://")) {
-    console.error("--> Please use HTTPS for SHOPIFY_APP_URL.");
+    console.error("---> Please use HTTPS for SHOPIFY_APP_URL.");
   }
   if (typeof apiVersion === "undefined") {
-    console.error("--> API Version is undefined.");
+    console.error("---> API Version is undefined.");
     errorCount++;
   }
   if (typeof encString === "undefined") {
-    console.error("--> Encryption String is undefined.");
+    console.error("---> Encryption String is undefined.");
     errorCount++;
   }
   if (typeof port === "undefined") {
@@ -45,7 +45,7 @@ const setupCheck = () => {
   }
 
   if (typeof databaseURL === "undefined") {
-    console.error("--> Database string is undefined.");
+    console.error("---> Database string is undefined.");
     errorCount++;
   }
   if (!forceInstall) {

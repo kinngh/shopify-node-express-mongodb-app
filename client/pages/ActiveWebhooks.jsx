@@ -6,7 +6,7 @@ import { navigate } from "raviger";
 const ActiveWebhooks = () => {
   const getInstalledWebhooks = gql`
     {
-      webhookSubscriptions(first: 10) {
+      webhookSubscriptions(first: 25) {
         edges {
           node {
             topic

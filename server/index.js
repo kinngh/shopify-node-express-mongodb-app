@@ -86,8 +86,8 @@ const createServer = async (root = process.cwd()) => {
       const response = await Shopify.Utils.graphqlProxy(req, res);
       res.status(200).send(response.body);
     } catch (err) {
-      console.error(err.response);
-      res.status(400).send(err.response);
+      console.error(`---> An error occured at GraphQL Proxy`, err.response);
+      res.status(403).send(err.response);
     }
   });
 
@@ -127,7 +127,7 @@ const createServer = async (root = process.cwd()) => {
     if (response.success) {
       res.status(200).send();
     } else {
-      res.status(400).send("An error occured");
+      res.status(403).send("An error occured");
     }
   });
 
