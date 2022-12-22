@@ -26,12 +26,12 @@ export default function App() {
         <NavigationMenu
           navigationLinks={[
             {
-              label: "Home",
-              destination: "/",
+              label: "Fetch Data",
+              destination: "/getData",
             },
             {
-              label: "Get Data",
-              destination: "/getData",
+              label: "Billing API",
+              destination: "/billing",
             },
           ]}
         />

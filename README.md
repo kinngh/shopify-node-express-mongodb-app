@@ -8,19 +8,14 @@ I also did make a video going over the entire repo as of November 4, 2022. If th
 
 [![Creating a Shopify app from scratch](https://img.youtube.com/vi/iV_3ENCraaM/0.jpg)](https://www.youtube.com/watch?v=iV_3ENCraaM)
 
-### Supporting Repositories:
+## Supporting repositories
 
-- [Polaris Playground](https://github.com/kinngh/shopify-polaris-playground): A Shopify Polaris playground to build your interfaces and directly drop them in this repo, with the exception of `App.jsx`.
-
-### WIP:
-
-- [`npx create-shop-app@latest`](https://github.com/kinngh/create-shop-app): A CLI tool to generate embedded Shopify app boilerplate with a tech stack of your own.
-- [Learning how to build Shopify apps](https://github.com/kinngh/learning-shopify-app): A repo with webhooks, scopes, basic controllers and more setup so newcomers on the Shopify platform can learn what's called and what's required when planning out their build.
+- [WIP] [`npx create-shop-app@latest`](https://github.com/kinngh/create-shop-app): A CLI tool to generate embedded Shopify app boilerplate with a tech stack of your own.
 
 ## Tech Stack
 
 - React.js
-  - `raviger` for easier routing.
+  - `raviger` for routing.
 - Express.js
 - MongoDB
 - Vite
@@ -47,4 +42,3 @@ The Shopify CLI generates an amazing starter app but it still needs some more bo
 
 - Storing data is kept to a minimal to allow building custom models for flexibility.
   - Session persistence is also kept to a minimal and based on the Redis example provided by Shopify, but feel free to modify as required.
-- When pushing to production, add `__templates` to `.gitignore`.

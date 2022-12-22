@@ -11,14 +11,14 @@ const GetData = () => {
 
   async function fetchContent() {
     setResponseData("loading...");
-    const res = await fetch("api"); //fetch instance of useFetch()
+    const res = await fetch("/api"); //fetch instance of useFetch()
     const { text } = await res.json();
     setResponseData(text);
   }
   async function fetchContentPost() {
     setResponseDataPost("loading...");
     const postBody = JSON.stringify({ content: "Body of POST request" });
-    const res = await fetch("api", {
+    const res = await fetch("/api", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const GetData = () => {
 
   async function fetchContentGQL() {
     setResponseDataGQL("loading...");
-    const res = await fetch("api/gql"); //fetch instance of useFetch()
+    const res = await fetch("/api/gql"); //fetch instance of useFetch()
     const response = await res.json();
     setResponseDataGQL(response.body.data.shop.name);
   }
@@ -46,7 +46,7 @@ const GetData = () => {
 
   return (
     <Page
-      title="Get data from Express route"
+      title="Data Fetching"
       breadcrumbs={[{ content: "Home", onAction: () => navigate("/") }]}
     >
       <Layout>
@@ -60,7 +60,9 @@ const GetData = () => {
               },
             }}
           >
-            <p>The data we get from "/apps/api" is : {responseData}</p>
+            <p>
+              GET <code>"/apps/api"</code>: {responseData}
+            </p>
           </Card>
         </Layout.Section>
         <Layout.Section>
@@ -73,20 +75,24 @@ const GetData = () => {
               },
             }}
           >
-            <p>POST "/apps/api" is : {responseDataPost}</p>
+            <p>
+              POST <code>"/apps/api" </code>: {responseDataPost}
+            </p>
           </Card>
         </Layout.Section>
         <Layout.Section>
           <Card
             sectioned
             primaryFooterAction={{
-              content: "Refetch GQL",
+              content: "Refetch",
               onAction: () => {
                 fetchContentGQL();
               },
             }}
           >
-            <p>The data we get from "/apps/api/gql" is : {responseDataGQL}</p>
+            <p>
+              GET <code>"/apps/api/gql"</code>: {responseDataGQL}
+            </p>
           </Card>
         </Layout.Section>
       </Layout>

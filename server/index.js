@@ -1,11 +1,12 @@
-import { Shopify } from "@shopify/shopify-api";
+import "@shopify/shopify-api/adapters/node";
 import "dotenv/config";
 import Express from "express";
 import mongoose from "mongoose";
 import { resolve } from "path";
+import shopify from "../utils/shopifyConfig.js";
 
 import setupCheck from "../devUtils/setupCheck.js";
-import sessionStorage from "../utils/sessionStorage.js";
+import sessionHandler from "../utils/sessionHandler.js";
 import {
   customerDataRequest,
   customerRedact,
@@ -41,59 +42,66 @@ mongoose.connect(mongoUrl, (err) => {
   }
 });
 
-// Initialize Shopify Context
-Shopify.Context.initialize({
-  API_KEY: process.env.SHOPIFY_API_KEY,
-  API_SECRET_KEY: process.env.SHOPIFY_API_SECRET,
-  SCOPES: process.env.SHOPIFY_API_SCOPES,
-  HOST_NAME: process.env.SHOPIFY_APP_URL.replace(/https:\/\//, ""),
-  HOST_SCHEME: "https",
-  API_VERSION: process.env.SHOPIFY_API_VERSION,
-  IS_EMBEDDED_APP: true,
-  SESSION_STORAGE: sessionStorage,
-});
-
 // Register all webhook handlers
 webhookRegistrar();
 
 const createServer = async (root = process.cwd()) => {
   const app = Express();
+  app.disable("x-powered-by");
 
   applyAuthMiddleware(app);
 
   // Incoming webhook requests
-  app.post("/webhooks/:topic", async (req, res) => {
-    const { topic } = req.params;
-    const shop = req.headers["x-shopify-shop-domain"];
+  app.post(
+    "/webhooks/:topic",
+    Express.text({ type: "*/*" }),
+    async (req, res) => {
+      const { topic } = req.params || "";
+      const shop = req.headers["x-shopify-shop-domain"] || "";
 
-    try {
-      await Shopify.Webhooks.Registry.process(req, res);
-      console.log(`--> Processed ${topic} webhook for ${shop}`);
-    } catch (e) {
-      console.error(
-        `---> Error while registering ${topic} webhook for ${shop}`,
-        e
-      );
-
-      if (!res.headersSent) {
-        res.status(403).send(e.message);
+      try {
+        await shopify.webhooks.process({
+          rawBody: req.body,
+          rawRequest: req,
+          rawResponse: res,
+        });
+        console.log(`--> Processed ${topic} webhook for ${shop}`);
+      } catch (e) {
+        console.error(
+          `---> Error while registering ${topic} webhook for ${shop}`,
+          e
+        );
+        if (!res.headersSent) {
+          res.status(500).send(error.message);
+        }
       }
     }
-  });
+  );
+
+  app.use(Express.json());
 
   app.post("/graphql", verifyRequest, async (req, res) => {
     try {
-      const response = await Shopify.Utils.graphqlProxy(req, res);
+      const sessionId = await shopify.session.getCurrentId({
+        isOnline: true,
+        rawRequest: req,
+        rawResponse: res,
+      });
+      const session = await sessionHandler.loadSession(sessionId);
+      const response = await shopify.clients.graphqlProxy({
+        session,
+        rawBody: req.body,
+      });
       res.status(200).send(response.body);
-    } catch (err) {
-      console.error(`---> An error occured at GraphQL Proxy`, err.response);
-      res.status(403).send(err.response);
+    } catch (e) {
+      console.error(`---> An error occured at GraphQL Proxy`, e);
+      res.status(403).send(e);
     }
   });
 
-  app.use(Express.json());
   app.use(csp);
   app.use(isShopActive);
+  // If you're making changes to any of the routes, please make sure to add them in `./client/vite.config.cjs` or it'll not work.
   app.use("/apps", verifyRequest, userRoutes); //Verify user route requests
   app.use("/proxy_route", verifyProxy, proxyRouter); //MARK:- App Proxy routes
 
@@ -131,27 +139,7 @@ const createServer = async (root = process.cwd()) => {
     }
   });
 
-  let vite;
-  if (isDev) {
-    vite = await import("vite").then(({ createServer }) =>
-      createServer({
-        root,
-        logLevel: isDev ? "error" : "info",
-        server: {
-          port: PORT,
-          hmr: {
-            protocol: "ws",
-            host: "localhost",
-            port: 64999,
-            clientPort: 64999,
-          },
-          middlewareMode: "html",
-        },
-      })
-    );
-
-    app.use(vite.middlewares);
-  } else {
+  if (!isDev) {
     const compression = await import("compression").then(
       ({ default: fn }) => fn
     );
@@ -170,7 +158,7 @@ const createServer = async (root = process.cwd()) => {
     });
   }
 
-  return { app, vite };
+  return { app };
 };
 
 createServer().then(({ app }) => {

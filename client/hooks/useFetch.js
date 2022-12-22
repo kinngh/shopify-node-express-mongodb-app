@@ -8,7 +8,9 @@ function useFetch() {
 
   return async (uri, options) => {
     const response = await fetchFunction(
-      `https://${appOrigin}/apps/${uri}`,
+      uri.startsWith("/")
+        ? `https://${appOrigin}/apps${uri}`
+        : `https://${appOrigin}/apps/${uri}`,
       options
     );
 

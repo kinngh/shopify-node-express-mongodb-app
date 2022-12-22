@@ -1,91 +1,78 @@
-import React from "react";
-import { Page, Card, Layout } from "@shopify/polaris";
-import { navigate } from "raviger";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { Fullscreen } from "@shopify/app-bridge/actions";
+import { Card, Layout, Page } from "@shopify/polaris";
+import { navigate } from "raviger";
+import React from "react";
 
 const HomePage = () => {
   const app = useAppBridge();
   const fullscreen = Fullscreen.create(app);
   fullscreen.dispatch(Fullscreen.Action.EXIT);
   return (
-    <React.Fragment>
-      <Page title="Debug Cards">
-        <Layout>
-          <Layout.Section>
-            <Card
-              title="Fullscreen UI"
-              sectioned
-              primaryFooterAction={{
-                content: "Go Fullscreen",
-                onAction: () => {
-                  fullscreen.dispatch(Fullscreen.Action.ENTER);
-                  navigate("/fullscreen");
-                },
-              }}
-            >
-              <p>Grab data from an Express route in React</p>
-            </Card>
-          </Layout.Section>
-          <Layout.Section>
-            <Card
-              title="Making API Calls"
-              sectioned
-              primaryFooterAction={{
-                content: "Get Data",
-                onAction: () => {
-                  navigate("/getData");
-                },
-              }}
-            >
-              <p>Grab data from an Express route in React</p>
-            </Card>
-          </Layout.Section>
-          <Layout.Section>
-            <Card
-              title="Subcribe Merchant"
-              sectioned
-              primaryFooterAction={{
-                content: "Subscribe",
-                onAction: () => {
-                  navigate("/subscribe-server");
-                },
-              }}
-            >
-              <p>Subscribe your merchant to a recurring subscription plan.</p>
-            </Card>
-          </Layout.Section>
-          <Layout.Section>
-            <Card
-              title="Active Subscriptions"
-              sectioned
-              primaryFooterAction={{
-                content: "View",
-                onAction: () => {
-                  navigate("/activeSubscriptions");
-                },
-              }}
-            >
-              <p>View currently active subscriptions for your app.</p>
-            </Card>
-          </Layout.Section>
-          <Layout.Section>
-            <Card
-              title="Registered Webhooks"
-              sectioned
-              primaryFooterAction={{
-                content: "Webhooks",
-                onAction: () => {
-                  navigate("/activeWebhooks");
-                },
-              }}
-            >
-              <p>Check for registered webhooks and their relative paths.</p>
-            </Card>
-          </Layout.Section>
-        </Layout>
-      </Page>
-    </React.Fragment>
+    <Page>
+      <Layout>
+        <Layout.Section>
+          <Card
+            sectioned
+            title="Webhooks"
+            primaryFooterAction={{
+              content: "Explore",
+              onAction: () => {
+                navigate("/activeWebhooks");
+              },
+            }}
+          >
+            <p>Explore registered webhooks and endpoints.</p>
+          </Card>
+        </Layout.Section>
+        <Layout.Section>
+          <Card
+            sectioned
+            title="Data Fetching"
+            primaryFooterAction={{
+              content: "Explore",
+              onAction: () => {
+                navigate("/getData");
+              },
+            }}
+          >
+            <p>
+              Run GET and POST requests to your server along with GraphQL
+              queries.
+            </p>
+          </Card>
+        </Layout.Section>
+        <Layout.Section>
+          <Card
+            sectioned
+            title="Billing API"
+            primaryFooterAction={{
+              content: "Cha-Ching",
+              onAction: () => {
+                navigate("/billing");
+              },
+            }}
+          >
+            <p>Subscribe merchant to a plan and explore existing plans.</p>
+          </Card>
+        </Layout.Section>
+        <Layout.Section>
+          <Card
+            sectioned
+            title="Fullscreen Editor"
+            primaryFooterAction={{
+              content: "Explore",
+              onAction: () => {
+                fullscreen.dispatch(Fullscreen.Action.ENTER);
+                navigate("/fullscreen");
+              },
+            }}
+          >
+            <p>Enter Fullscreen mode.</p>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 };
 

@@ -1,8 +1,4 @@
-# Bug being investigated
-vite.config.js.*
-
 # Non-production folders
-# __templates/
 # docs/
 
 # Personal Dev Content

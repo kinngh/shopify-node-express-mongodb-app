@@ -1,5 +1,5 @@
-import { Shopify } from "@shopify/shopify-api";
 import { Router } from "express";
+import clientProvider from "../../utils/clientProvider.js";
 import subscriptionRoute from "./recurringSubscriptions.js";
 
 const userRoutes = Router();
@@ -16,9 +16,13 @@ userRoutes.post("/api", (req, res) => {
 
 userRoutes.get("/api/gql", async (req, res) => {
   //false for offline session, true for online session
-  const session = await Shopify.Utils.loadCurrentSession(req, res, false);
-  const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
+  const { client } = await clientProvider.graphqlClient({
+    req,
+    res,
+    isOnline: false,
+  });
 
+  // const shop = await client.query({
   const shop = await client.query({
     data: `{
       shop {

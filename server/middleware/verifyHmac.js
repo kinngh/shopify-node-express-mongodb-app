@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { Shopify } from "@shopify/shopify-api";
+import shopify from "../../utils/shopifyConfig.js";
 
 const verifyHmac = (req, res, next) => {
   try {
@@ -9,7 +9,7 @@ const verifyHmac = (req, res, next) => {
       .digest("base64");
     const hmac = req.headers["x-shopify-hmac-sha256"];
 
-    if (Shopify.Utils.safeCompare(generateHash, hmac)) {
+    if (shopify.auth.safeCompare(generateHash, hmac)) {
       next();
     } else {
       return res.status(401).send();

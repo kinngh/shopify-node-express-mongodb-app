@@ -1,4 +1,4 @@
-import { Shopify } from "@shopify/shopify-api";
+import shopify from "./shopifyConfig.js";
 
 const authRedirect = async (req, res) => {
   if (!req.query.shop) {
@@ -7,25 +7,23 @@ const authRedirect = async (req, res) => {
   }
 
   if (req.query.embedded === "1") {
-    const shop = Shopify.Utils.sanitizeShop(req.query.shop);
+    const shop = shopify.utils.sanitizeShop(req.query.shop);
     const queryParams = new URLSearchParams({
       ...req.query,
       shop,
-      redirectUri: `https://${Shopify.Context.HOST_NAME}/auth?shop=${shop}&host=${req.query.host}`,
+      redirectUri: `https://${shopify.config.hostName}/auth?shop=${shop}&host=${req.query.host}`,
     }).toString();
 
     return res.redirect(`/exitframe?${queryParams}`);
   }
 
-  const redirectUrl = await Shopify.Auth.beginAuth(
-    req,
-    res,
-    req.query.shop,
-    "/auth/tokens",
-    false
-  );
-
-  return res.redirect(redirectUrl);
+  return await shopify.auth.begin({
+    shop: req.query.shop,
+    callbackPath: "/auth/tokens",
+    isOnline: false,
+    rawRequest: req,
+    rawResponse: res,
+  });
 };
 
 export default authRedirect;

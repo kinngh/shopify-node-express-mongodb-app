@@ -1,8 +1,8 @@
-import { Shopify } from "@shopify/shopify-api";
+import shopify from "../../utils/shopifyConfig.js";
 
 const csp = (req, res, next) => {
   const { shop } = req.query;
-  if (Shopify.Context.IS_EMBEDDED_APP && shop) {
+  if (shopify.config.isEmbeddedApp && shop) {
     res.setHeader(
       "Content-Security-Policy",
       `frame-ancestors https://${shop} https://admin.shopify.com;`

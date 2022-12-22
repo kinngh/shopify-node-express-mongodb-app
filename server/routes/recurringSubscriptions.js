@@ -1,5 +1,5 @@
-import { Shopify } from "@shopify/shopify-api";
 import { Router } from "express";
+import clientProvider from "../../utils/clientProvider.js";
 
 const subscriptionRoute = Router();
 
@@ -9,9 +9,13 @@ const subscriptionRoute = Router();
 // Create a new MongoDB collection and just store test store names in it.
 
 subscriptionRoute.get("/api/recurringSubscription", async (req, res) => {
-  const session = await Shopify.Utils.loadCurrentSession(req, res);
-  const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
-  const returnUrl = `${process.env.SHOPIFY_APP_URL}/auth?shop=${session.shop}`;
+  //false for offline session, true for online session
+  const { client, shop } = await clientProvider.graphqlClient({
+    req,
+    res,
+    isOnline: true,
+  });
+  const returnUrl = `${process.env.SHOPIFY_APP_URL}/auth?shop=${shop}`;
 
   const planName = "$10.25 plan";
   const planPrice = 10.25; //Always a decimal
@@ -48,7 +52,7 @@ subscriptionRoute.get("/api/recurringSubscription", async (req, res) => {
 
   if (response.body.data.appSubscriptionCreate.userErrors.length > 0) {
     console.log(
-      `--> Error subscribing ${session.shop} to plan:`,
+      `--> Error subscribing ${shop} to plan:`,
       response.body.data.appSubscriptionCreate.userErrors
     );
     res.status(400).send({ error: "An error occured." });

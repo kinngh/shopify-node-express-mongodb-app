@@ -1,22 +1,18 @@
 import React from "react";
 
-import Index from "./pages/Index";
-import ExitFrame from "./pages/ExitFrame";
-import ActiveSubscriptions from "./pages/ActiveSubscriptions";
-import RecurringSubscriptions from "./pages/RecurringSubscriptions";
+import ExitFrame from "./ExitFrame";
 import ActiveWebhooks from "./pages/ActiveWebhooks";
-import GetData from "./pages/GetData";
-import ServerSideRecurringSubscriptions from "./pages/ServerSideRecurringSubscriptions";
 import FullScreen from "./pages/FullScreen";
+import GetData from "./pages/GetData";
+import Index from "./pages/Index";
+import BillingAPI from "./pages/BillingAPI";
 
 const routes = {
   "/": () => <Index />,
   "/exitframe": () => <ExitFrame />,
-  "/activeSubscriptions": () => <ActiveSubscriptions />,
-  "/recurringSubscriptions": () => <RecurringSubscriptions />,
   "/activeWebhooks": () => <ActiveWebhooks />,
   "/getData": () => <GetData />,
-  "/subscribe-server": () => <ServerSideRecurringSubscriptions />,
+  "/billing": () => <BillingAPI />,
   "/fullscreen": () => <FullScreen />,
 };
 

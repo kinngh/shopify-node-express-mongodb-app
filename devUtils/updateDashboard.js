@@ -10,12 +10,10 @@
 import {
   api as cliAPI,
   error as cliError,
-  ui as cliUI,
   session,
+  ui as cliUI,
 } from "@shopify/cli-kit";
-
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
 const selectOrg = async (accessToken) => {
   const orgs = await getOrgs(accessToken);
