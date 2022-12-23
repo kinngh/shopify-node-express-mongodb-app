@@ -2,27 +2,34 @@
 
 ## GraphQL and REST clients
 
-I highly recommend using GraphQL instead of REST and setting up client server side as much as possible. To create a new client
+I highly recommend using GraphQL instead of REST and setting up client server side as much as possible. v6 introduced a lot of changes in how clients are created and there's now `clientProvider` to create clients. To create a new client
 
-- First grab the session.
+- Import `clientProvider`
 
 ```javascript
-const session = await Shopify.Utils.loadCurrentSession(req, res, true); //online token
-const session = await Shopify.Utils.loadCurrentSession(req, res, false); //offline token
+import clientProvider from "./utils/clientProvider.js";
 ```
 
-- Then create an instance of `Shopify.Clients`
+- `clientProvider` returns the `client`, `shop` and `session`. Destructure the `client`:
 
   - GraphQL
 
   ```javascript
-  const client = new Shopify.Clients.GraphQL(session.shop, session.accessToken);
+  const { client } = await clientProvider.graphqlClient({
+    req,
+    res,
+    isOnline: false,
+  });
   ```
 
   - REST
 
   ```javascript
-  const client = new Shopify.Clients.Rest(session.shop, session.accessToken);
+  const { client } = await clientProvider.restClient({
+    req,
+    res,
+    isOnline: false,
+  });
   ```
 
 - Making calls
@@ -51,7 +58,7 @@ I see a lot of devs getting confused with setting up Billing API and recurring s
 
 ### Server
 
-The setup is available at `server/routes/recurringSubscriptions.js` and `client/pages/ServerSideRecurringSubscriptions.jsx`.
+The setup is available at `server/routes/recurringSubscriptions.js`.
 
 - First we create a route. I prefer making GET requests here so I can build a separate route for each tier, making it easier to manage and avoid unnecessary fiddling with code from poky merchants / developers (like me).
 - Create a GraphQL client by loading current session.

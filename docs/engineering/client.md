@@ -25,3 +25,7 @@ The `GlobalRoutes.jsx` is to define all our routes and telling what component to
 ## Fetching Data
 
 Fetching data from the server is easier when using an instance of `useFetch()`. An example for this is setup in `client/pages/GetData.jsx`, demonstrating GET and POST requests. A thing to note here is to POST JSON data to the server, you have to manually add headers in the request for it to function properly, as added in `fetchContentPost()`.
+
+## Exit Frame
+
+Exitframe is necessary to get out of the embedded iFrame for auth. It's highly recommended you don't delete this so auth works as expected.

@@ -6,7 +6,7 @@ The documentation is not for a specific technology, but I'm using MongoDB as an 
 
 I've seen a lot of struggle around creating a custom sessions storage solution and it's weird given there's [this great example by the Shopify team in Redis](https://github.com/Shopify/shopify-node-api/blob/main/docs/usage/customsessions.md) to implement it and this repo uses this as a guide to write MongoDB version of it.
 
-The custom session storage is in `utils/sessionStorage.js` and is written for MongoDB, with `Cryptr` for encrypting strings.
+The custom session storage is in `utils/sessionhandler.js` and is written for MongoDB, with `Cryptr` for encrypting strings.
 
 ### Store
 
@@ -26,6 +26,4 @@ Shopify sometimes sends it twice, so it makes sense to use a unique ID to just u
 - Grab the instance by id.
 - Delete.
 
-After the three components are built, you can create a new instance using `Shopify.Session.CustomSessionStorage()` and add your Store, Load and Delete functions.
-
-Then, head over to `server/index.js` and add it in your `Shopify.Context.initialize()` instance with the `SESSION_STORAGE` param.
+Handling session tokens is much more manual since v6 so there's no need to create classes in Shopify config anymore.
