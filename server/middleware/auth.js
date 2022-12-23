@@ -89,7 +89,11 @@ const authMiddleware = (app) => {
       const host = req.query.host;
       const { shop } = session;
 
-      await StoreModel.findOneAndUpdate({ shop }, { isActive: true }); //Update store to true after auth has happened, or it'll cause reinstall issues.
+      await StoreModel.findOneAndUpdate(
+        { shop },
+        { isActive: true },
+        { upsert: true }
+      ); //Update store to true after auth has happened, or it'll cause reinstall issues.
 
       // Redirect to app with shop parameter upon auth
       res.redirect(`/?shop=${shop}&host=${host}`);
