@@ -22,7 +22,11 @@ const authMiddleware = (app) => {
           break;
         case e instanceof CookieNotFound:
         case e instanceof InvalidSession:
-          await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
+          await StoreModel.findOneAndUpdate(
+            { shop },
+            { isActive: false },
+            { upsert: true }
+          );
           await SessionModel.deleteMany({ shop });
           res.redirect(`/auth?shop=${shop}`);
           break;
@@ -65,7 +69,11 @@ const authMiddleware = (app) => {
           break;
         case e instanceof CookieNotFound:
         case e instanceof InvalidSession:
-          await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
+          await StoreModel.findOneAndUpdate(
+            { shop },
+            { isActive: false },
+            { upsert: true }
+          );
           await SessionModel.deleteMany({ shop });
           res.redirect(`/auth?shop=${shop}`);
           break;
@@ -106,7 +114,11 @@ const authMiddleware = (app) => {
           break;
         case e instanceof CookieNotFound:
         case e instanceof InvalidSession:
-          await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
+          await StoreModel.findOneAndUpdate(
+            { shop },
+            { isActive: false },
+            { upsert: true }
+          );
           await SessionModel.deleteMany({ shop });
           res.redirect(`/auth?shop=${shop}`);
           break;
