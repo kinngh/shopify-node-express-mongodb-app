@@ -1,5 +1,3 @@
-//MARK:- Provide GraphQL and REST clients directly from here instead of writing 200 lines of code with v6
-
 import sessionHandler from "./sessionHandler.js";
 import shopify from "./shopifyConfig.js";
 

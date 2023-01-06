@@ -22,7 +22,6 @@ userRoutes.get("/api/gql", async (req, res) => {
     isOnline: false,
   });
 
-  // const shop = await client.query({
   const shop = await client.query({
     data: `{
       shop {
