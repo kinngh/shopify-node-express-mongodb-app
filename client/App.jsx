@@ -5,10 +5,8 @@ import {
 import { AppProvider as PolarisProvider } from "@shopify/polaris";
 import "@shopify/polaris/build/esm/styles.css";
 import translations from "@shopify/polaris/locales/en.json";
-
-import ApolloClientProvider from "./providers/ApolloClientProvider";
-
 import { useRoutes } from "raviger";
+import ApolloClientProvider from "./providers/ApolloClientProvider";
 import routes from "./Routes";
 
 const appBridgeConfig = {
@@ -26,12 +24,8 @@ export default function App() {
         <NavigationMenu
           navigationLinks={[
             {
-              label: "Fetch Data",
-              destination: "/getData",
-            },
-            {
-              label: "Billing API",
-              destination: "/billing",
+              label: "Debug Cards",
+              destination: "/debug",
             },
           ]}
         />
@@ -40,6 +34,3 @@ export default function App() {
     </PolarisProvider>
   );
 }
-
-//MyProvider is now providers/ApolloProvider
-//userLoggedInFetch() is now hooks/useFetch()

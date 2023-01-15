@@ -1,9 +1,13 @@
-import { Card, Layout, Page } from "@shopify/polaris";
+import { useAppBridge } from "@shopify/app-bridge-react";
+import { Redirect } from "@shopify/app-bridge/actions";
+import { Card, Layout, Link, Page } from "@shopify/polaris";
 import { navigate } from "raviger";
 import React, { useEffect, useState } from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 
 const GetData = () => {
+  const app = useAppBridge();
+  const redirect = Redirect.create(app);
   const [responseData, setResponseData] = useState("");
   const [responseDataPost, setResponseDataPost] = useState("");
   const [responseDataGQL, setResponseDataGQL] = useState("");
@@ -47,7 +51,7 @@ const GetData = () => {
   return (
     <Page
       title="Data Fetching"
-      breadcrumbs={[{ content: "Home", onAction: () => navigate("/") }]}
+      breadcrumbs={[{ content: "Home", onAction: () => navigate("/debug") }]}
     >
       <Layout>
         <Layout.Section>
@@ -93,6 +97,44 @@ const GetData = () => {
             <p>
               GET <code>"/apps/api/gql"</code>: {responseDataGQL}
             </p>
+          </Card>
+          <Card title="Developer Notes">
+            <Card.Section title="Making Requests">
+              <li>
+                Create a new route in <code>/server/routes</code> and add it to
+                your <code>index.js</code> to expose it behind{" "}
+                <code>verifyRequest</code>.
+              </li>
+              <li>
+                Create a new instance of <code>useFetch()</code> and use that to
+                make a request to <code>/api/your-route/goes-here/</code>
+              </li>
+              <li>
+                [Optional] Use a library like{" "}
+                <Link
+                  onClick={() => {
+                    redirect.dispatch(Redirect.Action.REMOTE, {
+                      url: "https://tanstack.com/query/latest",
+                      newContext: true,
+                    });
+                  }}
+                >
+                  <code>@tanstack/react-query</code>
+                </Link>{" "}
+                or{" "}
+                <Link
+                  onClick={() => {
+                    redirect.dispatch(Redirect.Action.REMOTE, {
+                      url: "https://swr.vercel.app",
+                      newContext: true,
+                    });
+                  }}
+                >
+                  <code>swr</code>
+                </Link>{" "}
+                for client side data fetching state management.
+              </li>
+            </Card.Section>
           </Card>
         </Layout.Section>
       </Layout>

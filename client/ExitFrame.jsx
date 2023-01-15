@@ -1,5 +1,5 @@
+import { Loading, useAppBridge } from "@shopify/app-bridge-react";
 import { Redirect } from "@shopify/app-bridge/actions";
-import { useAppBridge, Loading } from "@shopify/app-bridge-react";
 import { useEffect } from "react";
 
 const ExitFrame = () => {

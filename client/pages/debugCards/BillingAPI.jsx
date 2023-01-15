@@ -1,10 +1,10 @@
 import { gql, useQuery } from "@apollo/client";
-import { useAppBridge } from "@shopify/app-bridge-react";
+import { Loading, useAppBridge } from "@shopify/app-bridge-react";
 import { Redirect } from "@shopify/app-bridge/actions";
-import { Card, DataTable, Layout, Page } from "@shopify/polaris";
+import { Card, DataTable, Frame, Layout, Page } from "@shopify/polaris";
 import { navigate } from "raviger";
-import React, { useState } from "react";
-import useFetch from "../hooks/useFetch";
+import React, { Fragment, useState } from "react";
+import useFetch from "../../hooks/useFetch";
 
 const BillingAPI = () => {
   const [responseData, setResponseData] = useState("");
@@ -28,7 +28,7 @@ const BillingAPI = () => {
   return (
     <Page
       title="Billing API"
-      breadcrumbs={[{ content: "Home", onAction: () => navigate("/") }]}
+      breadcrumbs={[{ content: "Home", onAction: () => navigate("/debug") }]}
     >
       <Layout>
         <Layout.Section>
@@ -92,6 +92,13 @@ const ActiveSubscriptions = () => {
   let rows = [];
   if (loading) {
     console.log("loading", loading);
+    return (
+      <>
+        <Frame>
+          <Loading />
+        </Frame>
+      </>
+    );
   }
   if (data) {
     const activeSubscriptions = data.appInstallation.activeSubscriptions;

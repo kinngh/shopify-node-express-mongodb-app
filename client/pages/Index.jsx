@@ -1,74 +1,146 @@
 import { useAppBridge } from "@shopify/app-bridge-react";
-import { Fullscreen } from "@shopify/app-bridge/actions";
+import { Redirect } from "@shopify/app-bridge/actions";
 import { Card, Layout, Page } from "@shopify/polaris";
 import { navigate } from "raviger";
 import React from "react";
 
 const HomePage = () => {
   const app = useAppBridge();
-  const fullscreen = Fullscreen.create(app);
-  fullscreen.dispatch(Fullscreen.Action.EXIT);
+  const redirect = Redirect.create(app);
+
   return (
-    <Page>
+    <Page title="Home">
       <Layout>
-        <Layout.Section>
+        <Layout.Section fullWidth>
           <Card
+            title="Debug Cards"
             sectioned
-            title="Webhooks"
             primaryFooterAction={{
-              content: "Explore",
+              content: "Debug Cards",
               onAction: () => {
-                navigate("/activeWebhooks");
-              },
-            }}
-          >
-            <p>Explore registered webhooks and endpoints.</p>
-          </Card>
-        </Layout.Section>
-        <Layout.Section>
-          <Card
-            sectioned
-            title="Data Fetching"
-            primaryFooterAction={{
-              content: "Explore",
-              onAction: () => {
-                navigate("/getData");
+                navigate("/debug");
               },
             }}
           >
             <p>
-              Run GET and POST requests to your server along with GraphQL
-              queries.
+              Explore how the repository handles data fetching from the backend,
+              App Proxy, making GraphQL requests, Billing API and more.
             </p>
           </Card>
         </Layout.Section>
-        <Layout.Section>
+        <Layout.Section oneHalf>
           <Card
             sectioned
-            title="Billing API"
+            title="Repository"
             primaryFooterAction={{
-              content: "Cha-Ching",
+              content: "GitHub",
               onAction: () => {
-                navigate("/billing");
+                redirect.dispatch(Redirect.Action.REMOTE, {
+                  url: "https://github.com/kinngh/shopify-node-express-mongodb-app",
+                  newContext: true,
+                });
               },
             }}
+            secondaryFooterActions={[
+              {
+                content: "Open Issue",
+                onAction: () => {
+                  redirect.dispatch(Redirect.Action.REMOTE, {
+                    url: "https://github.com/kinngh/shopify-node-express-mongodb-app/issues?q=is%3Aissue",
+                    newContext: true,
+                  });
+                },
+              },
+            ]}
           >
-            <p>Subscribe merchant to a plan and explore existing plans.</p>
+            <p>Star the repository, open a new issue or start a discussion.</p>
           </Card>
-        </Layout.Section>
-        <Layout.Section>
           <Card
             sectioned
-            title="Fullscreen Editor"
+            title="Changelog"
             primaryFooterAction={{
               content: "Explore",
               onAction: () => {
-                fullscreen.dispatch(Fullscreen.Action.ENTER);
-                navigate("/fullscreen");
+                redirect.dispatch(Redirect.Action.REMOTE, {
+                  url: "https://shopify.dev/changelog/",
+                  newContext: true,
+                });
               },
             }}
           >
-            <p>Enter Fullscreen mode.</p>
+            <p>Explore changelog on Shopify.dev and follow updates.</p>
+          </Card>
+        </Layout.Section>
+        <Layout.Section oneHalf>
+          <Card
+            sectioned
+            title="Documentation"
+            primaryFooterAction={{
+              content: "Explore APIs",
+              onAction: () => {
+                redirect.dispatch(Redirect.Action.REMOTE, {
+                  url: "https://shopify.dev/graphiql/admin-graphiql",
+                  newContext: true,
+                });
+              },
+            }}
+            secondaryFooterActions={[
+              {
+                content: "Design Guidelines",
+                onAction: () => {
+                  redirect.dispatch(Redirect.Action.REMOTE, {
+                    url: "https://shopify.dev/apps/design-guidelines",
+                    newContext: true,
+                  });
+                },
+              },
+            ]}
+          >
+            <p>
+              Explore the GraphQL APIs in Graphiql or read design guidelines.
+            </p>
+          </Card>
+          <Card
+            sectioned
+            title="Hiring?"
+            primaryFooterAction={{
+              content: "Twitter",
+              onAction: () => {
+                redirect.dispatch(Redirect.Action.REMOTE, {
+                  url: "https://www.twitter.com/kinngh",
+                  newContext: true,
+                });
+              },
+            }}
+            secondaryFooterActions={[
+              {
+                content: "LinkedIn",
+                onAction: () => {
+                  redirect.dispatch(Redirect.Action.REMOTE, {
+                    url: "https://www.linkedin.com/in/theharshdeep/",
+                    newContext: true,
+                  });
+                },
+              },
+            ]}
+          >
+            <p>🌎 / 🇨🇦 and looking to expand your engineering team?</p>
+          </Card>
+        </Layout.Section>
+        <Layout.Section fullWidth>
+          <Card
+            sectioned
+            title="Developer Notes"
+            primaryFooterAction={{
+              content: "Read More",
+              onAction: () => {
+                navigate("/debug/devNotes");
+              },
+            }}
+          >
+            <p>
+              Read notes on opening an issue, creating App Extensions and more.
+            </p>
           </Card>
         </Layout.Section>
       </Layout>

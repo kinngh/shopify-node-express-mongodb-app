@@ -1,19 +1,23 @@
 import React from "react";
 
 import ExitFrame from "./ExitFrame";
-import ActiveWebhooks from "./pages/ActiveWebhooks";
-import FullScreen from "./pages/FullScreen";
-import GetData from "./pages/GetData";
+import ActiveWebhooks from "./pages/debugCards/ActiveWebhooks";
+import BillingAPI from "./pages/debugCards/BillingAPI";
+import DebugIndex from "./pages/debugCards/DebugIndex";
+import DevNotes from "./pages/debugCards/DevNotes";
+import GetData from "./pages/debugCards/GetData";
 import Index from "./pages/Index";
-import BillingAPI from "./pages/BillingAPI";
 
 const routes = {
   "/": () => <Index />,
   "/exitframe": () => <ExitFrame />,
-  "/activeWebhooks": () => <ActiveWebhooks />,
-  "/getData": () => <GetData />,
-  "/billing": () => <BillingAPI />,
-  "/fullscreen": () => <FullScreen />,
+  //Debug Cards
+  "/debug": () => <DebugIndex />,
+  "/debug/activeWebhooks": () => <ActiveWebhooks />,
+  "/debug/getData": () => <GetData />,
+  "/debug/billing": () => <BillingAPI />,
+  "/debug/devNotes": () => <DevNotes />,
+  //Add your routes here
 };
 
 export default routes;

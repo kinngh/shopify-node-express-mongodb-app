@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import { resolve } from "path";
 import shopify from "../utils/shopifyConfig.js";
 
-import setupCheck from "../devUtils/setupCheck.js";
+import setupCheck from "../utils/setupCheck.js";
 import sessionHandler from "../utils/sessionHandler.js";
 import {
   customerDataRequest,

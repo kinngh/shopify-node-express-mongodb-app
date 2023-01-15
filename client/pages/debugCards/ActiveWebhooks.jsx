@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { Redirect } from "@shopify/app-bridge/actions";
-import { Card, DataTable, Page } from "@shopify/polaris";
+import { Card, DataTable, Frame, Loading, Page } from "@shopify/polaris";
 import { navigate } from "raviger";
 import React from "react";
 
@@ -60,8 +60,13 @@ const ActiveWebhooks = () => {
   return (
     <Page
       title="Webhooks"
-      breadcrumbs={[{ content: "Home", onAction: () => navigate("/") }]}
+      breadcrumbs={[{ content: "Home", onAction: () => navigate("/debug") }]}
     >
+      {loading && (
+        <Frame>
+          <Loading />
+        </Frame>
+      )}
       <Card>
         <DataTable
           columnContentTypes={["text", "text"]}
@@ -72,7 +77,6 @@ const ActiveWebhooks = () => {
       <Card
         title="Webhook URLs"
         sectioned
-        // This is an extremely terrible implementation please do not do this
         primaryFooterAction={
           myShopifyDomain
             ? {
@@ -84,7 +88,7 @@ const ActiveWebhooks = () => {
                   );
                 },
               }
-            : { content: "Fetching data" }
+            : { content: "Fetching data", disabled: true }
         }
       >
         <p>

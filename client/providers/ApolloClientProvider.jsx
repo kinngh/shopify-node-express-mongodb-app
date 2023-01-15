@@ -5,8 +5,8 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { useAppBridge } from "@shopify/app-bridge-react";
-import { authenticatedFetch } from "@shopify/app-bridge-utils";
 import { Redirect } from "@shopify/app-bridge/actions";
+import { authenticatedFetch } from "@shopify/app-bridge/utilities";
 
 function ApolloClientProvider({ children }) {
   const client = new ApolloClient({
