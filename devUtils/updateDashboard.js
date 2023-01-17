@@ -5,15 +5,48 @@
   LIMITATION:
   - [OEM] Cannot update GDPR URLs.
   - [OEM] Cannot update App Proxy URL.
+  - May break with a future update to `@shopify/cli-kit`.
  */
 
-import {
-  api as cliAPI,
-  error as cliError,
-  session,
-  ui as cliUI,
-} from "@shopify/cli-kit";
+import { error as cliError, ui as cliUI } from "@shopify/cli-kit";
+import { partnersRequest } from "@shopify/cli-kit/node/api/partners";
+import { ensureAuthenticatedPartners } from "@shopify/cli-kit/node/session";
 import "dotenv/config";
+
+const UpdateAppURLQuery = ` mutation appUpdate($apiKey: String!, $applicationUrl: Url!, $redirectUrlWhitelist: [Url]!) {
+    appUpdate(input: {apiKey: $apiKey, applicationUrl: $applicationUrl, redirectUrlWhitelist: $redirectUrlWhitelist}) {
+      userErrors {
+        message
+        field
+      }
+    }
+  }`;
+
+const FindAppQuery = `query FindApp($apiKey: String!) {
+    app(apiKey: $apiKey) {
+      id
+      title
+      apiKey
+      organizationId
+      apiSecretKeys {
+        secret
+      }
+      appType
+      grantedScopes
+    }
+  }`;
+
+const AllOrganizationsQuery = `
+  {
+    organizations(first: 200) {
+      nodes {
+        id
+        businessName
+        website
+        appsNext
+      }
+    }
+  }`;
 
 const selectOrg = async (accessToken) => {
   const orgs = await getOrgs(accessToken);
@@ -22,10 +55,7 @@ const selectOrg = async (accessToken) => {
 };
 
 const getOrgs = async (accessToken) => {
-  const response = await cliAPI.partners.request(
-    cliAPI.graphql.AllOrganizationsQuery,
-    accessToken
-  );
+  const response = await partnersRequest(AllOrganizationsQuery, accessToken);
   const orgs = response.organizations.nodes;
   if (orgs.length === 0) {
     return new cliError.Abort(
@@ -57,25 +87,20 @@ const selectOrgCLI = async (orgs) => {
 };
 
 const getApp = async (apiKey, accessToken) => {
-  const response = await cliAPI.partners.request(
-    cliAPI.graphql.FindAppQuery,
-    accessToken,
-    {
-      apiKey,
-    }
-  );
+  const response = await partnersRequest(FindAppQuery, accessToken, {
+    apiKey,
+  });
   return response.app;
 };
 const updateDashboardURLs = async (apiKey, appUrl) => {
-  const accessToken = await session.ensureAuthenticatedPartners();
+  const accessToken = await ensureAuthenticatedPartners();
 
   const urls = {
     applicationUrl: appUrl,
     redirectUrlWhitelist: [`${appUrl}/auth/tokens`, `${appUrl}/auth/callback`],
   };
 
-  const query = cliAPI.graphql.UpdateURLsQuery;
-  const result = await cliAPI.partners.request(query, accessToken, {
+  const result = await partnersRequest(UpdateAppURLQuery, accessToken, {
     apiKey,
     ...urls,
   });
@@ -90,7 +115,7 @@ const updateDashboardURLs = async (apiKey, appUrl) => {
 
 console.warn("--> This is for use in DEV mode only");
 console.log("--> Fetching Access Tokens");
-const accessToken = await session.ensureAuthenticatedPartners();
+const accessToken = await ensureAuthenticatedPartners();
 console.log("--> Fetching Orgs");
 await selectOrg(accessToken);
 console.log("--> Fetching App Data");
