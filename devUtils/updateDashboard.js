@@ -8,7 +8,7 @@
   - May break with a future update to `@shopify/cli-kit`.
  */
 
-import { error as cliError, ui as cliUI } from "@shopify/cli-kit";
+import { ui as cliUI } from "@shopify/cli-kit";
 import { partnersRequest } from "@shopify/cli-kit/node/api/partners";
 import { ensureAuthenticatedPartners } from "@shopify/cli-kit/node/session";
 import "dotenv/config";
@@ -58,8 +58,8 @@ const getOrgs = async (accessToken) => {
   const response = await partnersRequest(AllOrganizationsQuery, accessToken);
   const orgs = response.organizations.nodes;
   if (orgs.length === 0) {
-    return new cliError.Abort(
-      `There was a problem connecting to the org. Please check that the org exists and/or you have access. You can logout using\n npm run shopify auth logout`
+    return console.error(
+      `---> There was a problem connecting to the org. Please check that the org exists and/or you have access. You can logout using\n npm run shopify auth logout`
     );
   }
   return orgs;
