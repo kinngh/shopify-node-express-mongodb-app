@@ -10,6 +10,7 @@ I also did make a video going over the entire repo as of November 4, 2022. If th
 
 ## Supporting repositories
 
+- NEW! [Next.js + Prisma](https://github.com/kinngh/shopify-nextjs-prisma-app): A Shopify app boilerplate built with Next.js and Prisma ORM, with deployments available on Vercel. 
 - [WIP] [`npx create-shop-app@latest`](https://github.com/kinngh/create-shop-app): A CLI tool to generate embedded Shopify app boilerplate with a tech stack of your own.
 
 ## Tech Stack
