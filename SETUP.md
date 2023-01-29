@@ -4,6 +4,8 @@ This is an in-depth guide on using this repo. This goes over getting the base re
 
 For deploying to servers, refer to [Deployment](./docs/Deployment.md).
 
+`Windows` users, run `npm install -g win-node-env` before running the repo since `NODE_ENV` isn't recognized in Windows. Alternatively, you can replace it with `cross-env` and update `package.json` accordingly.
+
 - [ ] Run `npm i --force` to install dependencies.
 
   - Substantial efforts have gone into ensuring we're using the latest package versions, and some incompatibility issues always pop up while installing. There are no negative effects on the functionality just yet, but if you find anything please open an issue.
