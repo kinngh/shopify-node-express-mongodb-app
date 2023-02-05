@@ -83,22 +83,6 @@ const DevNotes = () => {
                   </strong>
                 </li>
               </Card.Section>
-              <Card.Section>
-                <p>
-                  To have other common issues added here,{" "}
-                  <Link
-                    onClick={() => {
-                      redirect.dispatch(Redirect.Action.REMOTE, {
-                        url: "https://github.com/kinngh/shopify-node-express-mongodb-app/discussions/new/choose",
-                        newContext: true,
-                      });
-                    }}
-                  >
-                    start a discussion{" "}
-                  </Link>{" "}
-                  here
-                </p>
-              </Card.Section>
             </Card>
           </Layout.Section>
         </Layout>
