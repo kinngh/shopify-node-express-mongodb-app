@@ -23,6 +23,10 @@ const verifyRequest = async (req, res, next) => {
       // if (session?.isActive()) {
       const client = new shopify.clients.Graphql({ session });
       await client.query({ data: TEST_QUERY });
+      res.setHeader(
+        "Content-Security-Policy",
+        `frame-ancestors https://${session.shop} https://admin.shopify.com;`
+      );
       return next();
     }
 

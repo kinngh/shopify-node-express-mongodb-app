@@ -5,15 +5,14 @@ import mongoose from "mongoose";
 import { resolve } from "path";
 import shopify from "../utils/shopifyConfig.js";
 
-import setupCheck from "../utils/setupCheck.js";
 import sessionHandler from "../utils/sessionHandler.js";
+import setupCheck from "../utils/setupCheck.js";
 import {
   customerDataRequest,
   customerRedact,
   shopRedact,
 } from "./controllers/gdpr.js";
 import applyAuthMiddleware from "./middleware/auth.js";
-import csp from "./middleware/csp.js";
 import isShopActive from "./middleware/isShopActive.js";
 import verifyHmac from "./middleware/verifyHmac.js";
 import verifyProxy from "./middleware/verifyProxy.js";
@@ -99,7 +98,6 @@ const createServer = async (root = process.cwd()) => {
     }
   });
 
-  app.use(csp);
   app.use(isShopActive);
   // If you're making changes to any of the routes, please make sure to add them in `./client/vite.config.cjs` or it'll not work.
   app.use("/apps", verifyRequest, userRoutes); //Verify user route requests
