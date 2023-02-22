@@ -24,7 +24,6 @@
     "ngrok:auth": "ngrok authtoken <your-auth-token>",
     "ngrok": "ngrok http 5173",
     "ngrok:prod": "ngrok http 8081",
-    "update:url": "node devUtils/updateDashboard.js",
     "shopify": "shopify",
     "s:e:create": "shopify app generate extension",
     "s:e:deploy": "shopify app deploy"

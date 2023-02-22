@@ -40,8 +40,10 @@ const setupCheck = () => {
     errorCount++;
   }
   if (typeof port === "undefined") {
-    console.warn("--> Port is undefined. Using 8081");
-    errorCount++;
+    if (process.env.NODE_ENV !== "dev") {
+      console.warn("--> Port is undefined. Using 8081");
+      errorCount++;
+    }
   }
 
   if (typeof databaseURL === "undefined") {
