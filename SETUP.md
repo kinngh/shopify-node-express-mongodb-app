@@ -36,6 +36,7 @@ For deploying to servers, refer to [Deployment](./docs/Deployment.md).
   - `pretty`: Run prettier across the entire project. I personally like my code to be readable and using prettier CLI makes things easier. Refer to `.prettierrc` for configuration and `.prettierignore` to ignore files and folders.
   - `ngrok:auth`: Add in your auth token from [Ngrok](https://ngrok.com) to use the service.
   - `ngrok`: Ngrok is used to expose specific ports of your machine to the internet and serve over https. Running `npm run ngrok` auto generates a URL for you. The URL that's generated here goes in `SHOPIFY_APP_URL` and in the URL section of your app in Partner Dashboard.
+  - `update:url`: Update App URL and Whitelisted URLs to your Partner Dashboard from your `.env` file.
   - `shopify`: Run CLI 3.0 commands with `npm run shopify [command]`;
   - `s:e:create`: Create extension scaffolding using CLI 3.0. A new folder called `extensions` is created at root that uses the new folder structure.
   - `s:e:deploy`: Deploy extension(s) to Shopify.
@@ -43,7 +44,7 @@ For deploying to servers, refer to [Deployment](./docs/Deployment.md).
 - [ ] Setup Partner Dashboard
 
   - Run `npm run ngrok` to generate your subdomain. Copy the `https://<your-url>` domain and add it in `SHOPIFY_APP_URL` in your `.env` file.
-  - Head over to Shopify Partner Dashboard > Apps > _Your App Name_ > App Setup
+  - Run `npm run update:url` OR you can do it manually by heading over to Shopify Partner Dashboard > Apps > _Your App Name_ > App Setup
   - In the URLs section
     - App URL: `https://<your-url>`
     - Allowed Redirection URL(s):

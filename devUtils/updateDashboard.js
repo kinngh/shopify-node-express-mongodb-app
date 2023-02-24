@@ -8,9 +8,10 @@
   - May break with a future update to `@shopify/cli-kit`.
  */
 
-import { ui as cliUI } from "@shopify/cli-kit";
 import { partnersRequest } from "@shopify/cli-kit/node/api/partners";
+import { AbortError } from "@shopify/cli-kit/node/error";
 import { ensureAuthenticatedPartners } from "@shopify/cli-kit/node/session";
+import { renderSelectPrompt } from "@shopify/cli-kit/node/ui";
 import "dotenv/config";
 
 const UpdateAppURLQuery = ` mutation appUpdate($apiKey: String!, $applicationUrl: Url!, $redirectUrlWhitelist: [Url]!) {
@@ -58,7 +59,7 @@ const getOrgs = async (accessToken) => {
   const response = await partnersRequest(AllOrganizationsQuery, accessToken);
   const orgs = response.organizations.nodes;
   if (orgs.length === 0) {
-    return console.error(
+    throw new AbortError(
       `---> There was a problem connecting to the org. Please check that the org exists and/or you have access. You can logout using\n npm run shopify auth logout`
     );
   }
@@ -70,20 +71,17 @@ const selectOrgCLI = async (orgs) => {
     return orgs[0];
   }
   const orgList = orgs.map((org) => ({
-    name: org.businessName,
+    label: org.businessName,
     value: org.id,
+    id: org.id,
   }));
 
-  const choice = await cliUI.prompt([
-    {
-      type: "autocomplete",
-      name: "id",
-      message: "Select a Shopify Partner org for this app",
-      choices: orgList,
-    },
-  ]);
+  const choice = await renderSelectPrompt({
+    message: "Select a Shopify Partner org for this app",
+    choices: orgList,
+  });
 
-  return orgs.find((org) => org.id === choice.id);
+  return orgs.find((org) => org.id === choice);
 };
 
 const getApp = async (apiKey, accessToken) => {

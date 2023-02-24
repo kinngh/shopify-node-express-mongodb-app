@@ -14,6 +14,7 @@
   "scripts": {
     "update": "ncu -u",
     "update:check": "ncu",
+    "update:url": "node devUtils/updateDashboard.js",
     "dev": "concurrently \"npm run dev:*\"",
     "dev:server": "NODE_ENV=dev nodemon server/index.js --ignore client/ --ignore dist/",
     "dev:client": "vite --config=./client/vite.config.cjs",
