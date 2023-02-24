@@ -93,9 +93,13 @@ const getApp = async (apiKey, accessToken) => {
 const updateDashboardURLs = async (apiKey, appUrl) => {
   const accessToken = await ensureAuthenticatedPartners();
 
+   const redirectURLs = appUrl.endsWith("/")
+    ? [`${appUrl}auth/tokens`, `${appUrl}auth/callback`]
+    : [`${appUrl}/auth/tokens`, `${appUrl}/auth/callback`];
+
   const urls = {
     applicationUrl: appUrl,
-    redirectUrlWhitelist: [`${appUrl}/auth/tokens`, `${appUrl}/auth/callback`],
+    redirectUrlWhitelist: redirectURLs,
   };
 
   const result = await partnersRequest(UpdateAppURLQuery, accessToken, {
