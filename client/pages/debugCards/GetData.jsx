@@ -1,6 +1,6 @@
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { Redirect } from "@shopify/app-bridge/actions";
-import { Card, Layout, Link, Page } from "@shopify/polaris";
+import { Layout, LegacyCard, Link, Page } from "@shopify/polaris";
 import { navigate } from "raviger";
 import React, { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -55,7 +55,7 @@ const GetData = () => {
     >
       <Layout>
         <Layout.Section>
-          <Card
+          <LegacyCard
             sectioned
             primaryFooterAction={{
               content: "Refetch",
@@ -67,10 +67,10 @@ const GetData = () => {
             <p>
               GET <code>"/apps/api"</code>: {responseData}
             </p>
-          </Card>
+          </LegacyCard>
         </Layout.Section>
         <Layout.Section>
-          <Card
+          <LegacyCard
             sectioned
             primaryFooterAction={{
               content: "Refetch",
@@ -82,10 +82,10 @@ const GetData = () => {
             <p>
               POST <code>"/apps/api" </code>: {responseDataPost}
             </p>
-          </Card>
+          </LegacyCard>
         </Layout.Section>
         <Layout.Section>
-          <Card
+          <LegacyCard
             sectioned
             primaryFooterAction={{
               content: "Refetch",
@@ -97,9 +97,9 @@ const GetData = () => {
             <p>
               GET <code>"/apps/api/gql"</code>: {responseDataGQL}
             </p>
-          </Card>
-          <Card title="Developer Notes">
-            <Card.Section title="Making Requests">
+          </LegacyCard>
+          <LegacyCard title="Developer Notes">
+            <LegacyCard.Section title="Making Requests">
               <li>
                 Create a new route in <code>/server/routes</code> and add it to
                 your <code>index.js</code> to expose it behind{" "}
@@ -134,8 +134,8 @@ const GetData = () => {
                 </Link>{" "}
                 for client side data fetching state management.
               </li>
-            </Card.Section>
-          </Card>
+            </LegacyCard.Section>
+          </LegacyCard>
         </Layout.Section>
       </Layout>
     </Page>

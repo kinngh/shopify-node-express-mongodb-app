@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { Redirect } from "@shopify/app-bridge/actions";
-import { Card, DataTable, Frame, Loading, Page } from "@shopify/polaris";
+import { DataTable, Frame, LegacyCard, Loading, Page } from "@shopify/polaris";
 import { navigate } from "raviger";
 import React from "react";
 
@@ -67,14 +67,14 @@ const ActiveWebhooks = () => {
           <Loading />
         </Frame>
       )}
-      <Card>
+      <LegacyCard>
         <DataTable
           columnContentTypes={["text", "text"]}
           headings={["Topic", "Callback Url"]}
           rows={rows}
         />
-      </Card>
-      <Card
+      </LegacyCard>
+      <LegacyCard
         title="Webhook URLs"
         sectioned
         primaryFooterAction={
@@ -98,7 +98,7 @@ const ActiveWebhooks = () => {
           during dev when using ngrok), you need to go through the auth process
           again. Click on `reauth` to fix this.
         </p>
-      </Card>
+      </LegacyCard>
     </Page>
   );
 };

@@ -30,16 +30,7 @@ const isDev = process.env.NODE_ENV === "dev";
 const mongoUrl =
   process.env.MONGO_URL || "mongodb://127.0.0.1:27017/shopify-express-app";
 
-mongoose.connect(mongoUrl, (err) => {
-  if (err) {
-    console.error(
-      "---> An error occured while connecting to MongoDB",
-      err.message
-    );
-  } else {
-    console.log("--> Connected to MongoDB");
-  }
-});
+mongoose.connect(mongoUrl);
 
 // Register all webhook handlers
 webhookRegistrar();

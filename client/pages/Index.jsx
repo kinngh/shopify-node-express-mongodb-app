@@ -1,6 +1,6 @@
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { Redirect } from "@shopify/app-bridge/actions";
-import { Card, Layout, Page } from "@shopify/polaris";
+import { Layout, LegacyCard, Page } from "@shopify/polaris";
 import { navigate } from "raviger";
 import React from "react";
 
@@ -12,7 +12,7 @@ const HomePage = () => {
     <Page title="Home">
       <Layout>
         <Layout.Section fullWidth>
-          <Card
+          <LegacyCard
             title="Debug Cards"
             sectioned
             primaryFooterAction={{
@@ -26,10 +26,10 @@ const HomePage = () => {
               Explore how the repository handles data fetching from the backend,
               App Proxy, making GraphQL requests, Billing API and more.
             </p>
-          </Card>
+          </LegacyCard>
         </Layout.Section>
         <Layout.Section oneHalf>
-          <Card
+          <LegacyCard
             sectioned
             title="Repository"
             primaryFooterAction={{
@@ -54,8 +54,8 @@ const HomePage = () => {
             ]}
           >
             <p>Star the repository, open a new issue or start a discussion.</p>
-          </Card>
-          <Card
+          </LegacyCard>
+          <LegacyCard
             sectioned
             title="Changelog"
             primaryFooterAction={{
@@ -69,10 +69,10 @@ const HomePage = () => {
             }}
           >
             <p>Explore changelog on Shopify.dev and follow updates.</p>
-          </Card>
+          </LegacyCard>
         </Layout.Section>
         <Layout.Section oneHalf>
-          <Card
+          <LegacyCard
             sectioned
             title="Documentation"
             primaryFooterAction={{
@@ -99,8 +99,8 @@ const HomePage = () => {
             <p>
               Explore the GraphQL APIs in Graphiql or read design guidelines.
             </p>
-          </Card>
-          <Card
+          </LegacyCard>
+          <LegacyCard
             sectioned
             title="Hiring?"
             primaryFooterAction={{
@@ -125,10 +125,10 @@ const HomePage = () => {
             ]}
           >
             <p>🌎 / 🇨🇦 and looking to expand your engineering team?</p>
-          </Card>
+          </LegacyCard>
         </Layout.Section>
         <Layout.Section fullWidth>
-          <Card
+          <LegacyCard
             sectioned
             title="Developer Notes"
             primaryFooterAction={{
@@ -141,7 +141,7 @@ const HomePage = () => {
             <p>
               Read notes on opening an issue, creating App Extensions and more.
             </p>
-          </Card>
+          </LegacyCard>
         </Layout.Section>
       </Layout>
     </Page>
