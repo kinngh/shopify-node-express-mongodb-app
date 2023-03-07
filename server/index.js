@@ -6,6 +6,7 @@ import { resolve } from "path";
 import shopify from "../utils/shopifyConfig.js";
 
 import sessionHandler from "../utils/sessionHandler.js";
+import csp from "./middleware/csp.js";
 import setupCheck from "../utils/setupCheck.js";
 import {
   customerDataRequest,
@@ -89,6 +90,7 @@ const createServer = async (root = process.cwd()) => {
     }
   });
 
+  app.use(csp);
   app.use(isShopActive);
   // If you're making changes to any of the routes, please make sure to add them in `./client/vite.config.cjs` or it'll not work.
   app.use("/apps", verifyRequest, userRoutes); //Verify user route requests
