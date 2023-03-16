@@ -1,3 +1,4 @@
+import { ApiVersion } from "@shopify/shopify-api";
 import sessionHandler from "./sessionHandler.js";
 import shopify from "./shopifyConfig.js";
 
@@ -20,7 +21,10 @@ const graphqlClient = async ({ req, res, isOnline }) => {
 
 const restClient = async ({ req, res, isOnline }) => {
   const session = await fetchSession({ req, res, isOnline });
-  const client = new shopify.clients.Rest({ session });
+  const client = new shopify.clients.Rest({
+    session,
+    apiVersion: ApiVersion.January23,
+  });
   const { shop } = session;
   return { client, shop, session };
 };
