@@ -17,6 +17,7 @@ const verifyProxy = (req, res, next) => {
     .digest("hex");
 
   if (calculatedSignature === signature) {
+    res.locals.user_shop = req.query.shop;
     next();
   } else {
     res.send(401);
