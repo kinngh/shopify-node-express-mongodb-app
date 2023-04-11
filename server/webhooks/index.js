@@ -19,7 +19,7 @@ import appUninstallHandler from "./app_uninstalled.js";
 */
 
 const webhookRegistrar = async () => {
-  await shopify.webhooks.addHandlers({
+  shopify.webhooks.addHandlers({
     APP_UNINSTALLED: {
       deliveryMethod: DeliveryMethod.Http,
       callbackUrl: "/webhooks/app_uninstalled",
