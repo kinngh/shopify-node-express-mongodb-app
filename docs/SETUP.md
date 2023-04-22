@@ -1,8 +1,6 @@
 # Setup
 
-This is an in-depth guide on using this repo. This goes over getting the base repo up and running, to understand how to add your own customizations server side like registering webhooks, routes, etc, refer to [Notes](./NOTES.md).
-
-For deploying to servers, refer to [Deployment](./docs/Deployment.md).
+This is an in-depth guide on using this repo. This goes over getting the base repo up and running, to understand how to add your own customizations server side like registering webhooks, routes, etc, refer to [Notes](/docs/NOTES.md).
 
 `Windows` users, run `npm install -g win-node-env` before running the repo since `NODE_ENV` isn't recognized in Windows. Alternatively, you can replace it with `cross-env` and update `package.json` accordingly.
 

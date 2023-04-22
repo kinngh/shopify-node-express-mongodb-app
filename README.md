@@ -2,7 +2,7 @@
 
 An embedded app starter template to get up and ready with Shopify app development with JavaScript. This is heavily influenced by the choices Shopify Engineering team made in building their [starter template](https://github.com/Shopify/shopify-app-template-node) to ensure smooth transition between templates.
 
-I've included [notes](/NOTES.md) on this repo which goes over the repo on why certain choices were made.
+I've included [notes](/docs/NOTES.md) on this repo which goes over the repo on why certain choices were made.
 
 I also did make a video going over the entire repo as of November 4, 2022. If there's any substantial changes, the video here will be updated to reflect it.
 
@@ -37,7 +37,7 @@ The Shopify CLI generates an amazing starter app but it still needs some more bo
 
 ### Setup
 
-- Refer to [SETUP](/SETUP.md)
+- Refer to [SETUP](/docs/SETUP.md)
 
 ### Misc
 
