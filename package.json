@@ -33,30 +33,30 @@
     "@apollo/client": "^3.7.14",
     "@shopify/app-bridge": "^3.7.7",
     "@shopify/app-bridge-react": "^3.7.7",
-    "@shopify/polaris": "^10.49.1",
-    "@shopify/shopify-api": "^7.0.0",
+    "@shopify/polaris": "^10.50.1",
+    "@shopify/shopify-api": "^7.2.0",
     "compression": "^1.7.4",
     "cryptr": "^6.2.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "graphql": "^16.6.0",
-    "mongoose": "^7.1.0",
+    "mongoose": "^7.2.0",
     "raviger": "^4.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@shopify/app": "^3.45.4",
-    "@shopify/cli": "^3.45.4",
-    "@shopify/cli-kit": "^3.45.4",
+    "@shopify/app": "^3.46.0",
+    "@shopify/cli": "^3.46.0",
+    "@shopify/cli-kit": "^3.46.0",
     "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^8.0.1",
     "ngrok": "^4.3.3",
     "nodemon": "^2.0.22",
     "npm-check-updates": "^16.10.12",
     "prettier": "^2.8.8",
-    "vite": "^4.3.5"
+    "vite": "^4.3.8"
   },
   "overrides": {
     "@shopify/cli-kit": {
