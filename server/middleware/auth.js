@@ -51,7 +51,7 @@ const authMiddleware = (app) => {
       const webhookRegisterResponse = await shopify.webhooks.register({
         session,
       }); //Register all webhooks with offline token
-      console.log(webhookRegisterResponse); //This is an array that includes all registry responses.
+      console.dir(webhookRegisterResponse, { depth: null }); //This is an array that includes all registry responses.
 
       return await shopify.auth.begin({
         shop: session.shop,
