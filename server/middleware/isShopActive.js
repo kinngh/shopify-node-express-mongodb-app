@@ -8,12 +8,12 @@ const isShopActive = async (req, res, next) => {
     return;
   }
 
-  const isShopAvaialble = await StoreModel.findOne({ shop });
+  const isShopAvailable = await StoreModel.findOne({ shop });
 
-  if (isShopAvaialble === null || !isShopAvaialble.isActive) {
-    if (isShopAvaialble === null) {
+  if (isShopAvailable === null || !isShopAvailable.isActive) {
+    if (isShopAvailable === null) {
       await StoreModel.create({ shop, isActive: false });
-    } else if (!isShopAvaialble.isActive) {
+    } else if (!isShopAvailable.isActive) {
       await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
     }
     res.redirect(`/auth?shop=${shop}&host=${host}`);
