@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 const routes = {
   "/": () => <Index />,
   "/exitframe": () => <ExitFrame />,
+  "/exitframe/:shop": ({ shop }) => <ExitFrame shop={shop} />,
   //Debug Cards
   "/debug": () => <DebugIndex />,
   "/debug/activeWebhooks": () => <ActiveWebhooks />,

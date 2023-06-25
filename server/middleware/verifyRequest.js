@@ -20,7 +20,6 @@ const verifyRequest = async (req, res, next) => {
     const session = await sessionHandler.loadSession(sessionId);
 
     if (new Date(session?.expires) > new Date()) {
-      // if (session?.isActive()) {
       const client = new shopify.clients.Graphql({ session });
       await client.query({ data: TEST_QUERY });
       res.setHeader(
@@ -48,14 +47,15 @@ const verifyRequest = async (req, res, next) => {
       res.header("X-Shopify-API-Request-Failure-Reauthorize", "1");
       res.header(
         "X-Shopify-API-Request-Failure-Reauthorize-Url",
-        `/auth?shop=${shop}`
+        `/exitframe/${shop}`
       );
       res.end();
     } else {
-      res.redirect(`/auth?shop=${shop}`);
+      res.redirect(`/exitframe/${shop}`);
     }
   } catch (e) {
     console.error(e);
+    return res.status(401).send({ error: "Nah I ain't serving this request" });
   }
 };
 
