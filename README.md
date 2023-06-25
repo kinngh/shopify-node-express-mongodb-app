@@ -43,3 +43,5 @@ The Shopify CLI generates an amazing starter app but it still needs some more bo
 
 - Storing data is kept to a minimal to allow building custom models for flexibility.
   - Session persistence is also kept to a minimal and based on the Redis example provided by Shopify, but feel free to modify as required.
+- Installation in dev mode is broken and works as expected in production. You will see a 404 in Shopify admin when you attempt to install from dev Use this URL to install the app instead:
+  -  https://ngrok-url.io/auth?shop=storename.myshopify.com
