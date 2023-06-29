@@ -20,7 +20,7 @@ function AppBridgeProvider({ children }) {
         forceRedirect: true,
       });
     }
-  }, [query]);
+  }, []);
 
   const history = useMemo(
     () => ({
