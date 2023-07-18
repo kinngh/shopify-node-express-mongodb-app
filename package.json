@@ -14,7 +14,7 @@
   "scripts": {
     "update": "ncu -u",
     "update:check": "ncu",
-    "update:url": "node devUtils/updateDashboard.js",
+    "update:url": "node _developer/updateDashboard.js",
     "dev": "concurrently \"npm run dev:*\"",
     "dev:server": "NODE_ENV=dev nodemon server/index.js --ignore client/ --ignore dist/",
     "dev:client": "vite --config=./client/vite.config.cjs",
@@ -30,33 +30,33 @@
     "s:e:deploy": "shopify app deploy"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.15",
-    "@shopify/app-bridge": "^3.7.7",
-    "@shopify/app-bridge-react": "^3.7.7",
-    "@shopify/polaris": "^11.1.3",
-    "@shopify/shopify-api": "^7.3.1",
+    "@apollo/client": "^3.7.17",
+    "@shopify/app-bridge": "^3.7.8",
+    "@shopify/app-bridge-react": "^3.7.8",
+    "@shopify/polaris": "^11.6.0",
+    "@shopify/shopify-api": "^7.5.0",
     "compression": "^1.7.4",
     "cryptr": "^6.2.0",
-    "dotenv": "^16.2.0",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "graphql": "^16.6.0",
-    "mongoose": "^7.3.0",
+    "graphql": "^16.7.1",
+    "mongoose": "^7.3.4",
     "raviger": "^4.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@shopify/app": "^3.46.5",
-    "@shopify/cli": "^3.46.5",
-    "@shopify/cli-kit": "^3.46.5",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@shopify/app": "^3.47.5",
+    "@shopify/cli": "^3.47.5",
+    "@shopify/cli-kit": "^3.47.5",
+    "@vitejs/plugin-react": "^4.0.3",
     "concurrently": "^8.2.0",
     "ngrok": "^4.3.3",
-    "nodemon": "^2.0.22",
-    "npm-check-updates": "^16.10.12",
-    "prettier": "^2.8.8",
-    "vite": "^4.3.9"
+    "nodemon": "^3.0.1",
+    "npm-check-updates": "^16.10.16",
+    "prettier": "^3.0.0",
+    "vite": "^4.4.4"
   },
   "overrides": {
     "@shopify/cli-kit": {
