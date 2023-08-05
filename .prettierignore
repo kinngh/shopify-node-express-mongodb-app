@@ -2,5 +2,5 @@
 dist/
 mongo/
 node_modules/
-
 package-lock.json
+client/vite.config.cjs

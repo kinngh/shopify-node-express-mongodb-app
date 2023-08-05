@@ -47,20 +47,18 @@ const ActiveWebhooks = () => {
     console.log("error", error.message);
   }
 
-  const { data: myShopifyDomain } = useQuery(
-    gql`
-      {
-        shop {
-          myshopifyDomain
-        }
+  const { data: myShopifyDomain } = useQuery(gql`
+    {
+      shop {
+        myshopifyDomain
       }
-    `
-  );
+    }
+  `);
 
   return (
     <Page
       title="Webhooks"
-      breadcrumbs={[{ content: "Home", onAction: () => navigate("/debug") }]}
+      backAction={{ content: "Home", onAction: () => navigate("/debug") }}
     >
       {loading && (
         <Frame>

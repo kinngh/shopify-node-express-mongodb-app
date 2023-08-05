@@ -9,7 +9,7 @@ const DebugIndex = () => {
     <Page
       title="Debug Cards"
       subtitle="Interact and explore the current installation"
-      breadcrumbs={[{ content: "Home", onAction: () => navigate("/") }]}
+      backAction={{ content: "Home", onAction: () => navigate("/") }}
     >
       <Layout>
         <Layout.Section oneHalf>

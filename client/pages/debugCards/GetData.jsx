@@ -51,7 +51,7 @@ const GetData = () => {
   return (
     <Page
       title="Data Fetching"
-      breadcrumbs={[{ content: "Home", onAction: () => navigate("/debug") }]}
+      backAction={{ content: "Home", onAction: () => navigate("/debug") }}
     >
       <Layout>
         <Layout.Section>
