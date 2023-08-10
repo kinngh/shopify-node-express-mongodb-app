@@ -30,7 +30,7 @@
     "s:e:deploy": "shopify app deploy"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.17",
+    "@apollo/client": "^3.8.0",
     "@shopify/app-bridge": "^3.7.9",
     "@shopify/app-bridge-react": "^3.7.9",
     "@shopify/polaris": "^11.11.0",
@@ -54,9 +54,9 @@
     "@vitejs/plugin-react": "^4.0.4",
     "concurrently": "^8.2.0",
     "nodemon": "^3.0.1",
-    "npm-check-updates": "^16.10.17",
+    "npm-check-updates": "^16.10.18",
     "prettier": "^3.0.1",
-    "vite": "^4.4.8"
+    "vite": "^4.4.9"
   },
   "overrides": {
     "@shopify/cli-kit": {
