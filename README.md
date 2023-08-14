@@ -1,5 +1,7 @@
 # Shopify Node.js x Express.js x React.js Boilerplate
 
+[![Shopify Course](https://raw.githubusercontent.com/kinngh/extras/main/shopify_course_promo_github.png)](https://kinngh.gumroad.com/l/how-to-make-shopify-apps?offer_code=PREORDER)
+
 An embedded app starter template to get up and ready with Shopify app development with JavaScript. This is heavily influenced by the choices Shopify Engineering team made in building their [starter template](https://github.com/Shopify/shopify-app-template-node) to ensure smooth transition between templates.
 
 I've included [notes](/docs/NOTES.md) on this repo which goes over the repo on why certain choices were made.
