@@ -1,12 +1,11 @@
 import React from "react";
 
 import ExitFrame from "./ExitFrame";
-import ActiveWebhooks from "./pages/debugCards/ActiveWebhooks";
-import BillingAPI from "./pages/debugCards/BillingAPI";
-import DebugIndex from "./pages/debugCards/DebugIndex";
-import DevNotes from "./pages/debugCards/DevNotes";
-import GetData from "./pages/debugCards/GetData";
 import Index from "./pages/Index";
+import DebugIndex from "./pages/debug/Index";
+import BillingAPI from "./pages/debug/Billing";
+import GetData from "./pages/debug/Data";
+import ActiveWebhooks from "./pages/debug/Webhooks";
 
 const routes = {
   "/": () => <Index />,
@@ -14,10 +13,9 @@ const routes = {
   "/exitframe/:shop": ({ shop }) => <ExitFrame shop={shop} />,
   //Debug Cards
   "/debug": () => <DebugIndex />,
-  "/debug/activeWebhooks": () => <ActiveWebhooks />,
-  "/debug/getData": () => <GetData />,
+  "/debug/webhooks": () => <ActiveWebhooks />,
+  "/debug/data": () => <GetData />,
   "/debug/billing": () => <BillingAPI />,
-  "/debug/devNotes": () => <DevNotes />,
   //Add your routes here
 };
 

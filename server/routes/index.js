@@ -7,11 +7,12 @@ userRoutes.use(subscriptionRoute);
 
 userRoutes.get("/api", (req, res) => {
   const sendData = { text: "This is coming from /apps/api route." };
-  res.status(200).json(sendData);
+  return res.status(200).json(sendData);
 });
 
 userRoutes.post("/api", (req, res) => {
-  res.status(200).json(req.body);
+  console.log("Route hit");
+  return res.status(200).json(req.body);
 });
 
 userRoutes.get("/api/gql", async (req, res) => {
@@ -30,7 +31,33 @@ userRoutes.get("/api/gql", async (req, res) => {
     }`,
   });
 
-  res.status(200).send(shop);
+  return res.status(200).json({ text: shop.body.data.shop.name });
+});
+
+userRoutes.get("/api/activeWebhooks", async (req, res) => {
+  const { client } = await clientProvider.graphqlClient({
+    req,
+    res,
+    isOnline: true,
+  });
+  const activeWebhooks = await client.query({
+    data: `{
+      webhookSubscriptions(first: 25) {
+        edges {
+          node {
+            topic
+            endpoint {
+              __typename
+              ... on WebhookHttpEndpoint {
+                callbackUrl
+              }
+            }
+          }
+        }
+      }
+    }`,
+  });
+  return res.status(200).json(activeWebhooks);
 });
 
 export default userRoutes;

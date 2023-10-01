@@ -9,6 +9,7 @@ mongo/
 
 # Package-Lock
 package-lock.json
+bun.lockb
 
 # Logs
 logs

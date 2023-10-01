@@ -12,35 +12,36 @@
     "url": "https://github.com/kinngh/shopify-node-express-mongodb-app.git"
   },
   "scripts": {
-    "update": "ncu -u",
-    "update:check": "ncu",
-    "update:url": "node _developer/updateDashboard.js",
     "dev": "concurrently \"npm run dev:*\"",
     "dev:server": "NODE_ENV=dev nodemon server/index.js --ignore client/ --ignore dist/",
     "dev:client": "vite --config=./client/vite.config.cjs",
-    "preserve": "npm run build",
     "build": "vite build --config=./client/vite.config.cjs",
     "start": "NODE_ENV=prod node server/index.js",
+    "-----> utils <-----": "",
+    "update": "ncu -u",
+    "update:url": "node _developer/updateDashboard.js",
     "pretty": "prettier --write .",
+    "-----> ngrok <-----": "",
     "ngrok:auth": "ngrok authtoken <your-auth-token>",
     "ngrok": "ngrok http 5173",
     "ngrok:prod": "ngrok http 8081",
+    "-----> Shopify <-----": "",
+    "g:install": "npm i -g @shopify/app@latest @shopify/cli@latest",
     "shopify": "shopify",
-    "s:e:create": "shopify app generate extension",
-    "s:e:deploy": "shopify app deploy"
+    "-----> Reserved Scripts <-----": "",
+    "preserve": "npm run build"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.2",
+    "@apollo/client": "^3.8.4",
     "@shopify/app-bridge": "^3.7.9",
     "@shopify/app-bridge-react": "^3.7.9",
-    "@shopify/polaris": "^11.14.0",
-    "@shopify/shopify-api": "^7.6.0",
+    "@shopify/polaris": "^11.25.0",
+    "@shopify/shopify-api": "^7.7.0",
     "compression": "^1.7.4",
-    "cryptr": "^6.2.0",
+    "cryptr": "^6.3.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "graphql": "^16.8.0",
-    "mongoose": "^7.5.0",
+    "mongoose": "^7.5.3",
     "ngrok": "^5.0.0-beta.2",
     "raviger": "^4.1.2",
     "react": "^18.2.0",
@@ -48,25 +49,12 @@
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@shopify/app": "^3.48.6",
-    "@shopify/cli": "^3.48.6",
-    "@shopify/cli-kit": "^3.48.6",
-    "@vitejs/plugin-react": "^4.0.4",
+    "@shopify/cli-kit": "^3.49.4",
+    "@vitejs/plugin-react": "^4.1.0",
     "concurrently": "^8.2.1",
     "nodemon": "^3.0.1",
-    "npm-check-updates": "^16.13.2",
+    "npm-check-updates": "^16.14.4",
     "prettier": "^3.0.3",
     "vite": "^4.4.9"
-  },
-  "overrides": {
-    "@shopify/cli-kit": {
-      "react": "18.2.0"
-    },
-    "@shopify/cli": {
-      "react": "18.2.0"
-    },
-    "@shopify/app": {
-      "react": "18.2.0"
-    }
   }
 }

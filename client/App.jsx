@@ -18,13 +18,16 @@ export default function App() {
   const RouteComponents = useRoutes(routes);
 
   return (
-    <PolarisProvider i18n={translations}>
+    <PolarisProvider
+      i18n={translations}
+      features={{ polarisSummerEditions2023: true }}
+    >
       <AppBridgeProvider>
         <NavigationMenu
           navigationLinks={[
             {
               label: "Fetch Data",
-              destination: "/debug/getData",
+              destination: "/debug/data",
             },
             {
               label: "Billing API",
