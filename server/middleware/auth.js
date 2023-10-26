@@ -1,27 +1,49 @@
 import {
+  BotActivityDetected,
   CookieNotFound,
   InvalidOAuthError,
   InvalidSession,
 } from "@shopify/shopify-api";
-import authRedirect from "../../utils/authRedirect.js";
 import StoreModel from "../../utils/models/StoreModel.js";
 import sessionHandler from "../../utils/sessionHandler.js";
-import shopify from "../../utils/shopifyConfig.js";
+import shopify from "../../utils/shopify.js";
 
 const authMiddleware = (app) => {
-  app.get("/auth", async (req, res) => {
+  app.get("/api/auth", async (req, res) => {
     try {
-      await authRedirect(req, res);
+      if (!req.query.shop) {
+        return res.status(500).send("No shop provided");
+      }
+
+      if (req.query.embedded === "1") {
+        const shop = shopify.utils.sanitizeShop(req.query.shop);
+        const queryParams = new URLSearchParams({
+          ...req.query,
+          shop,
+          redirectUri: `https://${shopify.config.hostName}/api/auth?shop=${shop}`,
+        }).toString();
+
+        return res.redirect(`/exitframe?${queryParams}`);
+      }
+
+      return await shopify.auth.begin({
+        shop: req.query.shop,
+        callbackPath: "/api/auth/tokens",
+        isOnline: false,
+        rawRequest: req,
+        rawResponse: res,
+      });
     } catch (e) {
-      console.error(`---> Error at /auth`, e);
+      console.error(`---> Error at /api/auth`, e);
       const { shop } = req.query;
       switch (true) {
         case e instanceof CookieNotFound:
-          return res.redirect(`/exitframe/${shop}`);
-          break;
         case e instanceof InvalidOAuthError:
         case e instanceof InvalidSession:
-          res.redirect(`/auth?shop=${shop}`);
+          res.redirect(`/api/auth?shop=${shop}`);
+          break;
+        case e instanceof BotActivityDetected:
+          res.status(410).send(e.message);
           break;
         default:
           res.status(500).send(e.message);
@@ -30,7 +52,7 @@ const authMiddleware = (app) => {
     }
   });
 
-  app.get("/auth/tokens", async (req, res) => {
+  app.get("/api/auth/tokens", async (req, res) => {
     try {
       const callbackResponse = await shopify.auth.callback({
         rawRequest: req,
@@ -43,26 +65,27 @@ const authMiddleware = (app) => {
 
       const webhookRegisterResponse = await shopify.webhooks.register({
         session,
-      }); //Register all webhooks with offline token
-      console.dir(webhookRegisterResponse, { depth: null }); //This is an array that includes all registry responses.
+      });
+      console.dir(webhookRegisterResponse, { depth: null });
 
       return await shopify.auth.begin({
         shop: session.shop,
-        callbackPath: "/auth/callback",
+        callbackPath: "/api/auth/callback",
         isOnline: true,
         rawRequest: req,
         rawResponse: res,
       });
     } catch (e) {
-      console.error(`---> Error at /auth/tokens`, e);
+      console.error(`---> Error at /api/auth/tokens`, e);
       const { shop } = req.query;
       switch (true) {
         case e instanceof CookieNotFound:
-          return res.redirect(`/exitframe/${shop}`);
-          break;
         case e instanceof InvalidOAuthError:
         case e instanceof InvalidSession:
-          res.redirect(`/auth?shop=${shop}`);
+          res.redirect(`/api/auth?shop=${shop}`);
+          break;
+        case e instanceof BotActivityDetected:
+          res.status(410).send(e.message);
           break;
         default:
           res.status(500).send(e.message);
@@ -71,7 +94,7 @@ const authMiddleware = (app) => {
     }
   });
 
-  app.get("/auth/callback", async (req, res) => {
+  app.get("/api/auth/callback", async (req, res) => {
     try {
       const callbackResponse = await shopify.auth.callback({
         rawRequest: req,
@@ -90,18 +113,18 @@ const authMiddleware = (app) => {
         { upsert: true }
       ); //Update store to true after auth has happened, or it'll cause reinstall issues.
 
-      // Redirect to app with shop parameter upon auth
-      res.redirect(`/?shop=${shop}&host=${host}`);
+      return res.redirect(`/?shop=${shop}`);
     } catch (e) {
-      console.error(`---> Error at /auth/callback`, e);
+      console.error(`---> Error at /api/auth/callback`, e);
       const { shop } = req.query;
       switch (true) {
         case e instanceof CookieNotFound:
-          return res.redirect(`/exitframe/${shop}`);
-          break;
         case e instanceof InvalidOAuthError:
         case e instanceof InvalidSession:
-          res.redirect(`/auth?shop=${shop}`);
+          res.redirect(`/api/auth?shop=${shop}`);
+          break;
+        case e instanceof BotActivityDetected:
+          res.status(410).send(e.message);
           break;
         default:
           res.status(500).send(e.message);

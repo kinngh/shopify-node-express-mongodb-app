@@ -1,5 +1,6 @@
-import { shopifyApi } from "@shopify/shopify-api";
+import { DeliveryMethod, shopifyApi } from "@shopify/shopify-api";
 import "dotenv/config";
+import appUninstallHandler from "../server/webhooks/app_uninstalled.js";
 
 const isDev = process.env.NODE_ENV === "dev";
 
@@ -12,6 +13,15 @@ const shopify = shopifyApi({
   hostScheme: "https",
   apiVersion: process.env.SHOPIFY_API_VERSION,
   isEmbeddedApp: true,
-  logger: { level: isDev ? 3 : 0 }, //Error = 0,Warning = 1,Info = 2,Debug = 3
+  logger: { level: isDev ? 1 : 0 }, //Error = 0,Warning = 1,Info = 2,Debug = 3
 });
+
+shopify.webhooks.addHandlers({
+  APP_UNINSTALLED: {
+    deliveryMethod: DeliveryMethod.Http,
+    callbackUrl: "/webhooks/app_uninstalled",
+    callback: appUninstallHandler,
+  },
+});
+
 export default shopify;

@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import shopify from "../../utils/shopifyConfig.js";
+import shopify from "../../utils/shopify.js";
 
 const verifyHmac = (req, res, next) => {
   try {

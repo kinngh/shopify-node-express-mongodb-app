@@ -1,11 +1,11 @@
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../hooks/useFetch.js";
 import {
   Card,
   DataTable,
   Layout,
   Page,
   Text,
-  VerticalStack,
+  BlockStack,
 } from "@shopify/polaris";
 import { navigate } from "raviger";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ const ActiveWebhooks = () => {
   ]);
 
   async function fetchWebhooks() {
-    const res = await fetch("/api/activeWebhooks");
+    const res = await fetch("/api/apps/debug/activeWebhooks");
     const data = await res.json();
     let rowData = [];
     Object.entries(data.body.data.webhookSubscriptions.edges).map(
@@ -53,7 +53,7 @@ const ActiveWebhooks = () => {
           </Layout.Section>
           <Layout.Section>
             <Card>
-              <VerticalStack gap="2">
+              <BlockStack gap="200">
                 <Text as="h2" variant="headingMd">
                   Note
                 </Text>
@@ -64,7 +64,7 @@ const ActiveWebhooks = () => {
                   URL (happens usually during dev when using ngrok), you need to
                   go through the auth process again.
                 </Text>
-              </VerticalStack>
+              </BlockStack>
             </Card>
           </Layout.Section>
         </Layout>

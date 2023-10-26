@@ -16,7 +16,7 @@ const isShopActive = async (req, res, next) => {
     } else if (!isShopAvaialble.isActive) {
       await StoreModel.findOneAndUpdate({ shop }, { isActive: false });
     }
-    res.redirect(`/auth?shop=${shop}&host=${host}`);
+    res.redirect(`/api/auth?shop=${shop}&host=${host}`);
   } else {
     next();
   }

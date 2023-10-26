@@ -1,27 +1,31 @@
-import { gql, useQuery } from "@apollo/client";
-import { Loading, useAppBridge } from "@shopify/app-bridge-react";
-import { Redirect } from "@shopify/app-bridge/actions";
-import { DataTable, Frame, Layout, LegacyCard, Page } from "@shopify/polaris";
+import useFetch from "../../hooks/useFetch.js";
+import {
+  DataTable,
+  Layout,
+  Card,
+  Page,
+  BlockStack,
+  InlineStack,
+  Button,
+  Text,
+} from "@shopify/polaris";
 import { navigate } from "raviger";
-import React, { useState } from "react";
-import useFetch from "../../hooks/useFetch";
+import { useEffect, useState } from "react";
 
 const BillingAPI = () => {
-  const [responseData, setResponseData] = useState("");
-  const app = useAppBridge();
   const fetch = useFetch();
-  const redirect = Redirect.create(app);
+  const [responseData, setResponseData] = useState("");
 
   async function fetchContent() {
     setResponseData("loading...");
-    const res = await fetch("api/recurringSubscription"); //fetch instance of useFetch()
+    const res = await fetch("/api/apps/debug/createNewSubscription");
     const data = await res.json();
     if (data.error) {
       setResponseData(data.error);
     } else if (data.confirmationUrl) {
       setResponseData("Redirecting");
       const { confirmationUrl } = data;
-      redirect.dispatch(Redirect.Action.REMOTE, confirmationUrl);
+      open(confirmationUrl, "_top");
     }
   }
 
@@ -32,25 +36,29 @@ const BillingAPI = () => {
     >
       <Layout>
         <Layout.Section>
-          <LegacyCard
-            sectioned
-            primaryFooterAction={{
-              content: "Subscribe merchant",
-              onAction: () => {
-                fetchContent();
-              },
-            }}
-          >
-            <p>
-              Subscribe your merchant to a test $10.25 plan and redirect to your
-              home page.
-            </p>
+          <Card>
+            <BlockStack gap="200">
+              <Text>
+                Subscribe your merchant to a test $10.25 plan and redirect to
+                your home page.
+              </Text>
 
-            {
-              /* If we have an error, it'll pop up here. */
-              responseData && <p>{responseData}</p>
-            }
-          </LegacyCard>
+              {
+                /* If we have an error, it'll pop up here. */
+                responseData && <Text>{responseData}</Text>
+              }
+              <InlineStack gap="200" align="end">
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    fetchContent();
+                  }}
+                >
+                  Subscribe Merchant
+                </Button>
+              </InlineStack>
+            </BlockStack>
+          </Card>
         </Layout.Section>
         <Layout.Section>
           <ActiveSubscriptions />
@@ -61,73 +69,43 @@ const BillingAPI = () => {
 };
 
 const ActiveSubscriptions = () => {
-  const getActiveSubscriptions = gql`
-    {
-      appInstallation {
-        activeSubscriptions {
-          name
-          status
-          lineItems {
-            plan {
-              pricingDetails {
-                ... on AppRecurringPricing {
-                  __typename
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  interval
-                }
-              }
-            }
-          }
-          test
-        }
-      }
-    }
-  `;
+  const [rows, setRows] = useState([]);
 
-  const { loading, error, data } = useQuery(getActiveSubscriptions);
+  async function getActiveSubscriptions() {
+    const res = await fetch("/api/apps/debug/getActiveSubscriptions");
+    const data = await res.json();
 
-  let rows = [];
-  if (loading) {
-    console.log("loading", loading);
-    return (
-      <>
-        <Frame>
-          <Loading />
-        </Frame>
-      </>
-    );
-  }
-  if (data) {
-    const activeSubscriptions = data.appInstallation.activeSubscriptions;
+    let rowsData = [];
+    const activeSubscriptions =
+      data.body.data.appInstallation.activeSubscriptions;
+
     if (activeSubscriptions.length === 0) {
-      rows.push(["No Plan", "N/A", "N/A", "USD 0.00"]);
+      rowsData.push(["No Plan", "N/A", "N/A", "USD 0.00"]);
     } else {
       console.log("Rendering Data");
       Object.entries(activeSubscriptions).map(([key, value]) => {
         const { name, status, test } = value;
         const { amount, currencyCode } =
           value.lineItems[0].plan.pricingDetails.price;
-        rows.push([name, status, `${test}`, `${currencyCode} ${amount}`]);
+        rowsData.push([name, status, `${test}`, `${currencyCode} ${amount}`]);
       });
     }
+    setRows(rowsData);
   }
-
-  if (error) {
-    rows.push(["Error", "Check console for more info"]);
-    console.log("error", error.message);
-  }
+  useEffect(() => {
+    getActiveSubscriptions();
+  }, []);
 
   return (
-    <LegacyCard title="Active Subscriptions" sectioned>
-      <DataTable
-        columnContentTypes={["text", "text", "text", "text"]}
-        headings={["Plan Name", "Status", "Test", "Amount"]}
-        rows={rows}
-      />
-    </LegacyCard>
+    <>
+      <Card padding="0">
+        <DataTable
+          columnContentTypes={["text", "text", "text", "text"]}
+          headings={["Plan Name", "Status", "Test", "Amount"]}
+          rows={rows}
+        />
+      </Card>
+    </>
   );
 };
 

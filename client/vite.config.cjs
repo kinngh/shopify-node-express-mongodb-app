@@ -13,10 +13,12 @@ const proxyOptions = {
   secure: true,
   ws: false,
 };
+
 const host = process.env.SHOPIFY_APP_URL
   ? process.env.SHOPIFY_APP_URL.replace(/https?:\/\//, "")
   : "localhost";
 let hmrConfig;
+
 if (host === "localhost") {
   hmrConfig = {
     protocol: "ws",
@@ -53,21 +55,7 @@ export default defineConfig({
     port: VitePort,
     hmr: hmrConfig,
     proxy: {
-      // Routes are kept separate on purpose
-      "^/auth(/|(\\?.*)?$)": proxyOptions,
-      "^/apps(/|(\\?.*)?$)": proxyOptions,
-      "^/proxy_route(/|(\\?.*)?$)": proxyOptions,
-      "^/graphql(/|(\\?.*)?$)": proxyOptions,
-      "^/webhooks(/|(\\?.*)?$)": proxyOptions,
-      "^/gdpr(/|(\\?.*)?$)": proxyOptions,
+      "^/api(/|(\\?.*)?$)": proxyOptions,
     },
   },
 });
-
-// proxy routes ARE clumsy, but a future update will refactor into a single route
-// like /apps/* so everything works as expected.
-// I am working on `create-shop-app` project anyways where I deal with this
-// so just 🐻 with me on this, but it's production ready, so don't worry about this
-// On a future date I'll push out a migration guide because the entire structure will change
-// to make the developer experience better.
-// https://github.com/kinngh/create-shop-app

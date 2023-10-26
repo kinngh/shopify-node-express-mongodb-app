@@ -1,28 +1,13 @@
-import { useAppBridge } from "@shopify/app-bridge-react";
-import { authenticatedFetch } from "@shopify/app-bridge/utilities";
-import { Redirect } from "@shopify/app-bridge/actions";
+import { navigate } from "raviger";
 
 function useFetch() {
-  const app = useAppBridge();
-  const fetchFunction = authenticatedFetch(app);
-
   return async (uri, options) => {
-    const response = await fetchFunction(
-      uri.startsWith("/")
-        ? `https://${appOrigin}/apps${uri}`
-        : `https://${appOrigin}/apps/${uri}`,
-      options
-    );
+    const response = await fetch(uri, options);
 
-    if (
-      response.headers.get("X-Shopify-API-Request-Failure-Reauthorize") === "1"
-    ) {
-      const authUrlHeader = response.headers.get(
-        "X-Shopify-API-Request-Failure-Reauthorize-Url"
-      );
+    if (response.headers.get("Verify-Request-Failure") === "1") {
+      const authUrlHeader = response.headers.get("Verify-Request-Reauth-URL");
+      navigate(authUrlHeader);
 
-      const redirect = Redirect.create(app);
-      redirect.dispatch(Redirect.Action.APP, authUrlHeader || `/exitframe`);
       return null;
     }
 

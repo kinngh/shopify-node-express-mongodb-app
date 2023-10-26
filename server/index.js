@@ -3,7 +3,7 @@ import "dotenv/config";
 import Express from "express";
 import mongoose from "mongoose";
 import { resolve } from "path";
-import shopify from "../utils/shopifyConfig.js";
+import shopify from "../utils/shopify.js";
 
 import sessionHandler from "../utils/sessionHandler.js";
 import csp from "./middleware/csp.js";
@@ -20,7 +20,6 @@ import verifyProxy from "./middleware/verifyProxy.js";
 import verifyRequest from "./middleware/verifyRequest.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 import userRoutes from "./routes/index.js";
-import webhookRegistrar from "./webhooks/index.js";
 
 setupCheck(); // Run a check to ensure everything is setup properly
 
@@ -33,9 +32,6 @@ const mongoUrl =
 
 mongoose.connect(mongoUrl);
 
-// Register all webhook handlers
-webhookRegistrar();
-
 const createServer = async (root = process.cwd()) => {
   const app = Express();
   app.disable("x-powered-by");
@@ -44,7 +40,7 @@ const createServer = async (root = process.cwd()) => {
 
   // Incoming webhook requests
   app.post(
-    "/webhooks/:topic",
+    "/api/webhooks/:topic",
     Express.text({ type: "*/*" }),
     async (req, res) => {
       const { topic } = req.params || "";
@@ -71,7 +67,7 @@ const createServer = async (root = process.cwd()) => {
 
   app.use(Express.json());
 
-  app.post("/graphql", verifyRequest, async (req, res) => {
+  app.post("/api/graphql", verifyRequest, async (req, res) => {
     try {
       const sessionId = await shopify.session.getCurrentId({
         isOnline: true,
@@ -93,10 +89,10 @@ const createServer = async (root = process.cwd()) => {
   app.use(csp);
   app.use(isShopActive);
   // If you're making changes to any of the routes, please make sure to add them in `./client/vite.config.cjs` or it'll not work.
-  app.use("/apps", verifyRequest, userRoutes); //Verify user route requests
-  app.use("/proxy_route", verifyProxy, proxyRouter); //MARK:- App Proxy routes
+  app.use("/api/apps", verifyRequest, userRoutes); //Verify user route requests
+  app.use("/api/proxy_route", verifyProxy, proxyRouter); //MARK:- App Proxy routes
 
-  app.post("/gdpr/:topic", verifyHmac, async (req, res) => {
+  app.post("/api/gdpr/:topic", verifyHmac, async (req, res) => {
     const { body } = req;
     const { topic } = req.params;
     const shop = req.body.shop_domain;

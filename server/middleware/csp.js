@@ -1,4 +1,4 @@
-import shopify from "../../utils/shopifyConfig.js";
+import shopify from "../../utils/shopify.js";
 
 const csp = (req, res, next) => {
   const shop = req.query.shop || "*.myshopify.com";

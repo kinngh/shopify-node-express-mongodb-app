@@ -20,7 +20,7 @@ const verifyProxy = (req, res, next) => {
     res.locals.user_shop = req.query.shop;
     next();
   } else {
-    res.send(401);
+    return res.send(401);
   }
 };
 

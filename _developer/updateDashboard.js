@@ -94,8 +94,8 @@ const updateDashboardURLs = async (apiKey, appUrl) => {
   const accessToken = await ensureAuthenticatedPartners();
 
   const redirectURLs = appUrl.endsWith("/")
-    ? [`${appUrl}auth/tokens`, `${appUrl}auth/callback`]
-    : [`${appUrl}/auth/tokens`, `${appUrl}/auth/callback`];
+    ? [`${appUrl}api/auth/tokens`, `${appUrl}api/auth/callback`]
+    : [`${appUrl}/api/auth/tokens`, `${appUrl}/api/auth/callback`];
 
   const urls = {
     applicationUrl: appUrl,

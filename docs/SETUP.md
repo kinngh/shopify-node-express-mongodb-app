@@ -4,6 +4,7 @@ This is an in-depth guide on using this repo. This goes over getting the base re
 
 `Windows` users, run `npm install -g win-node-env` before running the repo since `NODE_ENV` isn't recognized in Windows. Alternatively, you can replace it with `cross-env` and update `package.json` accordingly.
 
+- [ ] Run `npm run g:install` to install Shopify's global dependencies if you haven't already.
 - [ ] Run `npm i --force` to install dependencies.
 
   - Substantial efforts have gone into ensuring we're using the latest package versions, and some incompatibility issues always pop up while installing. There are no negative effects on the functionality just yet, but if you find anything please open an issue.
@@ -46,26 +47,26 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - In the URLs section
     - App URL: `https://<your-url>`
     - Allowed Redirection URL(s):
-      - `https://<your-url>/auth/callback`
-      - `https://<your-url>/auth/tokens`
+      - `https://<your-url>/api/auth/callback`
+      - `https://<your-url>/api/auth/tokens`
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
   - GPDR handlers are available at `server/controllers/gdpr.js` and the URLs to register are:
-    - Customers Data Request: `https://<your-url>/gdpr/customers_data_request`
-    - Customers Redact: `https://<your-url>/gdpr/customers_redact`
-    - Shop Redact: `https://<your-url>/gdpr/shop_redact`
+    - Customers Data Request: `https://<your-url>/api/gdpr/customers_data_request`
+    - Customers Redact: `https://<your-url>/api/gdpr/customers_redact`
+    - Shop Redact: `https://<your-url>/api/gdpr/shop_redact`
   - App Proxy routes are setup to allow accessing data from your app directly from the store. An example proxy route has been setup and is available at `server/index.js` at `//MARK:- App Proxy routes` and the routes are available in `server/routes/app_proxy/`. First you need to setup your base urls. Here's how to get it working:
 
     - Subpath Prefix: `apps`
     - Subpath: `express-proxy`
-    - Proxy URL: `https://<your-url>/proxy_route`
+    - Proxy URL: `https://<your-url>/api/proxy_route`
 
     - So when a merchant visits `https://shop-url.com/apps/express-proxy/`, the response to that request will come from `https://<your-url>/proxy_route`. A middleware has already been setup to check signatures so you don't have to worry about authenticating proxy calls, and is available at `server/middleware/proxyVerification.js`.
-    - Subsequently, any child requests will be mapped the same way. A call to `https://shop-url.com/apps/express-proxy/json` will be routed to `https://<your-url>/proxy_route/json`.
+    - Subsequently, any child requests will be mapped the same way. A call to `https://shop-url.com/apps/express-proxy/json` will be routed to `https://<your-url>/api/proxy_route/json`.
     - To confirm if you've setup app proxy properly, head over to `https://shop-url.myshopify.com/apps/express-proxy/json` to confirm if you get a JSON being returned with the configuration set above^
     - A common _gotcha_ is if you're creating multiple apps that all use the same subpath (`express-proxy` in this case), all susbequent installs will throw a `404` error because Shopify serializes routes based on installation. To avoid this, please change the subpath to something that's unique to your app. I prefer using the format `<<appname>>-proxy`
 
 - [ ] Running App
-  - Install the app by heading over to `https://ngrokurl.io/auth?shop=mystorename.myshopify.com`. In dev mode, if you try and install from your partner dashboard, it'll fail since it'll use Vite instead of Express to run the server.
+  - Install the app by heading over to `https://ngrokurl.io/api/auth?shop=mystorename.myshopify.com`. In dev mode, if you try and install from your partner dashboard, it'll fail since it'll use Vite instead of Express to run the server.
   - I prefer running a local `mongod` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
   - In your second terminal window, run `npm run ngrok` to create a ngrok instance if you haven't already.
   - In your third terminal window (preferrably in your IDE), `npm run dev` or `npm run start` depending on how you want to test your app. Make sure to add the generated URL to `SHOPIFY_APP_URL` in `.env` file.

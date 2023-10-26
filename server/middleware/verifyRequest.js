@@ -1,5 +1,5 @@
 import sessionHandler from "../../utils/sessionHandler.js";
-import shopify from "../../utils/shopifyConfig.js";
+import shopify from "../../utils/shopify.js";
 
 const TEST_QUERY = `
 {
@@ -19,9 +19,13 @@ const verifyRequest = async (req, res, next) => {
 
     const session = await sessionHandler.loadSession(sessionId);
 
-    if (new Date(session?.expires) > new Date()) {
+    if (
+      new Date(session?.expires) > new Date() &&
+      shopify.config.scopes.equals(session.scope)
+    ) {
       const client = new shopify.clients.Graphql({ session });
       await client.query({ data: TEST_QUERY });
+      res.locals.user_session = session;
       res.setHeader(
         "Content-Security-Policy",
         `frame-ancestors https://${session.shop} https://admin.shopify.com;`
@@ -43,15 +47,18 @@ const verifyRequest = async (req, res, next) => {
           }
         }
       }
-      res.status(403);
-      res.header("X-Shopify-API-Request-Failure-Reauthorize", "1");
-      res.header(
-        "X-Shopify-API-Request-Failure-Reauthorize-Url",
-        `/exitframe/${shop}`
-      );
-      res.end();
+      res
+        .status(403)
+        .setHeader("Verify-Request-Failure", "1")
+        .setHeader("Verify-Request-Reauth-URL", `/exitframe/${shop}`)
+        .end();
     } else {
-      res.redirect(`/exitframe/${shop}`);
+      res
+        .status(403)
+        .setHeader("Verify-Request-Failure", "1")
+        .setHeader("Verify-Request-Reauth-URL", `/exitframe/${shop}`)
+        .end();
+      return;
     }
   } catch (e) {
     console.error(e);
