@@ -23,7 +23,6 @@ I also did make a video going over the entire repo. If you want to learn Shopify
 - MongoDB
 - Vite
 - Ngrok
-- Apollo/Client
 
 ## Why I made this
 
