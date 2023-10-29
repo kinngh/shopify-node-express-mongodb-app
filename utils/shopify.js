@@ -19,7 +19,7 @@ const shopify = shopifyApi({
 shopify.webhooks.addHandlers({
   APP_UNINSTALLED: {
     deliveryMethod: DeliveryMethod.Http,
-    callbackUrl: "/webhooks/app_uninstalled",
+    callbackUrl: "/api/webhooks/app_uninstalled",
     callback: appUninstallHandler,
   },
 });
