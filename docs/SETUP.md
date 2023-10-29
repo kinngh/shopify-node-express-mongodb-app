@@ -27,7 +27,7 @@ This is an in-depth guide on using this repo. This goes over getting the base re
 
 - [ ] NPM Scripts
 
-  - `update` and `update:check`: Depends on `npm-check-updates` to force update packages to the latest available version. Can potentially break things.
+  - `update`: Depends on `npm-check-updates` to force update packages to the latest available version. Can potentially break things.
   - `dev`: Run in dev mode.
   - `preserve`: For Vite.
   - `build`: Use Vite to build React into `dist/client`. If you don't run build, you cannot serve anything in dev / production modes.
