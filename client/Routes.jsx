@@ -2,10 +2,10 @@ import React from "react";
 
 import ExitFrame from "./ExitFrame";
 import Index from "./pages/Index";
-import DebugIndex from "./pages/debug";
-import BillingAPI from "./pages/debug/billing";
-import GetData from "./pages/debug/data";
-import ActiveWebhooks from "./pages/debug/webhooks";
+import BillingAPI from "./pages/debug/Billing";
+import GetData from "./pages/debug/Data";
+import DebugIndex from "./pages/debug/Index";
+import ActiveWebhooks from "./pages/debug/Webhooks";
 
 const routes = {
   "/": () => <Index />,
