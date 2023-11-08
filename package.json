@@ -23,7 +23,7 @@
     "pretty": "prettier --write .",
     "-----> ngrok <-----": "",
     "ngrok:auth": "ngrok authtoken <your-auth-token>",
-    "ngrok": "ngrok http 5173",
+    "ngrok": "node _developer/startNgrok.js",
     "ngrok:prod": "ngrok http 8081",
     "-----> Shopify <-----": "",
     "g:install": "npm i -g @shopify/app@latest @shopify/cli@latest",
