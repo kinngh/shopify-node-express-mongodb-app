@@ -44,7 +44,6 @@ const AllOrganizationsQuery = `
         id
         businessName
         website
-        appsNext
       }
     }
   }`;
