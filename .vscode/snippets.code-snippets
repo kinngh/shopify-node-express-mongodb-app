@@ -14,7 +14,7 @@
   "Polaris Page": {
     "prefix": "createNewPage",
     "body": [
-      "import { Page, Layout, LegacyCard } from \"@shopify/polaris\";",
+      "import { Page, Layout, Card } from \"@shopify/polaris\";",
       "",
       "const $1 = ($2) => {",
       "\treturn (",
@@ -22,9 +22,9 @@
       "\t\t\t<Page>",
       "\t\t\t\t<Layout>",
       "\t\t\t\t\t<Layout.Section>",
-      "\t\t\t\t\t\t<LegacyCard sectioned title=\"$3\">",
+      "\t\t\t\t\t\t<Card sectioned title=\"$3\">",
       "\t\t\t\t\t\t\t<p>$4</p>",
-      "\t\t\t\t\t\t</LegacyCard>",
+      "\t\t\t\t\t\t</Card>",
       "\t\t\t\t\t</Layout.Section>",
       "\t\t\t\t</Layout>",
       "\t\t\t</Page>",
@@ -34,13 +34,13 @@
       "",
       "export default $1;"
     ],
-    "description": "Create a new page with a sectioned LegacyCard component."
+    "description": "Create a new page with a sectioned Card component."
   },
 
   "Polaris Page with Empty State": {
     "prefix": "createNewPageEmpty",
     "body": [
-      "import { Page, Layout, LegacyCard, EmptyState } from \"@shopify/polaris\";",
+      "import { Page, Layout, Card, EmptyState } from \"@shopify/polaris\";",
       "",
       "const $1 = ($2) => {",
       "\treturn (",
@@ -48,7 +48,7 @@
       "\t\t\t<Page>",
       "\t\t\t\t<Layout>",
       "\t\t\t\t\t<Layout.Section>",
-      "\t\t\t\t\t\t<LegacyCard sectioned>",
+      "\t\t\t\t\t\t<Card sectioned>",
       "\t\t\t\t\t\t\t{/* Taken from Shopify Polaris */}",
       "\t\t\t\t\t\t\t<EmptyState",
       "\t\t\t\t\t\t\t\theading=\"Manage your inventory transfers\"",
@@ -61,7 +61,7 @@
       "\t\t\t\t\t\t\t>",
       "\t\t\t\t\t\t\t\t<p>Track and receive your incoming inventory from suppliers.</p>",
       "\t\t\t\t\t\t\t</EmptyState>",
-      "\t\t\t\t\t\t</LegacyCard>",
+      "\t\t\t\t\t\t</Card>",
       "\t\t\t\t\t</Layout.Section>",
       "\t\t\t\t</Layout>",
       "\t\t\t</Page>",
@@ -71,7 +71,7 @@
       "",
       "export default $1;"
     ],
-    "description": "Create a new page with an Empty State and sectioned LegacyCard component."
+    "description": "Create a new page with an Empty State and sectioned Card component."
   },
 
   "Create new /route || /app_proxy route": {
