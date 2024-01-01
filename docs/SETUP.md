@@ -50,7 +50,7 @@ This is an in-depth guide on using this repo. This goes over getting the base re
       - `https://<your-url>/api/auth/callback`
       - `https://<your-url>/api/auth/tokens`
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
-  - GPDR handlers are available at `server/controllers/gdpr.js` and the URLs to register are:
+  - GDPR handlers are available at `server/controllers/gdpr.js` and the URLs to register are:
     - Customers Data Request: `https://<your-url>/api/gdpr/customers_data_request`
     - Customers Redact: `https://<your-url>/api/gdpr/customers_redact`
     - Shop Redact: `https://<your-url>/api/gdpr/shop_redact`
