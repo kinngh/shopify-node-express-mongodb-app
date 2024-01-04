@@ -37,8 +37,6 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - `ngrok`: Ngrok is used to expose specific ports of your machine to the internet and serve over https. Running `npm run ngrok` auto generates a URL for you. The URL that's generated here goes in `SHOPIFY_APP_URL` and in the URL section of your app in Partner Dashboard.
   - `update:url`: Update App URL and Whitelisted URLs to your Partner Dashboard from your `.env` file.
   - `shopify`: Run CLI 3.0 commands with `npm run shopify [command]`;
-  - `s:e:create`: Create extension scaffolding using CLI 3.0. A new folder called `extensions` is created at root that uses the new folder structure.
-  - `s:e:deploy`: Deploy extension(s) to Shopify.
 
 - [ ] Setup Partner Dashboard
 
@@ -70,3 +68,6 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - I prefer running a local `mongod` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
   - In your second terminal window, run `npm run ngrok` to create a ngrok instance if you haven't already.
   - In your third terminal window (preferrably in your IDE), `npm run dev` or `npm run start` depending on how you want to test your app. Make sure to add the generated URL to `SHOPIFY_APP_URL` in `.env` file.
+
+- [ ] Creating Extensions
+  - See [`kinngh/shopify-app-js`](https://github.com/kinngh/shopify-app-js/) to understand extensions implementation.
