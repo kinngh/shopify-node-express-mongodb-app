@@ -28,6 +28,8 @@
     "-----> Shopify <-----": "",
     "g:install": "npm i -g @shopify/app@latest @shopify/cli@latest",
     "shopify": "shopify",
+    "s:e:create": "shopify app scaffold extension",
+    "s:e:deploy": "shopify app deploy",
     "-----> Reserved Scripts <-----": "",
     "preserve": "npm run build"
   },
