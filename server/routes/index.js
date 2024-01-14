@@ -20,15 +20,15 @@ userRoutes.get("/debug/gql", async (req, res) => {
     isOnline: false,
   });
 
-  const shop = await client.query({
-    data: `{
+  const shop = await client.request(
+    `{
       shop {
         name
       }
-    }`,
-  });
+    }`
+  );
 
-  return res.status(200).json({ text: shop.body.data.shop.name });
+  return res.status(200).json({ text: shop.data.shop.name });
 });
 
 userRoutes.get("/debug/activeWebhooks", async (req, res) => {
@@ -37,8 +37,8 @@ userRoutes.get("/debug/activeWebhooks", async (req, res) => {
     res,
     isOnline: true,
   });
-  const activeWebhooks = await client.query({
-    data: `{
+  const activeWebhooks = await client.request(
+    `{
       webhookSubscriptions(first: 25) {
         edges {
           node {
@@ -52,8 +52,8 @@ userRoutes.get("/debug/activeWebhooks", async (req, res) => {
           }
         }
       }
-    }`,
-  });
+    }`
+  );
   return res.status(200).json(activeWebhooks);
 });
 
@@ -63,8 +63,8 @@ userRoutes.get("/debug/getActiveSubscriptions", async (req, res) => {
     res,
     isOnline: true,
   });
-  const response = await client.query({
-    data: `{
+  const response = await client.request(
+    `{
       appInstallation {
         activeSubscriptions {
           name
@@ -87,7 +87,7 @@ userRoutes.get("/debug/getActiveSubscriptions", async (req, res) => {
         }
       }
     }`,
-  });
+  );
 
   res.status(200).send(response);
 });
@@ -103,8 +103,8 @@ userRoutes.get("/debug/createNewSubscription", async (req, res) => {
   const planName = "$10.25 plan";
   const planPrice = 10.25; //Always a decimal
 
-  const response = await client.query({
-    data: `mutation CreateSubscription{
+  const response = await client.request(
+    `mutation CreateSubscription{
     appSubscriptionCreate(
       name: "${planName}"
       returnUrl: "${returnUrl}"
@@ -131,19 +131,19 @@ userRoutes.get("/debug/createNewSubscription", async (req, res) => {
     }
   }
 `,
-  });
+  );
 
-  if (response.body.data.appSubscriptionCreate.userErrors.length > 0) {
+  if (response.data.appSubscriptionCreate.userErrors.length > 0) {
     console.log(
       `--> Error subscribing ${shop} to plan:`,
-      response.body.data.appSubscriptionCreate.userErrors
+      response.data.appSubscriptionCreate.userErrors
     );
     res.status(400).send({ error: "An error occured." });
     return;
   }
 
   return res.status(200).send({
-    confirmationUrl: `${response.body.data.appSubscriptionCreate.confirmationUrl}`,
+    confirmationUrl: `${response.data.appSubscriptionCreate.confirmationUrl}`,
   });
 });
 

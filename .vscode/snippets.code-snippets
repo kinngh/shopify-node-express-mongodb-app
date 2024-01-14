@@ -6,9 +6,9 @@
       "\treturn ( $0 );",
       "}",
       " ",
-      "export default $1;"
+      "export default $1;",
     ],
-    "description": "Arrow Function Component"
+    "description": "Arrow Function Component",
   },
 
   "Polaris Page": {
@@ -32,9 +32,9 @@
       "\t);",
       "};",
       "",
-      "export default $1;"
+      "export default $1;",
     ],
-    "description": "Create a new page with a sectioned LegacyCard component."
+    "description": "Create a new page with a sectioned LegacyCard component.",
   },
 
   "Polaris Page with Empty State": {
@@ -69,9 +69,9 @@
       "\t);",
       "};",
       "",
-      "export default $1;"
+      "export default $1;",
     ],
-    "description": "Create a new page with an Empty State and sectioned LegacyCard component."
+    "description": "Create a new page with an Empty State and sectioned LegacyCard component.",
   },
 
   "Create new /route || /app_proxy route": {
@@ -93,9 +93,9 @@
       "\t}",
       "});",
       "",
-      "export default $1;"
+      "export default $1;",
     ],
-    "description": "Create new /route || /app_proxy route"
+    "description": "Create new /route || /app_proxy route",
   },
 
   "Webhook function": {
@@ -118,9 +118,9 @@
       "\t}",
       "};",
       "",
-      "export default $1;"
+      "export default $1;",
     ],
-    "description": "Webhook function"
+    "description": "Webhook function",
   },
 
   "GraphQL Client Provider": {
@@ -137,9 +137,9 @@
       "\t\t\tisOnline: true, //false for offline session, true for online session",
       "\t\t});",
       "",
-      "\t\tconst response = await client.query({",
-      "\t\t\tdata: `{$2}`, //Paste your GraphQL query/mutation here",
-      "\t\t});",
+      "\t\tconst response = await client.request(",
+      "\t\t\t`{$2}`, //Paste your GraphQL query/mutation here",
+      "\t\t);",
       "",
       "\t\tres.status(200).send(response);",
       "\t} catch (e) {",
@@ -148,9 +148,9 @@
       "\t}",
       "};",
       "",
-      "export default $1;"
+      "export default $1;",
     ],
-    "description": "GraphQL Client Provider"
+    "description": "GraphQL Client Provider",
   },
   "Offline GraphQL Client Provider": {
     "prefix": "createOfflineClientGql",
@@ -162,9 +162,9 @@
       "\ttry {",
       "\t\tconst { client } = await clientProvider.offline.graphqlClient({shop: res.locals.user_shop}); //Only available in app proxy routes",
       "",
-      "\t\tconst response = await client.query({",
-      "\t\t\tdata: `{$2}`, //Paste your GraphQL query/mutation here",
-      "\t\t});",
+      "\t\tconst response = await client.request(",
+      "\t\t\t`{$2}`, //Paste your GraphQL query/mutation here",
+      "\t\t);",
       "",
       "\t\treturn res.status(200).send(response);",
       "\t} catch (e) {",
@@ -173,8 +173,8 @@
       "\t}",
       "};",
       "",
-      "export default $1;"
+      "export default $1;",
     ],
-    "description": "Offline GraphQL Client Provider"
-  }
+    "description": "Offline GraphQL Client Provider",
+  },
 }
