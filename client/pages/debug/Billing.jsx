@@ -76,8 +76,7 @@ const ActiveSubscriptions = () => {
     const data = await res.json();
 
     let rowsData = [];
-    const activeSubscriptions =
-      data.data.appInstallation.activeSubscriptions;
+    const activeSubscriptions = data.data.appInstallation.activeSubscriptions;
 
     if (activeSubscriptions.length === 0) {
       rowsData.push(["No Plan", "N/A", "N/A", "USD 0.00"]);

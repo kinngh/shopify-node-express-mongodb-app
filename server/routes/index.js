@@ -86,7 +86,7 @@ userRoutes.get("/debug/getActiveSubscriptions", async (req, res) => {
           test
         }
       }
-    }`,
+    }`
   );
 
   res.status(200).send(response);
@@ -130,7 +130,7 @@ userRoutes.get("/debug/createNewSubscription", async (req, res) => {
       }
     }
   }
-`,
+`
   );
 
   if (response.data.appSubscriptionCreate.userErrors.length > 0) {
