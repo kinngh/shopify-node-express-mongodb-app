@@ -12,7 +12,6 @@ If you don't want the snippets, delete the [snippets file](../.vscode/snippets.c
 | ------------------------ | ---------------------------------------------------------------- |
 | `sfc`                    | Create an arrow function component                               |
 | `createNewPage`          | Create a new Polaris page with a LegacyCard                      |
-| `createNewPageEmpty`     | Create a new Polaris page with a LegacyCard and Empty State      |
 | `createroute`            | Create a new route. Works with both regular and app proxy routes |
 | `createwebhook`          | Create a new webhook function                                    |
 | `createClientGql`        | Create a new GraphQL Client with online tokens                   |
