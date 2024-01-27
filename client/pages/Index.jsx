@@ -7,7 +7,7 @@ import {
   Page,
   Text,
 } from "@shopify/polaris";
-import { ExternalMinor } from "@shopify/polaris-icons";
+import { ExternalIcon } from "@shopify/polaris-icons";
 import { navigate } from "raviger";
 
 const HomePage = () => {
@@ -52,7 +52,7 @@ const HomePage = () => {
                   <Button
                     variant="primary"
                     external
-                    icon={ExternalMinor}
+                    icon={ExternalIcon}
                     onClick={() => {
                       open(
                         "https://shopify.dev/docs/api/app-bridge-library/reference",
@@ -79,7 +79,7 @@ const HomePage = () => {
                 <InlineStack wrap={false} align="end" gap="200">
                   <Button
                     external
-                    icon={ExternalMinor}
+                    icon={ExternalIcon}
                     onClick={() => {
                       open(
                         "https://github.com/kinngh/shopify-node-express-mongodb-app/issues?q=is%3Aissue",
@@ -92,7 +92,7 @@ const HomePage = () => {
                   <Button
                     external
                     variant="primary"
-                    icon={ExternalMinor}
+                    icon={ExternalIcon}
                     onClick={() => {
                       open(
                         "https://github.com/kinngh/shopify-node-express-mongodb-app",
@@ -120,7 +120,7 @@ const HomePage = () => {
                   <Button
                     external
                     variant="primary"
-                    icon={ExternalMinor}
+                    icon={ExternalIcon}
                     onClick={() => {
                       open(
                         "https://kinngh.gumroad.com/l/how-to-make-shopify-apps?utm_source=boilerplate&utm_medium=expressjs",
