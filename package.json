@@ -36,26 +36,26 @@
     "preserve": "npm run build"
   },
   "dependencies": {
-    "@shopify/polaris": "^12.21.0",
-    "@shopify/shopify-api": "^9.5.1",
+    "@shopify/polaris": "^12.25.0",
+    "@shopify/shopify-api": "^9.7.0",
     "compression": "^1.7.4",
     "cryptr": "^6.3.0",
     "dotenv": "^16.4.5",
-    "express": "^4.18.3",
-    "mongoose": "^8.2.2",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.0",
     "raviger": "^4.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@shopify/cli-kit": "^3.57.1",
+    "@shopify/cli-kit": "^3.58.2",
     "@vitejs/plugin-react": "^4.2.1",
     "concurrently": "^8.2.2",
     "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.1.0",
-    "npm-check-updates": "^16.14.17",
+    "npm-check-updates": "^16.14.18",
     "prettier": "^3.2.5",
-    "vite": "^5.1.6"
+    "vite": "^5.2.8"
   }
 }
