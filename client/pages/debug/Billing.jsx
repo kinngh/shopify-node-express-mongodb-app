@@ -1,19 +1,17 @@
-import useFetch from "../../hooks/useFetch.js";
 import {
-  DataTable,
-  Layout,
-  Card,
-  Page,
   BlockStack,
-  InlineStack,
   Button,
+  Card,
+  DataTable,
+  InlineStack,
+  Layout,
+  Page,
   Text,
 } from "@shopify/polaris";
 import { navigate } from "raviger";
 import { useEffect, useState } from "react";
 
 const BillingAPI = () => {
-  const fetch = useFetch();
   const [responseData, setResponseData] = useState("");
 
   async function fetchContent() {

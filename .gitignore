@@ -1,8 +1,6 @@
-# Non-production folders
-# docs/
-
 # Personal Dev Content
 mongo/
+shopify.*.toml
 
 # macOS
 .DS_Store

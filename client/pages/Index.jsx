@@ -19,7 +19,7 @@ const HomePage = () => {
             <Card>
               <BlockStack gap="200">
                 <Text as="h2" variant="headingMd">
-                  Debug Cards
+                  Debug Cards are here and it now works
                 </Text>
                 <Text>
                   Explore how the repository handles data fetching from the

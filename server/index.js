@@ -1,20 +1,20 @@
 import "@shopify/shopify-api/adapters/node";
 import "dotenv/config";
 import Express from "express";
+import fs from "fs";
 import mongoose from "mongoose";
-import { resolve } from "path";
-import shopify from "../utils/shopify.js";
-
+import path, { resolve } from "path";
+import { createServer as createViteServer } from "vite";
 import sessionHandler from "../utils/sessionHandler.js";
-import csp from "./middleware/csp.js";
 import setupCheck from "../utils/setupCheck.js";
+import shopify from "../utils/shopify.js";
 import {
   customerDataRequest,
   customerRedact,
   shopRedact,
 } from "./controllers/gdpr.js";
-import applyAuthMiddleware from "./middleware/auth.js";
-import isShopActive from "./middleware/isShopActive.js";
+import csp from "./middleware/csp.js";
+import isInitialLoad from "./middleware/isInitialLoad.js";
 import verifyHmac from "./middleware/verifyHmac.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import verifyRequest from "./middleware/verifyRequest.js";
@@ -35,8 +35,6 @@ mongoose.connect(mongoUrl);
 const createServer = async (root = process.cwd()) => {
   const app = Express();
   app.disable("x-powered-by");
-
-  applyAuthMiddleware(app);
 
   // Incoming webhook requests
   app.post(
@@ -87,8 +85,8 @@ const createServer = async (root = process.cwd()) => {
   });
 
   app.use(csp);
-  app.use(isShopActive);
-  // If you're making changes to any of the routes, please make sure to add them in `./client/vite.config.cjs` or it'll not work.
+  app.use(isInitialLoad);
+  // If you're making changes to any of the routes, please make sure to add them in `./client/vite.config.js` or it'll not work.
   app.use("/api/apps", verifyRequest, userRoutes); //Verify user route requests
   app.use("/api/proxy_route", verifyProxy, proxyRouter); //MARK:- App Proxy routes
 
@@ -126,14 +124,36 @@ const createServer = async (root = process.cwd()) => {
     }
   });
 
-  if (!isDev) {
+  if (isDev) {
+    const vite = await createViteServer({
+      root: path.resolve(process.cwd(), "client"),
+      server: {
+        middlewareMode: true,
+        hmr: {
+          server: app.listen(PORT, () => {
+            console.log(`Dev server running on localhost:${PORT}`);
+          }),
+        },
+      },
+      appType: "spa",
+    });
+    app.use(vite.middlewares);
+    app.use("*", async (req, res) => {
+      const url = req.originalUrl;
+      let template = fs.readFileSync(
+        path.resolve(process.cwd(), "client", "index.html"),
+        "utf-8"
+      );
+      template = await vite.transformIndexHtml(url, template);
+      res.status(200).set({ "Content-Type": "text/html" }).end(template);
+    });
+  } else {
     const compression = await import("compression").then(
       ({ default: fn }) => fn
     );
     const serveStatic = await import("serve-static").then(
       ({ default: fn }) => fn
     );
-    const fs = await import("fs");
 
     app.use(compression());
     app.use(serveStatic(resolve("dist/client")));
@@ -148,8 +168,12 @@ const createServer = async (root = process.cwd()) => {
   return { app };
 };
 
-createServer().then(({ app }) => {
-  app.listen(PORT, () => {
-    console.log(`--> Running on ${PORT}`);
+if (isDev) {
+  createServer();
+} else {
+  createServer().then(({ app }) => {
+    app.listen(PORT, () => {
+      console.log(`--> Running on ${PORT}`);
+    });
   });
-});
+}

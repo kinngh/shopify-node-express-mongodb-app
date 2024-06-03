@@ -1,20 +1,17 @@
 import {
-  Layout,
+  BlockStack,
+  Button,
   Card,
+  InlineStack,
+  Layout,
   Page,
   Text,
-  BlockStack,
-  InlineCode,
-  InlineStack,
-  Button,
 } from "@shopify/polaris";
 import { navigate } from "raviger";
 import { useEffect, useState } from "react";
-import useFetch from "../../hooks/useFetch.js";
 
 const useDataFetcher = (initialState, url, options) => {
   const [data, setData] = useState(initialState);
-  const fetch = useFetch();
 
   const fetchData = async () => {
     setData("loading...");

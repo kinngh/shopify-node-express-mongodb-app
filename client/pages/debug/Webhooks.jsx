@@ -1,18 +1,15 @@
-import useFetch from "../../hooks/useFetch.js";
 import {
+  BlockStack,
   Card,
   DataTable,
   Layout,
   Page,
   Text,
-  BlockStack,
 } from "@shopify/polaris";
 import { navigate } from "raviger";
 import { useEffect, useState } from "react";
 
 const ActiveWebhooks = () => {
-  const fetch = useFetch();
-
   const [rows, setRows] = useState([
     ["Loading", "I haven't implemented swr or react query yet."],
   ]);

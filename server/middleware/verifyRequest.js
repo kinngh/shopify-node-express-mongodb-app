@@ -1,69 +1,90 @@
 import sessionHandler from "../../utils/sessionHandler.js";
 import shopify from "../../utils/shopify.js";
-
-const TEST_QUERY = `
-{
-  shop {
-    name
-  }
-}`;
+import validateJWT from "../../utils/validateJWT.js";
+import { RequestedTokenType, Session } from "@shopify/shopify-api";
 
 const verifyRequest = async (req, res, next) => {
   try {
-    let { shop } = req.query;
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) {
+      throw Error("No authorization header found");
+    }
+
+    const payload = validateJWT(authHeader.split(" ")[1]);
+
+    let shop = shopify.utils.sanitizeShop(payload.dest.replace("https://", ""));
+
+    if (!shop) {
+      throw Error("No shop found, not a valid request");
+    }
+
     const sessionId = await shopify.session.getCurrentId({
       isOnline: true,
       rawRequest: req,
       rawResponse: res,
     });
 
-    const session = await sessionHandler.loadSession(sessionId);
+    let session = await sessionHandler.loadSession(sessionId);
+    if (!session) {
+      session = await getSession({ shop, authHeader });
+    }
 
     if (
       new Date(session?.expires) > new Date() &&
-      shopify.config.scopes.equals(session.scope)
+      shopify.config.scopes.equals(session?.scope)
     ) {
-      const client = new shopify.clients.Graphql({ session });
-      await client.request(TEST_QUERY);
-      res.locals.user_session = session;
-      res.setHeader(
-        "Content-Security-Policy",
-        `frame-ancestors https://${session.shop} https://admin.shopify.com;`
-      );
-      return next();
-    }
-
-    const authBearer = req.headers.authorization?.match(/Bearer (.*)/);
-    if (authBearer) {
-      if (!shop) {
-        if (session) {
-          shop = session.shop;
-        } else if (shopify.config.isEmbeddedApp) {
-          if (authBearer) {
-            const payload = await shopify.session.decodeSessionToken(
-              authBearer[1]
-            );
-            shop = payload.dest.replace("https://", "");
-          }
-        }
-      }
-      res
-        .status(403)
-        .setHeader("Verify-Request-Failure", "1")
-        .setHeader("Verify-Request-Reauth-URL", `/exitframe/${shop}`)
-        .end();
     } else {
-      res
-        .status(403)
-        .setHeader("Verify-Request-Failure", "1")
-        .setHeader("Verify-Request-Reauth-URL", `/exitframe/${shop}`)
-        .end();
-      return;
+      session = await getSession({ shop, authHeader });
     }
+    res.locals.user_session = session;
+    next();
   } catch (e) {
-    console.error(e);
-    return res.status(401).send({ error: "Nah I ain't serving this request" });
+    console.error(
+      `---> An error happened at verifyRequest middleware: ${e.message}`
+    );
+    return res.status(401).send({ error: "Unauthorized call" });
   }
 };
 
 export default verifyRequest;
+
+/**
+ * Retrieves and stores session information based on the provided authentication header and offline flag.
+ * If the `offline` flag is true, it will also attempt to exchange the token for an offline session token.
+ * Errors during the process are logged to the console.
+ *
+ * @async
+ * @function getSession
+ * @param {Object} params - The function parameters.
+ * @param {string} params.shop - The xxx.myshopify.com url of the requesting store.
+ * @param {string} params.authHeader - The authorization header containing the session token.
+ * @returns {Promise<Session>} The online session object
+ */
+
+async function getSession({ shop, authHeader }) {
+  try {
+    const sessionToken = authHeader.split(" ")[1];
+
+    const { session: onlineSession } = await shopify.auth.tokenExchange({
+      sessionToken,
+      shop,
+      requestedTokenType: RequestedTokenType.OnlineAccessToken,
+    });
+
+    await sessionHandler.storeSession(onlineSession);
+
+    const { session: offlineSession } = await shopify.auth.tokenExchange({
+      sessionToken,
+      shop,
+      requestedTokenType: RequestedTokenType.OfflineAccessToken,
+    });
+
+    await sessionHandler.storeSession(offlineSession);
+
+    return new Session(onlineSession);
+  } catch (e) {
+    console.error(
+      `---> Error happened while pulling session from Shopify: ${e.message}`
+    );
+  }
+}

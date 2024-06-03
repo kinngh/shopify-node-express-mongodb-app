@@ -8,12 +8,15 @@
   - May break with a future update to `@shopify/cli-kit`.
  */
 
+/*
+
 import { partnersRequest } from "@shopify/cli-kit/node/api/partners";
 import { ensureAuthenticatedPartners } from "@shopify/cli-kit/node/session";
 import { renderSelectPrompt } from "@shopify/cli-kit/node/ui";
 import "dotenv/config";
 
-const UpdateAppURLQuery = ` mutation appUpdate($apiKey: String!, $applicationUrl: Url!, $redirectUrlWhitelist: [Url]!) {
+const UpdateAppURLQuery = `
+  mutation appUpdate($apiKey: String!, $applicationUrl: Url!, $redirectUrlWhitelist: [Url]!) {
     appUpdate(input: {apiKey: $apiKey, applicationUrl: $applicationUrl, redirectUrlWhitelist: $redirectUrlWhitelist}) {
       userErrors {
         message
@@ -22,7 +25,8 @@ const UpdateAppURLQuery = ` mutation appUpdate($apiKey: String!, $applicationUrl
     }
   }`;
 
-const FindAppQuery = `query FindApp($apiKey: String!) {
+const FindAppQuery = `
+  query FindApp($apiKey: String!) {
     app(apiKey: $apiKey) {
       id
       title
@@ -109,7 +113,7 @@ const updateDashboardURLs = async (apiKey, appUrl) => {
       .map((error) => error.message)
       .join(", ");
 
-    throw new AbortError(errors);
+    throw new Error(errors);
   }
 };
 
@@ -124,3 +128,9 @@ console.log("--> Updating URLs");
 await updateDashboardURLs(app.apiKey, process.env.SHOPIFY_APP_URL);
 console.log("--> URLs updated. Please update GDPR and Proxy routes manually");
 console.log("--> Done");
+
+*/
+
+throw new Error(
+  "\n\n\n\n\n---> npm run update:url is now `npm run update:config`. Please refer to setup for more information. If you're not using managed auth, head into `_developer/updateDashboard.js` and uncomment the file\n\n\n\n\n"
+);

@@ -24,29 +24,48 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - `SHOPIFY_API_VERSION`: Pre-filled to the latest version. All the calls in the repo are based off this API version so if you're downgrading please refer to the official docs instead. The repo is always kept up to date with the newest practices so you can rely on the basic repo to almost always work without depriciation errors popping up.
   - `MONGO_URL`: Mongo connection URL. If you're using a locally hosted version, you can leave it blank or use `mongodb://127.0.0.1:27017/app-name-here`
   - `ENCRYPTION_STRING`: String to use for Cryption for encrypting sessions token. Add a random salt (or a random string of letters and numbers) and save it. If you loose the string you cannot decrypt your sessions and must be kept safely.
+  - `NPM_CONFIG_FORCE`: Set to `true` so if you deploy on spaces like Heroku, it runs `npm install --force` instead of `npm install`.
+  -
+  - `VITE_SHOPIFY_API_KEY`: Used by Vite, this is the app API key, should be same as `SHOPIFY_API_KEY`.
+  -
+  - `APP_NAME`: Name of your app, as you've entered in Partner Dashboard.
+  - `APP_HANDLE`: The URL handle of your app.
+  -
+  - `APP_PROXY_PREFIX`: The prefix for your App Proxy's path, can be one of these:
+    - apps
+    - a
+    - community
+    - tools
+  - `APP_PROXY_SUBPATH`: Subpath for your app proxy.
+    - Leave `APP_PROXY_PREFIX` or `APP_PROXY_SUBPATH` blank and no App Proxy entries are created.
+  -
+  - `POS_EMBEDDED`: Boolean. If your app is embedded in Shopify Point of Sale.
 
 - [ ] NPM Scripts
 
-  - `update`: Depends on `npm-check-updates` to force update packages to the latest available version. Can potentially break things.
   - `dev`: Run in dev mode.
-  - `preserve`: For Vite.
   - `build`: Use Vite to build React into `dist/client`. If you don't run build, you cannot serve anything in dev / production modes.
   - `start`: Run in production mode. Please run `npm run build` before to compile client side.
+  -
+  - `update`: Depends on `npm-check-updates` to force update packages to the latest available version. Can potentially break things.
   - `pretty`: Run prettier across the entire project. I personally like my code to be readable and using prettier CLI makes things easier. Refer to `.prettierrc` for configuration and `.prettierignore` to ignore files and folders.
+  -
   - `ngrok:auth`: Add in your auth token from [Ngrok](https://ngrok.com) to use the service.
   - `ngrok`: Ngrok is used to expose specific ports of your machine to the internet and serve over https. Running `npm run ngrok` auto generates a URL for you. The URL that's generated here goes in `SHOPIFY_APP_URL` and in the URL section of your app in Partner Dashboard.
-  - `update:url`: Update App URL and Whitelisted URLs to your Partner Dashboard from your `.env` file.
-  - `shopify`: Run CLI 3.0 commands with `npm run shopify [command]`;
+  - `cloudflare`: Starts cloudflare tunnel on port 8081 (make sure you have `cloudflared` installed).
+  -
+  - `g:install`: Required global installs for buildling Shopify apps.
+  - `shopify`: Run `shopify` commands
+  - `update:config`: [Managed Installation] Use the Shopify CLI to update your configuration. Auto writes your `toml` file to root and `extension/` for syncing.
+  - `update:url`: [OAuth Installation] Use `@shopify/cli-kit` to update URLs to your Shopify partner dashboard. Requires a proper setup of `.env` file.
+  -
+  - `preserve`: For Vite.
 
 - [ ] Setup Partner Dashboard
 
-  - Run `npm run ngrok` to generate your subdomain. Copy the `https://<your-url>` domain and add it in `SHOPIFY_APP_URL` in your `.env` file.
-  - Run `npm run update:url` OR you can do it manually by heading over to Shopify Partner Dashboard > Apps > _Your App Name_ > App Setup
-  - In the URLs section
-    - App URL: `https://<your-url>`
-    - Allowed Redirection URL(s):
-      - `https://<your-url>/api/auth/callback`
-      - `https://<your-url>/api/auth/tokens`
+  - Run `npm run cloudflare` or `npm run ngrok` to generate your subdomain. Copy the `https://<your-url>` domain and add it in `SHOPIFY_APP_URL` and in your `.env` file.
+  - Run `npm run update:config` to generate `shopify.app.toml` files and upload your config to Shopify.
+    - ABSOLUTELY DO NOT MODIFY YOUR TOML FILES BY HAND. USE YOUR ENV INSTEAD.
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
   - GPDR handlers are available at `server/controllers/gdpr.js` and the URLs to register are:
     - Customers Data Request: `https://<your-url>/api/gdpr/customers_data_request`
@@ -65,10 +84,10 @@ This is an in-depth guide on using this repo. This goes over getting the base re
 
 - [ ] Running App
 
-  - Install the app by heading over to `https://ngrokurl.io/api/auth?shop=mystorename.myshopify.com`. In dev mode, if you try and install from your partner dashboard, it'll fail since it'll use Vite instead of Express to run the server.
+  - Install the app by heading over to `storename.myshopify.com/admin/oauth/install?client_id=SHOPIFY_API_KEY`.
   - I prefer running a local `mongod` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
-  - In your second terminal window, run `npm run ngrok` to create a ngrok instance if you haven't already.
+  - In your second terminal window, run `npm run cloudflare` or `npm run ngrok` to tunnel your localhost to the web via HTTPS.
   - In your third terminal window (preferrably in your IDE), `npm run dev` or `npm run start` depending on how you want to test your app. Make sure to add the generated URL to `SHOPIFY_APP_URL` in `.env` file.
 
 - [ ] Creating Extensions
-  - See [`kinngh/shopify-app-js`](https://github.com/kinngh/shopify-app-js/) to understand extensions implementation.
+  - See [DOCS](./migrations/oauth-to-managed-installation.md) point 8.

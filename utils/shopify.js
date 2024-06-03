@@ -14,7 +14,25 @@ const shopify = shopifyApi({
   apiVersion: process.env.SHOPIFY_API_VERSION,
   isEmbeddedApp: true,
   logger: { level: isDev ? 1 : 0 }, //Error = 0,Warning = 1,Info = 2,Debug = 3
+  future: {
+    unstable_tokenExchange: true,
+  },
 });
+
+/*
+  Template for adding new topics:
+  ```
+  TOPIC: {
+      deliveryMethod: DeliveryMethod.Http,
+      callbackUrl: "/api/webhooks/topic",
+      callback: topicHandler,
+    },
+  ```
+
+    - Webhook topic and callbackUrl topic should be exactly the same because it's using catch-all
+    - Don't change the delivery method unless you know what you're doing
+      - the method is `DeliveryMethod.Http` and not `DeliveryMethod.http`, mind the caps on `H` in `http`
+*/
 
 shopify.webhooks.addHandlers({
   APP_UNINSTALLED: {

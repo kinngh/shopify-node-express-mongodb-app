@@ -39,6 +39,7 @@ The Shopify CLI generates an amazing starter app but it still needs some more bo
 ### Setup
 
 - Refer to [SETUP](/docs/SETUP.md)
+- Migrations are available in [DOCS](/docs/migrations/)
 
 ### Misc
 
