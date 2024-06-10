@@ -116,7 +116,7 @@ userRoutes.get("/debug/createNewSubscription", async (req, res) => {
     const { client, shop } = await clientProvider.offline.graphqlClient({
       shop: res.locals.user_session.shop,
     });
-    const returnUrl = `${process.env.SHOPIFY_APP_URL}/api/auth?shop=${shop}`;
+    const returnUrl = `${process.env.SHOPIFY_APP_URL}/?shop=${shop}`;
 
     const planName = "$10.25 plan";
     const planPrice = 10.25; //Always a decimal
