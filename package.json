@@ -31,13 +31,13 @@
     "preserve": "npm run build"
   },
   "dependencies": {
-    "@shopify/polaris": "^13.6.0",
-    "@shopify/shopify-api": "^11.0.1",
+    "@shopify/polaris": "^13.6.1",
+    "@shopify/shopify-api": "^11.1.0",
     "compression": "^1.7.4",
     "cryptr": "^6.3.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongoose": "^8.4.4",
+    "mongoose": "^8.5.0",
     "raviger": "^4.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -45,13 +45,13 @@
   },
   "devDependencies": {
     "@iarna/toml": "^2.2.5",
-    "@shopify/cli-kit": "^3.63.1",
+    "@shopify/cli-kit": "^3.63.2",
     "@vitejs/plugin-react": "^4.3.1",
     "concurrently": "^8.2.2",
     "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.1.4",
     "npm-check-updates": "^16.14.20",
     "prettier": "^3.3.2",
-    "vite": "^5.3.2"
+    "vite": "^5.3.3"
   }
 }
