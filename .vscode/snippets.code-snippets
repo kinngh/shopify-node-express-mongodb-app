@@ -108,7 +108,7 @@
   },
 
   "GraphQL Client Provider": {
-    "prefix": "createClientGql",
+    "prefix": "createOnlineClientGql",
     "body": [
       "//Press `tab` to cycle through and fill up information",
       "//Import `clientProvider`",

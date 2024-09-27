@@ -1,11 +1,12 @@
-import { DeliveryMethod, shopifyApi } from "@shopify/shopify-api";
+import { LogSeverity, shopifyApi } from "@shopify/shopify-api";
+import "@shopify/shopify-api/adapters/node";
 import "dotenv/config";
 import appUninstallHandler from "../server/webhooks/app_uninstalled.js";
 
 const isDev = process.env.NODE_ENV === "dev";
 
 // Setup Shopify configuration
-const shopify = shopifyApi({
+let shopify = shopifyApi({
   apiKey: process.env.SHOPIFY_API_KEY,
   apiSecretKey: process.env.SHOPIFY_API_SECRET,
   scopes: process.env.SHOPIFY_API_SCOPES,
@@ -13,33 +14,43 @@ const shopify = shopifyApi({
   hostScheme: "https",
   apiVersion: process.env.SHOPIFY_API_VERSION,
   isEmbeddedApp: true,
-  logger: { level: isDev ? 1 : 0 }, //Error = 0,Warning = 1,Info = 2,Debug = 3
-  future: {
-    unstable_tokenExchange: true,
-  },
+  logger: { level: isDev ? LogSeverity.Info : LogSeverity.Error },
 });
 
 /*
   Template for adding new topics:
   ```
-  TOPIC: {
-      deliveryMethod: DeliveryMethod.Http,
-      callbackUrl: "/api/webhooks/topic",
-      callback: topicHandler,
-    },
+    {
+      topics: ["",""] //Get this from `https://shopify.dev/docs/api/webhooks?reference=toml`
+      url: "/api/webhooks/topic_name" //this can be AWS, PubSub or HTTP routes.
+      callback: () //This HAS to be in utils/webhooks/ and created with the `createwebhook` snippet.
+      filter: "" //Optional - filter what webhooks you recieve
+      include_fields: ["",""] //Optional - decide what fields you want to recieve
+    }
   ```
+ */
 
-    - Webhook topic and callbackUrl topic should be exactly the same because it's using catch-all
-    - Don't change the delivery method unless you know what you're doing
-      - the method is `DeliveryMethod.Http` and not `DeliveryMethod.http`, mind the caps on `H` in `http`
-*/
-
-shopify.webhooks.addHandlers({
-  APP_UNINSTALLED: {
-    deliveryMethod: DeliveryMethod.Http,
-    callbackUrl: "/api/webhooks/app_uninstalled",
-    callback: appUninstallHandler,
+//Add custom user properties to base shopify obj
+shopify = {
+  ...shopify,
+  user: {
+    /**
+     * @type {Array<{
+     *   topics: import("../_developer/types/webhookTopics.js").WebhookTopics["topic"],
+     *   url: string,
+     *   callback: Function,
+     *   filter?: string,
+     *   include_fields?: string[]
+     * }>}
+     */
+    webhooks: [
+      {
+        topics: ["app/uninstalled"],
+        url: "/api/webhooks/app_uninstalled",
+        callback: appUninstallHandler,
+      },
+    ],
   },
-});
+};
 
 export default shopify;

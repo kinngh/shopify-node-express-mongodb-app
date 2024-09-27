@@ -20,6 +20,7 @@ import verifyProxy from "./middleware/verifyProxy.js";
 import verifyRequest from "./middleware/verifyRequest.js";
 import proxyRouter from "./routes/app_proxy/index.js";
 import userRoutes from "./routes/index.js";
+import webhookHandler from "./webhooks/_index.js";
 
 setupCheck(); // Run a check to ensure everything is setup properly
 
@@ -38,29 +39,9 @@ const createServer = async (root = process.cwd()) => {
 
   // Incoming webhook requests
   app.post(
-    "/api/webhooks/:topic",
+    "/api/webhooks/:webhookTopic*",
     Express.text({ type: "*/*" }),
-    async (req, res) => {
-      const { topic } = req.params || "";
-      const shop = req.headers["x-shopify-shop-domain"] || "";
-
-      try {
-        await shopify.webhooks.process({
-          rawBody: req.body,
-          rawRequest: req,
-          rawResponse: res,
-        });
-        console.log(`--> Processed ${topic} webhook for ${shop}`);
-      } catch (e) {
-        console.error(
-          `---> Error while registering ${topic} webhook for ${shop}`,
-          e
-        );
-        if (!res.headersSent) {
-          res.status(500).send(error.message);
-        }
-      }
-    }
+    webhookHandler
   );
 
   app.use(Express.json());
