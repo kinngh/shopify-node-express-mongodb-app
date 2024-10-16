@@ -1,6 +1,6 @@
 {
   "name": "shopify-express-boilerplate",
-  "version": "2024.10.12",
+  "version": "2024.10.17",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
   "type": "module",
   "author": {
