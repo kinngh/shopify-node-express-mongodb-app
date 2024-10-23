@@ -7,8 +7,8 @@
  * To update this file, run `npm run update:config` or `bun run update:config`
  */
 
-import appUninstallHandler from "./app_uninstalled.js";
 import shopify from "../../utils/shopify.js";
+import appUninstallHandler from "./app_uninstalled.js";
 
 const webhookHandler = async (req, res) => {
   const topic = req.headers["x-shopify-topic"] || "";
@@ -34,7 +34,7 @@ const webhookHandler = async (req, res) => {
         await appUninstallHandler(topic, shop, req.body, webhookId, apiVersion);
         break;
       default:
-        throw new Error(`Can't find a handler for ${topic}`);
+        throw new Error(`Can't find a handler for ${validateWebhook.topic}`);
     }
     //SWITCHCASE END
     console.log(`--> Processed ${topic} webhook for ${shop}`);
