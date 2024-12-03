@@ -35,9 +35,9 @@
     "@shopify/shopify-api": "^11.6.0",
     "compression": "^1.7.5",
     "cryptr": "^6.3.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.6",
     "express": "^4.21.1",
-    "mongoose": "^8.8.2",
+    "mongoose": "^8.8.3",
     "raviger": "^4.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -46,12 +46,12 @@
   "devDependencies": {
     "@iarna/toml": "^2.2.5",
     "@shopify/cli-kit": "^3.70.0",
-    "@vitejs/plugin-react": "^4.3.3",
+    "@vitejs/plugin-react": "^4.3.4",
     "concurrently": "^9.1.0",
     "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.1.7",
     "npm-check-updates": "^17.1.11",
-    "prettier": "^3.3.3",
-    "vite": "^5.4.11"
+    "prettier": "^3.4.1",
+    "vite": "^6.0.2"
   }
 }
