@@ -22,14 +22,17 @@ const DebugIndex = () => {
             <Card>
               <BlockStack gap="200">
                 <Text as="h2" variant="headingMd">
-                  Webhooks
+                  Scopes
                 </Text>
-                <Text>Explored actively registered webhooks</Text>
+                <Text>
+                  Explore what scopes are registered and how to ask for optional
+                  scopes
+                </Text>
                 <InlineStack wrap={false} align="end">
                   <Button
                     variant="primary"
                     onClick={() => {
-                      navigate("/debug/webhooks");
+                      navigate("/debug/scopes");
                     }}
                   >
                     Explore

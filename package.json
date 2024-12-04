@@ -1,6 +1,6 @@
 {
   "name": "shopify-express-boilerplate",
-  "version": "2024.11.21",
+  "version": "2024.12.05",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
   "type": "module",
   "author": {
@@ -25,7 +25,7 @@
     "-----> Shopify <-----": "",
     "g:install": "npm i -g @shopify/cli@latest",
     "shopify": "shopify",
-    "update:config": "node _developer/tomlWriter.js && shopify app deploy && npm run pretty",
+    "update:config": "node _developer/tomlWriter.js; npm run pretty; shopify app deploy;",
     "update:url": "node _developer/updateDashboard.js",
     "-----> Reserved Scripts <-----": "",
     "preserve": "npm run build"
