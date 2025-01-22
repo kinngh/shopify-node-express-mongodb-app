@@ -10,6 +10,9 @@ export default defineConfig({
     appOrigin: JSON.stringify(
       process.env.SHOPIFY_APP_URL.replace(/https:\/\//, "")
     ),
+    SHOPIFY_API_OPTIONAL_SCOPES: JSON.stringify(
+      process?.env?.SHOPIFY_API_OPTIONAL_SCOPES
+    ),
   },
   plugins: [react()],
   build: {
@@ -18,5 +21,8 @@ export default defineConfig({
   root: dirname(fileURLToPath(import.meta.url)),
   resolve: {
     preserveSymlinks: true,
+  },
+  server: {
+    allowedHosts: [`${process.env.SHOPIFY_APP_URL.replace(/https:\/\//, "")}`],
   },
 });

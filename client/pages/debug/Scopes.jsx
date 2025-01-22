@@ -27,16 +27,16 @@ const OptionalScopes = () => {
   async function requestScopes() {
     setLoading(true);
     try {
-      const response = await window?.shopify?.scopes?.request([
-        "read_products",
-        "read_discounts",
-      ]);
+      const response = await window?.shopify?.scopes?.request(
+        SHOPIFY_API_OPTIONAL_SCOPES?.split(",") //this comes from vite
+      );
       if (response?.result === "granted-all") {
         createRows();
       } else if (response?.result === "declined-all") {
         alert("Declined optional scopes");
       }
     } catch (e) {
+      console.dir(e, { depth: null });
       alert(
         "Error occured while requesting scopes. Is the scope declared in your env?"
       );
