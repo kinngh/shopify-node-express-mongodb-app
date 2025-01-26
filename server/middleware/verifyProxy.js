@@ -1,5 +1,10 @@
 import crypto from "crypto";
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @param {import('express').NextFunction} next - Express next middleware function
+ */
 const verifyProxy = (req, res, next) => {
   const { signature } = req.query;
 

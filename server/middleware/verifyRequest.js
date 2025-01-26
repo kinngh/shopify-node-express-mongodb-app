@@ -3,6 +3,11 @@ import shopify from "../../utils/shopify.js";
 import validateJWT from "../../utils/validateJWT.js";
 import { RequestedTokenType, Session } from "@shopify/shopify-api";
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @param {import('express').NextFunction} next - Express next middleware function
+ */
 const verifyRequest = async (req, res, next) => {
   try {
     const authHeader = req.headers["authorization"];

@@ -4,6 +4,11 @@ import sessionHandler from "../../utils/sessionHandler.js";
 import shopify from "../../utils/shopify.js";
 import freshInstall from "../../utils/freshInstall.js";
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @param {import('express').NextFunction} next - Express next middleware function
+ */
 const isInitialLoad = async (req, res, next) => {
   try {
     const shop = req.query.shop;

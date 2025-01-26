@@ -3,9 +3,13 @@ import clientProvider from "../../utils/clientProvider.js";
 
 const userRoutes = Router();
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ */
 userRoutes.get("/", (req, res) => {
   try {
-    const sendData = { text: "This is coming from /apps/api route." };
+    const sendData = { text: "This is coming from /api/apps/ route." };
     return res.status(200).json(sendData);
   } catch (e) {
     console.error(e);
@@ -13,6 +17,10 @@ userRoutes.get("/", (req, res) => {
   }
 });
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ */
 userRoutes.post("/", (req, res) => {
   try {
     return res.status(200).json(req.body);
@@ -22,6 +30,10 @@ userRoutes.post("/", (req, res) => {
   }
 });
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ */
 userRoutes.get("/debug/gql", async (req, res) => {
   try {
     //false for offline session, true for online session
@@ -29,13 +41,13 @@ userRoutes.get("/debug/gql", async (req, res) => {
       shop: res.locals.user_session.shop,
     });
 
-    const shop = await client.request(
-      `{
-      shop {
-        name
+    const shop = await client.request(/* GraphQL */ `
+      {
+        shop {
+          name
+        }
       }
-    }`
-    );
+    `);
 
     return res.status(200).json({ text: shop.data.shop.name });
   } catch (e) {
@@ -44,28 +56,32 @@ userRoutes.get("/debug/gql", async (req, res) => {
   }
 });
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ */
 userRoutes.get("/debug/activeWebhooks", async (req, res) => {
   try {
     const { client } = await clientProvider.offline.graphqlClient({
       shop: res.locals.user_session.shop,
     });
-    const activeWebhooks = await client.request(
-      `{
-      webhookSubscriptions(first: 25) {
-        edges {
-          node {
-            topic
-            endpoint {
-              __typename
-              ... on WebhookHttpEndpoint {
-                callbackUrl
+    const activeWebhooks = await client.request(/* GraphQL */ `
+      {
+        webhookSubscriptions(first: 25) {
+          edges {
+            node {
+              topic
+              endpoint {
+                __typename
+                ... on WebhookHttpEndpoint {
+                  callbackUrl
+                }
               }
             }
           }
         }
       }
-    }`
-    );
+    `);
     return res.status(200).json(activeWebhooks);
   } catch (e) {
     console.error(e);
@@ -73,36 +89,40 @@ userRoutes.get("/debug/activeWebhooks", async (req, res) => {
   }
 });
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ */
 userRoutes.get("/debug/getActiveSubscriptions", async (req, res) => {
   try {
     const { client } = await clientProvider.offline.graphqlClient({
       shop: res.locals.user_session.shop,
     });
-    const response = await client.request(
-      `{
-      appInstallation {
-        activeSubscriptions {
-          name
-          status
-          lineItems {
-            plan {
-              pricingDetails {
-                ... on AppRecurringPricing {
-                  __typename
-                  price {
-                    amount
-                    currencyCode
+    const response = await client.request(/* GraphQL */ `
+      {
+        appInstallation {
+          activeSubscriptions {
+            name
+            status
+            lineItems {
+              plan {
+                pricingDetails {
+                  ... on AppRecurringPricing {
+                    __typename
+                    price {
+                      amount
+                      currencyCode
+                    }
+                    interval
                   }
-                  interval
                 }
               }
             }
+            test
           }
-          test
         }
       }
-    }`
-    );
+    `);
 
     return res.status(200).send(response);
   } catch (e) {
@@ -111,6 +131,10 @@ userRoutes.get("/debug/getActiveSubscriptions", async (req, res) => {
   }
 });
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ */
 userRoutes.get("/debug/createNewSubscription", async (req, res) => {
   try {
     const { client, shop } = await clientProvider.offline.graphqlClient({
@@ -122,33 +146,52 @@ userRoutes.get("/debug/createNewSubscription", async (req, res) => {
     const planPrice = 10.25; //Always a decimal
 
     const response = await client.request(
-      `mutation CreateSubscription{
-    appSubscriptionCreate(
-      name: "${planName}"
-      returnUrl: "${returnUrl}"
-      test: true
-      lineItems: [
-        {
-          plan: {
-            appRecurringPricingDetails: {
-              price: { amount: ${planPrice}, currencyCode: USD }
+      /* GraphQL */ `
+        mutation CreateSubscription(
+          $name: String!
+          $lineItems: [AppSubscriptionLineItemInput!]!
+          $returnUrl: URL!
+          $test: Boolean
+        ) {
+          appSubscriptionCreate(
+            name: $name
+            returnUrl: $returnUrl
+            lineItems: $lineItems
+            test: $test
+          ) {
+            userErrors {
+              field
+              message
+            }
+            c
+            confirmationUrl
+            appSubscription {
+              id
+              status
             }
           }
         }
-      ]
-    ) {
-      userErrors {
-        field
-        message
+      `,
+      {
+        variables: {
+          name: planName,
+          returnUrl: returnUrl,
+          test: true,
+          lineItems: [
+            {
+              plan: {
+                appRecurringPricingDetails: {
+                  price: {
+                    amount: planPrice,
+                    currencyCode: "USD",
+                  },
+                  interval: "EVERY_30_DAYS",
+                },
+              },
+            },
+          ],
+        },
       }
-      confirmationUrl
-      appSubscription {
-        id
-        status
-      }
-    }
-  }
-`
     );
 
     if (response.data.appSubscriptionCreate.userErrors.length > 0) {

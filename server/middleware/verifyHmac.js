@@ -1,6 +1,11 @@
 import crypto from "crypto";
 import shopify from "../../utils/shopify.js";
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @param {import('express').NextFunction} next - Express next middleware function
+ */
 const verifyHmac = (req, res, next) => {
   try {
     const generateHash = crypto

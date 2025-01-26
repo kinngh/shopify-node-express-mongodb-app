@@ -2,6 +2,10 @@ import { Router } from "express";
 import clientProvider from "../../../utils/clientProvider.js";
 const proxyRouter = Router();
 
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ */
 proxyRouter.get("/json", async (req, res) => {
   try {
     const { client } = await clientProvider.offline.graphqlClient({

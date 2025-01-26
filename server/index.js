@@ -15,6 +15,7 @@ import {
 } from "./controllers/gdpr.js";
 import csp from "./middleware/csp.js";
 import isInitialLoad from "./middleware/isInitialLoad.js";
+import verifyCheckout from "./middleware/verifyCheckout.js";
 import verifyHmac from "./middleware/verifyHmac.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import verifyRequest from "./middleware/verifyRequest.js";
@@ -67,9 +68,10 @@ const createServer = async (root = process.cwd()) => {
 
   app.use(csp);
   app.use(isInitialLoad);
-  // If you're making changes to any of the routes, please make sure to add them in `./client/vite.config.js` or it'll not work.
+  //Routes to make server calls
   app.use("/api/apps", verifyRequest, userRoutes); //Verify user route requests
   app.use("/api/proxy_route", verifyProxy, proxyRouter); //MARK:- App Proxy routes
+  app.use("/api/checkout", verifyCheckout, proxyRouter); //MARK:- Routes for Checkout Extensions
 
   app.post("/api/gdpr/:topic", verifyHmac, async (req, res) => {
     const { body } = req;
