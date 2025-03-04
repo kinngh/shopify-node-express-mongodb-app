@@ -163,7 +163,6 @@ userRoutes.get("/debug/createNewSubscription", async (req, res) => {
               field
               message
             }
-            c
             confirmationUrl
             appSubscription {
               id
