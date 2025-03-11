@@ -1,6 +1,6 @@
 {
   "name": "shopify-express-boilerplate",
-  "version": "2025.03.06",
+  "version": "2025.03.12",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
   "type": "module",
   "author": {
@@ -34,6 +34,7 @@
     "@shopify/polaris": "^13.9.3",
     "@shopify/shopify-api": "^11.9.0",
     "compression": "^1.8.0",
+    "cors": "^2.8.5",
     "cryptr": "^6.3.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

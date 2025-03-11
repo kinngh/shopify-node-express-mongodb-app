@@ -1,5 +1,6 @@
 import "@shopify/shopify-api/adapters/node";
 import "dotenv/config";
+import cors from "cors";
 import Express from "express";
 import fs from "fs";
 import mongoose from "mongoose";
@@ -20,6 +21,7 @@ import verifyHmac from "./middleware/verifyHmac.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import verifyRequest from "./middleware/verifyRequest.js";
 import proxyRouter from "./routes/app_proxy/index.js";
+import checkoutRoutes from "./routes/checkout/index.js";
 import userRoutes from "./routes/index.js";
 import webhookHandler from "./webhooks/_index.js";
 
@@ -71,7 +73,17 @@ const createServer = async (root = process.cwd()) => {
   //Routes to make server calls
   app.use("/api/apps", verifyRequest, userRoutes); //Verify user route requests
   app.use("/api/proxy_route", verifyProxy, proxyRouter); //MARK:- App Proxy routes
-  app.use("/api/checkout", verifyCheckout, proxyRouter); //MARK:- Routes for Checkout Extensions
+  app.use(
+    "/api/checkout",
+    cors({
+      origin: "https://extensions.shopifycdn.com",
+      methods: ["GET", "POST", "OPTIONS"],
+      allowedHeaders: ["Authorization", "Content-Type"],
+      optionsSuccessStatus: 200,
+    }),
+    verifyCheckout,
+    checkoutRoutes
+  );
 
   app.post("/api/gdpr/:topic", verifyHmac, async (req, res) => {
     const { body } = req;
