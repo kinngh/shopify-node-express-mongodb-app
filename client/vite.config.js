@@ -24,6 +24,6 @@ export default defineConfig({
   },
   server: {
     allowedHosts: [`${process.env.SHOPIFY_APP_URL.replace(/https:\/\//, "")}`],
-    cors: false
+    cors: false,
   },
 });

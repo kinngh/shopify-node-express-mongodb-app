@@ -2,7 +2,7 @@ import SessionModel from "../../utils/models/SessionModel.js";
 import StoreModel from "../../utils/models/StoreModel.js";
 
 /**
- * @typedef { import("../../_developer/types/2024-10/webhooks.js").APP_UNINSTALLED } webhookTopic
+ * @typedef { import("../../_developer/types/2025-04/webhooks.js").APP_UNINSTALLED } webhookTopic
  */
 
 const appUninstallHandler = async (
