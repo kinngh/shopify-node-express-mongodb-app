@@ -1,4 +1,5 @@
 import { AppProvider as PolarisProvider } from "@shopify/polaris";
+import { NavMenu } from '@shopify/app-bridge-react';
 import "@shopify/polaris/build/esm/styles.css";
 import translations from "@shopify/polaris/locales/en.json";
 import { useRoutes } from "raviger";
@@ -11,10 +12,10 @@ export default function App() {
   return (
     <PolarisProvider i18n={translations}>
       <AppBridgeProvider>
-        <ui-nav-menu>
+        <NavMenu>
           <a href="/debug/data">Fetch Data</a>
           <a href="/debug/billing">Billing API</a>
-        </ui-nav-menu>
+        </NavMenu>
         {RouteComponents}
       </AppBridgeProvider>
     </PolarisProvider>
