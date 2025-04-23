@@ -28,14 +28,25 @@ const offline = {
     const client = new shopify.clients.Graphql({ session });
     return { client, shop, session };
   },
+  /**
+   * Creates a Shopify Storefront client for offline access.
+   * @async
+   * @param {Object} params - The request and response objects.
+   * @param {string} params.shop - The shop's domain
+   */
+  storefrontClient: async ({ shop }) => {
+    const session = await fetchOfflineSession(shop);
+    const client = new shopify.clients.Storefront({ session });
+    return { client, shop, session };
+  },
 };
 
 /**
  * Fetches the online session associated with a request.
  * @async
  * @param {Object} params - The request and response objects.
- * @param {import('next').NextApiRequest} params.req - The Next.js API request object
- * @param {import('next').NextApiResponse} params.res - The Next.js API response object
+ * @param {import('express').Request} params.req - The Express request object
+ * @param {import('express').Response} params.res - The Express response object
  */
 const fetchOnlineSession = async ({ req, res }) => {
   const sessionID = await shopify.session.getCurrentId({
@@ -56,12 +67,25 @@ const online = {
    * Creates a Shopify GraphQL client for online access.
    * @async
    * @param {Object} params - The request and response objects.
-   * @param {import('next').NextApiRequest} params.req - The Next.js API request object
-   * @param {import('next').NextApiResponse} params.res - The Next.js API response object
+   * @param {import('express').Request} params.req - The Express request object
+   * @param {import('express').Response} params.res - The Express response object
    */
   graphqlClient: async ({ req, res }) => {
     const session = await fetchOnlineSession({ req, res });
     const client = new shopify.clients.Graphql({ session });
+    const { shop } = session;
+    return { client, shop, session };
+  },
+  /**
+   * Creates a Shopify GraphQL client for online access.
+   * @async
+   * @param {Object} params - The request and response objects.
+   * @param {import('express').Request} params.req - The Express request object
+   * @param {import('express').Response} params.res - The Express response object
+   */
+  storefrontClient: async ({ req, res }) => {
+    const session = await fetchOnlineSession({ req, res });
+    const client = new shopify.clients.Storefront({ session });
     const { shop } = session;
     return { client, shop, session };
   },
