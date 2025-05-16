@@ -124,7 +124,7 @@ try {
       globalStr,
       (err) => {
         if (err) {
-          console.log("An error occured while writing to file", e);
+          console.log("An error occured while writing to file", err);
           return;
         }
 
@@ -138,7 +138,7 @@ try {
       extensionStr,
       (err) => {
         if (err) {
-          console.log("An error occured while writing to file", e);
+          console.log("An error occured while writing to file", err);
           return;
         }
 
