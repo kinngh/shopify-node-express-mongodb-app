@@ -36,9 +36,9 @@
     "compression": "^1.8.0",
     "cors": "^2.8.5",
     "cryptr": "^6.3.0",
-    "dotenv": "^16.5.0",
+    "dotenv": "^17.0.0",
     "express": "^5.1.0",
-    "mongoose": "^8.15.1",
+    "mongoose": "^8.16.1",
     "raviger": "^4.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -46,13 +46,13 @@
   },
   "devDependencies": {
     "@iarna/toml": "^2.2.5",
-    "@shopify/cli-kit": "^3.80.7",
-    "@vitejs/plugin-react": "^4.5.2",
-    "concurrently": "^9.1.2",
+    "@shopify/cli-kit": "^3.81.2",
+    "@vitejs/plugin-react": "^4.6.0",
+    "concurrently": "^9.2.0",
     "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.1.10",
     "npm-check-updates": "^18.0.1",
-    "prettier": "^3.5.3",
-    "vite": "^6.3.5"
+    "prettier": "^3.6.2",
+    "vite": "^7.0.0"
   }
 }
