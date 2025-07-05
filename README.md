@@ -4,9 +4,7 @@ An embedded app starter template to get up and ready with Shopify app developmen
 
 I've included [notes](/docs/NOTES.md) on this repo which goes over the repo on why certain choices were made.
 
-I also did make a video going over the entire repo. If you want to learn Shopify app dev in-depth, I also sell a course _[How To Build Shopify Apps](https://kinngh.gumroad.com/l/how-to-make-shopify-apps?utm_source=github&utm_medium=express-repo)_
-
-[![How To Build Shopify Apps Course](https://raw.githubusercontent.com/kinngh/extras/main/csa_promo.png)](https://kinngh.gumroad.com/l/how-to-make-shopify-apps?utm_source=github&utm_medium=express-repo)
+I also did make a video going over the entire repo.
 
 [![Creating a Shopify app from scratch](https://img.youtube.com/vi/iV_3ENCraaM/0.jpg)](https://www.youtube.com/watch?v=iV_3ENCraaM)
 
@@ -40,6 +38,7 @@ The Shopify CLI generates an amazing starter app but it still needs some more bo
 
 - Refer to [SETUP](/docs/SETUP.md)
 - Migrations are available in [DOCS](/docs/migrations/)
+- Setting up [Polaris WebComponents](/docs/POLARIS_WC.md)
 
 ### Misc
 

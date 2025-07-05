@@ -6,17 +6,14 @@ This is an in-depth guide on using this repo. This goes over getting the base re
 
 - [ ] Run `npm run g:install` to install Shopify's global dependencies if you haven't already.
 - [ ] Run `npm i --force` to install dependencies.
-
   - Substantial efforts have gone into ensuring we're using the latest package versions, and some incompatibility issues always pop up while installing. There are no negative effects on the functionality just yet, but if you find anything please open an issue.
 
   - Do not delete `shopify.app.toml` file since that's required by Shopify CLI 3.0 to function properly, even if the file is empty.
 
 - [ ] Create a new app (Public or Custom) from your [Shopify Partner Dashboard](https://partners.shopify.com).
-
   - The App URL will be generated later in the setup. Add `https://localhost` for now.
 
 - [ ] Build your `.env` file based on `.env.example`
-
   - `SHOPIFY_API_KEY`: App API key.
   - `SHOPIFY_API_SECRET`: App secret.
   - `SHOPIFY_API_SCOPES`: Scopes required by your Shopify app. A list of access scopes can be found [here](https://shopify.dev/api/usage/access-scopes)
@@ -43,7 +40,6 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - `POS_EMBEDDED`: Boolean. If your app is embedded in Shopify Point of Sale.
 
 - [ ] NPM Scripts
-
   - `dev`: Run in dev mode.
   - `build`: Use Vite to build React into `dist/client`. If you don't run build, you cannot serve anything in dev / production modes.
   - `start`: Run in production mode. Please run `npm run build` before to compile client side.
@@ -63,7 +59,6 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - `preserve`: For Vite.
 
 - [ ] Setup Partner Dashboard
-
   - Run `npm run cloudflare` or `npm run ngrok` to generate your subdomain. Copy the `https://<your-url>` domain and add it in `SHOPIFY_APP_URL` and in your `.env` file.
   - Run `npm run update:config` to generate `shopify.app.toml` files and upload your config to Shopify.
     - ABSOLUTELY DO NOT MODIFY YOUR TOML FILES BY HAND. USE YOUR ENV INSTEAD.
@@ -73,7 +68,6 @@ This is an in-depth guide on using this repo. This goes over getting the base re
     - Customers Redact: `https://<your-url>/api/gdpr/customers_redact`
     - Shop Redact: `https://<your-url>/api/gdpr/shop_redact`
   - App Proxy routes are setup to allow accessing data from your app directly from the store. An example proxy route has been setup and is available at `server/index.js` at `//MARK:- App Proxy routes` and the routes are available in `server/routes/app_proxy/`. First you need to setup your base urls. Here's how to get it working:
-
     - Subpath Prefix: `apps`
     - Subpath: `express-proxy`
     - Proxy URL: `https://<your-url>/api/proxy_route`
@@ -84,7 +78,6 @@ This is an in-depth guide on using this repo. This goes over getting the base re
     - A common _gotcha_ is if you're creating multiple apps that all use the same subpath (`express-proxy` in this case), all susbequent installs will throw a `404` error because Shopify serializes routes based on installation. To avoid this, please change the subpath to something that's unique to your app. I prefer using the format `<<appname>>-proxy`
 
 - [ ] Running App
-
   - Install the app by heading over to `storename.myshopify.com/admin/oauth/install?client_id=SHOPIFY_API_KEY`.
   - I prefer running a local `mongod` instance to save on time and ease of setup. Create a new folder in your project called `mongo` (it's added in `.gitignore` so you can git freely) and in a terminal window run `mongod --dbpath mongo/` to start a mongo instance in that folder.
   - In your second terminal window, run `npm run cloudflare` or `npm run ngrok` to tunnel your localhost to the web via HTTPS.

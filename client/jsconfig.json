@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+    // "lib": ["dom", "dom.iterable", "esnext"]
+  }
+  // "include": ["../_developer/**/*.d.ts", "**/*.js", "**/*.jsx"]
+}
