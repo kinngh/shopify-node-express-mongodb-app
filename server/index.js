@@ -42,7 +42,7 @@ const createServer = async (root = process.cwd()) => {
 
   // Incoming webhook requests
   app.post(
-    "/api/webhooks/:webhookTopic*",
+    "/api/webhooks/*webhookTopic",
     Express.text({ type: "*/*" }),
     webhookHandler
   );
@@ -133,7 +133,7 @@ const createServer = async (root = process.cwd()) => {
       appType: "spa",
     });
     app.use(vite.middlewares);
-    app.use("*", async (req, res) => {
+    app.use("*splat", async (req, res) => {
       const url = req.originalUrl;
       let template = fs.readFileSync(
         path.resolve(process.cwd(), "client", "index.html"),
@@ -152,7 +152,7 @@ const createServer = async (root = process.cwd()) => {
 
     app.use(compression());
     app.use(serveStatic(resolve("dist/client")));
-    app.use("/*", (req, res, next) => {
+    app.use("/*splat", (req, res, next) => {
       res
         .status(200)
         .set("Content-Type", "text/html")

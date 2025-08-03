@@ -1,6 +1,6 @@
 {
   "name": "shopify-express-boilerplate",
-  "version": "2025.07.21",
+  "version": "2025.08.03",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
   "type": "module",
   "author": {
@@ -12,7 +12,7 @@
     "url": "https://github.com/kinngh/shopify-node-express-mongodb-app.git"
   },
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon server/index.js --ignore client/ --ignore dist/ --ignore server/index.js",
+    "dev": "NODE_ENV=dev nodemon server/index.js --ignore client/ --ignore dist/ ",
     "build": "vite build --config=./client/vite.config.js",
     "start": "NODE_ENV=prod node server/index.js",
     "-----> utils <-----": "",
