@@ -1,7 +1,45 @@
 import { Router } from "express";
 import clientProvider from "../../utils/clientProvider.js";
+import MetricsModel from "../../utils/models/MetricsModel.js";
 
 const userRoutes = Router();
+
+/**
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ */
+userRoutes.post("/metrics", async (req, res) => {
+  try {
+    let webVitals = {
+      INP: 0.0,
+      FID: 0.0,
+      CLS: 0.0,
+      LCP: 0.0,
+      FCP: 0.0,
+      TTFB: 0.0,
+    };
+    req?.body?.metrics?.forEach((metr) => {
+      webVitals[metr?.name] = Number(parseFloat(metr?.value).toFixed(2));
+    });
+
+    const writeMetrics = await MetricsModel.create({
+      shop: res.locals.user_session.shop,
+      appLoadId: req.body.appLoadId,
+      INP: webVitals?.INP,
+      FID: webVitals?.FID,
+      CLS: webVitals?.CLS,
+      LCP: webVitals?.LCP,
+      FCP: webVitals?.FCP,
+      TTFB: webVitals?.TTFB,
+      raw_json: JSON.stringify(req.body),
+    });
+
+    return res.status(200).send({ text: "Success!" });
+  } catch (e) {
+    console.error("---> An error occured at /api/apps/", e);
+    return res.status(403).send({ error: true });
+  }
+});
 
 /**
  * @param {import('express').Request} req - Express request object

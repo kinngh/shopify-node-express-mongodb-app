@@ -13,8 +13,8 @@
         "express": "^5.1.0",
         "mongoose": "^8.17.1",
         "raviger": "^5.0.0",
-        "react": "18",
-        "react-dom": "18",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
         "serve-static": "^2.2.0",
       },
       "devDependencies": {
