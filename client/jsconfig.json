@@ -2,8 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"]
-    }
-    // "lib": ["dom", "dom.iterable", "esnext"]
+    },
+    "types": ["@shopify/polaris-types"]
   }
-  // "include": ["../_developer/**/*.d.ts", "**/*.js", "**/*.jsx"]
 }
