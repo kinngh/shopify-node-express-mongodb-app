@@ -4,8 +4,9 @@ import fs from "fs";
 import path from "path";
 import setupCheck from "../utils/setupCheck.js";
 import webhookWriter from "./webhookWriter.js";
+import declarativeWriter from "./declarativeWriter.js";
 
-/** @typedef {import("@/_developer/types/toml.js").AppConfig} Config */
+/** @typedef {import("../_developer/types/toml.js").AppConfig} Config */
 
 /** @type {Config} */
 let config = {};
@@ -59,8 +60,9 @@ try {
   config.webhooks = {};
   config.webhooks.api_version = process.env.SHOPIFY_API_VERSION;
 
-  // Webhooks
+  // Writers
   webhookWriter(config);
+  declarativeWriter(config);
 
   // GDPR URLs
   config.webhooks.privacy_compliance = {};
