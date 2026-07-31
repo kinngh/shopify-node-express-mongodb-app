@@ -1,6 +1,6 @@
 {
   "name": "shopify-express-boilerplate",
-  "version": "2026.07.25",
+  "version": "2026.07.31",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
   "type": "module",
   "author": {
@@ -19,8 +19,6 @@
     "update": "ncu -u",
     "pretty": "prettier --write .",
     "-----> Tunnel <-----": "",
-    "ngrok:auth": "ngrok authtoken <your-auth-token>",
-    "ngrok": "ngrok http 8081",
     "cloudflare": "cloudflared tunnel --url localhost:8081",
     "-----> Shopify <-----": "",
     "g:install": "npm i -g @shopify/cli@latest",
@@ -49,7 +47,6 @@
     "@shopify/polaris-types": "^1.0.7",
     "@vitejs/plugin-react": "^6.0.4",
     "concurrently": "^10.0.4",
-    "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.1.14",
     "npm-check-updates": "^22.2.9",
     "prettier": "^3.9.6",

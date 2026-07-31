@@ -59,7 +59,6 @@ shopify = {
       //   triggers: [""],
       //   query: /* GraphQL */ `
       //     query your_query {
-
       //     } `,
       //   query_filter: "",
       // },
