@@ -36,7 +36,7 @@
     "cryptr": "^6.4.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.8.0",
+    "mongoose": "^9.9.1",
     "raviger": "^5.3.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -45,11 +45,11 @@
   "devDependencies": {
     "@iarna/toml": "^2.2.5",
     "@shopify/polaris-types": "^1.0.7",
-    "@vitejs/plugin-react": "^6.0.4",
+    "@vitejs/plugin-react": "^6.0.5",
     "concurrently": "^10.0.4",
     "nodemon": "^3.1.14",
-    "npm-check-updates": "^22.2.9",
+    "npm-check-updates": "^23.0.0",
     "prettier": "^3.9.6",
-    "vite": "^8.1.5"
+    "vite": "^8.2.0"
   }
 }
