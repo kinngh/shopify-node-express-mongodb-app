@@ -1,6 +1,6 @@
 {
   "name": "shopify-express-boilerplate",
-  "version": "2026.07.31",
+  "version": "2026.08.11",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
   "type": "module",
   "author": {
@@ -30,13 +30,13 @@
   },
   "dependencies": {
     "@shopify/polaris": "^13.9.5",
-    "@shopify/shopify-api": "^13.1.0",
+    "@shopify/shopify-api": "^14.0.0",
     "compression": "^1.8.1",
     "cors": "^2.8.6",
     "cryptr": "^6.4.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.9.1",
+    "mongoose": "^9.9.2",
     "raviger": "^5.3.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -48,8 +48,8 @@
     "@vitejs/plugin-react": "^6.0.5",
     "concurrently": "^10.0.4",
     "nodemon": "^3.1.14",
-    "npm-check-updates": "^23.0.0",
+    "npm-check-updates": "^23.0.2",
     "prettier": "^3.9.6",
-    "vite": "^8.2.0"
+    "vite": "^8.2.1"
   }
 }

@@ -5,7 +5,7 @@
  * To update this file, run `npm run update:config` or `bun run update:config`
  */
 
-import shopify from "@/utils/shopify.js";
+import shopify from "../../utils/shopify.js";
 
 const eventHandler = async (req, res) => {
   const topic = req.headers["shopify-topic"] || "";
@@ -30,16 +30,6 @@ const eventHandler = async (req, res) => {
 
     //SWITCHCASE
     switch (eventHandle) {
-      case "this-is-my-handle":
-        await productEventHandler(
-          validateEvent.topic,
-          shop,
-          rawBody,
-          webhookId,
-          apiVersion,
-          eventHandle
-        );
-        break;
       default:
         throw new Error(`Can't find a handler for ${eventHandle}`);
     }

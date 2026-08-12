@@ -130,7 +130,7 @@ const createServer = async (root = process.cwd()) => {
       root: path.resolve(process.cwd(), "client"),
       server: {
         middlewareMode: true,
-        hmr: {
+        ws: {
           server: app.listen(PORT, () => {
             console.log(`Dev server running on localhost:${PORT}`);
           }),
