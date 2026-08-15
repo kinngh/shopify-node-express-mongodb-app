@@ -16,14 +16,18 @@ const fetchOfflineSession = async (shop) => {
   }
 
   //If session token doesn't expire in a minute
-  if (
-    !session?.isExpired(60 * 1_000) ||
-    (session?.refreshTokenExpires &&
-      new Date(session?.refreshTokenExpires)?.getTime() <= Date.now())
-  ) {
+  if (!session?.isExpired(60 * 1_000)) {
     return session;
   }
 
+  //If refresh token has already expired, throw error
+  if (session?.refreshTokenExpires?.getTime() <= Date.now()) {
+    throw new Error(
+      `Offline session for ${shop} has expired and cannot be refreshed. The merchant must reopen the app to reauthenticate.`
+    );
+  }
+
+  //Valid refresh token; expired offline token
   const { session: refreshedSession } = await shopify.auth.refreshToken({
     shop,
     refreshToken: session.refreshToken,
@@ -31,7 +35,7 @@ const fetchOfflineSession = async (shop) => {
   await sessionHandler.storeSession(refreshedSession);
 
   return refreshedSession;
-};
+};;
 
 /**
  * Provides methods to create clients for offline access.
