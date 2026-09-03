@@ -60,7 +60,7 @@ async function writeToApi() {
   try {
     const shopifyFileContent = fs.readFileSync(shopifyFilePath, "utf8");
     const eventImports = shopifyFileContent.match(
-      /import .* from "\.\/events\/.*";/g
+      /import .* from "\.\.\/server\/events\/.*";/g
     );
 
     let eventsTopicFileContent = fs.readFileSync(eventsTopicFilePath, "utf8");
@@ -80,14 +80,14 @@ async function writeToApi() {
 
     // Start with the comment and shopify import
     let newFileContent =
-      topComment + 'import shopify from "@/utils/shopify.js";\n';
+      topComment + 'import shopify from "../../utils/shopify.js";\n';
 
     // Add new imports from event handlers
     if (eventImports) {
       eventImports.forEach((importStatement) => {
         const formattedImportStatement = importStatement.replace(
-          "./events",
-          "@/utils/events"
+          "../server/events",
+          "."
         );
         newFileContent += formattedImportStatement + "\n";
       });

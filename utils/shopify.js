@@ -39,8 +39,8 @@ shopify = {
     ],
     /**
      * @type {Array<{
-     *   topic: import("@/_developer/types/eventTopics.js").EventTopics["topic"],
-     *   actions: import("@/_developer/types/eventTopics.js").EventTopics["actions"],
+     *   topic: import("../_developer/types/eventTopics.js").EventTopics["topic"],
+     *   actions: import("../_developer/types/eventTopics.js").EventTopics["actions"],
      *   uri: string,
      *   handle: string,
      *   callback: Function,
