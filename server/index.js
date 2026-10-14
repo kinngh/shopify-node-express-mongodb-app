@@ -48,7 +48,7 @@ const createServer = async (root = process.cwd()) => {
     webhookHandler
   );
   app.post(
-    "/api/webhooks/*eventTopic",
+    "/api/events/*eventTopic",
     Express.text({ type: "*/*" }),
     eventHandler
   );

@@ -52,17 +52,30 @@
  * Webhook configuration
  * @typedef {Object} WebhooksConfig
  * @property {('2026-07' | '2025-10' | '2026-01' | '2026-04')} api_version - The API version to be used for webhooks.
- * @property {PrivacyComplianceConfig} privacy_compliance - Configuration for webhooks.
+ * @property {WebhookSubscription[]} subscriptions - Array of webhook subscriptions.
+ * @property {PrivacyComplianceConfig} privacy_compliance - Configuration for privacy compliance.
+ */
+
+/**
+ * Webhook subscription
+ * @typedef {Object} WebhookSubscription
+ * @property {string[]} topics - Array of webhook topics to subscribe to.
+ * @property {string} url - The URL to receive webhook events.
+ * @property {string} [filter] - Optional filter for webhook events.
+ * @property {string[]} [include_fields] - Optional array of fields to include in the webhook payload.
  */
 
 /**
  * Event configuration
  * @typedef {Object} EventsConfig
- * @property {"unstable"} api_version - The API version to be used for events.
+ * @property {string} api_version - Required shared API version for event subscriptions.
  * @property {EventSubscription[]} subscription - Array of event subscriptions.
- *
+ */
+
+/**
  * Event subscription
  * @typedef {Object} EventSubscription
+ * @property {string} [api_version] - Optional non-empty API version override; when omitted, uses events.api_version.
  * @property {('Product' | 'Customer')} topic - Event topic.
  * @property {Array<('create' | 'update' | 'delete')>} actions - Event actions.
  * @property {string} uri - The URI to receive events.
