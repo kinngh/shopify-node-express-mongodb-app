@@ -13,9 +13,9 @@ const verifyProxy = async (req, res, next) => {
   if (isValid) {
     res.locals.user_shop = req.query.shop;
     return next();
-  } else {
-    return res.status(401);
   }
+
+  return res.status(401).send({ error: "Unauthorized call" });
 };
 
 export default verifyProxy;

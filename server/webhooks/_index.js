@@ -8,7 +8,21 @@
  */
 
 import shopify from "../../utils/shopify.js";
+import customersDataRequestHandler from "./gdpr/customers_data_request.js";
+import customersRedactHandler from "./gdpr/customers_redact.js";
+import shopRedactHandler from "./gdpr/shop_redact.js";
+
+//WEBHOOK IMPORTS
 import appUninstallHandler from "./app_uninstalled.js";
+//WEBHOOK IMPORTS END
+
+async function buffer(readable) {
+  const chunks = [];
+  for await (const chunk of readable) {
+    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+  }
+  return Buffer.concat(chunks);
+}
 
 const webhookHandler = async (req, res) => {
   const topic = req.headers["x-shopify-topic"] || "";
@@ -17,35 +31,75 @@ const webhookHandler = async (req, res) => {
   const webhookId = req.headers["x-shopify-webhook-id"] || "";
 
   try {
+    req.body = new TextDecoder("utf-8", {
+      fatal: true,
+      ignoreBOM: true,
+    }).decode(await buffer(req));
+  } catch {
+    return res.status(400).send({ error: "Invalid webhook body" });
+  }
+
+  try {
     const validateWebhook = await shopify.webhooks.validate({
       rawBody: req.body,
       rawRequest: req,
       rawResponse: res,
     });
 
-    if (validateWebhook.valid) {
-    } else {
-      return res.status(400).send({ error: true });
+    if (!validateWebhook.valid) {
+      return res.status(401).send({ error: true });
     }
 
-    //SWITCHCASE
     switch (validateWebhook.topic) {
-      case "APP_UNINSTALLED":
-        await appUninstallHandler(topic, shop, req.body, webhookId, apiVersion);
+      case "CUSTOMERS_DATA_REQUEST":
+        await customersDataRequestHandler(
+          topic,
+          shop,
+          req.body,
+          webhookId,
+          apiVersion
+        );
+        break;
+      case "CUSTOMERS_REDACT":
+        await customersRedactHandler(
+          topic,
+          shop,
+          req.body,
+          webhookId,
+          apiVersion
+        );
+        break;
+      case "SHOP_REDACT":
+        await shopRedactHandler(topic, shop, req.body, webhookId, apiVersion);
         break;
       default:
-        throw new Error(`Can't find a handler for ${validateWebhook.topic}`);
+        //SWITCHCASE
+        switch (validateWebhook.topic) {
+          case "APP_UNINSTALLED":
+            await appUninstallHandler(
+              topic,
+              shop,
+              req.body,
+              webhookId,
+              apiVersion
+            );
+            break;
+          default:
+            throw new Error(
+              `Can't find a handler for ${validateWebhook.topic}`
+            );
+        }
+      //SWITCHCASE END
     }
-    //SWITCHCASE END
     console.log(`--> Processed ${topic} webhook for ${shop}`);
     return res.status(200).send({ message: "ok" });
   } catch (e) {
     console.error(
       `---> Error while registering ${topic} webhook for ${shop}`,
-      e
+      e?.constructor?.name || "Error"
     );
     if (!res.headersSent) {
-      return res.status(500).send(e.message);
+      return res.status(500).send({ error: "Webhook processing failed" });
     }
   }
 };

@@ -9,16 +9,11 @@ import { createServer as createViteServer } from "vite";
 import sessionHandler from "../utils/sessionHandler.js";
 import setupCheck from "../utils/setupCheck.js";
 import shopify from "../utils/shopify.js";
-import {
-  customerDataRequest,
-  customerRedact,
-  shopRedact,
-} from "./controllers/gdpr.js";
 import eventHandler from "./events/_index.js";
 import csp from "./middleware/csp.js";
+import errorHandler from "./middleware/errorHandler.js";
 import isInitialLoad from "./middleware/isInitialLoad.js";
 import verifyCheckout from "./middleware/verifyCheckout.js";
-import verifyHmac from "./middleware/verifyHmac.js";
 import verifyProxy from "./middleware/verifyProxy.js";
 import verifyRequest from "./middleware/verifyRequest.js";
 import proxyRouter from "./routes/app_proxy/index.js";
@@ -42,11 +37,7 @@ const createServer = async (root = process.cwd()) => {
   app.disable("x-powered-by");
 
   // Incoming webhook requests
-  app.post(
-    "/api/webhooks/*webhookTopic",
-    Express.text({ type: "*/*" }),
-    webhookHandler
-  );
+  app.post("/api/webhooks/*webhookTopic", webhookHandler);
   app.post(
     "/api/events/*eventTopic",
     Express.text({ type: "*/*" }),
@@ -69,8 +60,11 @@ const createServer = async (root = process.cwd()) => {
       });
       res.status(200).send(response.body);
     } catch (e) {
-      console.error(`---> An error occured at GraphQL Proxy`, e);
-      res.status(403).send(e);
+      console.error(
+        "---> An error occurred at GraphQL Proxy.",
+        e?.constructor?.name || "Error"
+      );
+      res.status(403).send({ error: "GraphQL request failed" });
     }
   });
 
@@ -90,40 +84,6 @@ const createServer = async (root = process.cwd()) => {
     verifyCheckout,
     checkoutRoutes
   );
-
-  app.post("/api/gdpr/:topic", verifyHmac, async (req, res) => {
-    const { body } = req;
-    const { topic } = req.params;
-    const shop = req.body.shop_domain;
-
-    console.warn(`--> GDPR request for ${shop} / ${topic} recieved.`);
-
-    let response;
-    switch (topic) {
-      case "customers_data_request":
-        response = await customerDataRequest(topic, shop, body);
-        break;
-      case "customers_redact":
-        response = await customerRedact(topic, shop, body);
-        break;
-      case "shop_redact":
-        response = await shopRedact(topic, shop, body);
-        break;
-      default:
-        console.error(
-          "--> Congratulations on breaking the GDPR route! Here's the topic that broke it: ",
-          topic
-        );
-        response = "broken";
-        break;
-    }
-
-    if (response.success) {
-      res.status(200).send();
-    } else {
-      res.status(403).send("An error occured");
-    }
-  });
 
   if (isDev) {
     const vite = await createViteServer({
@@ -165,6 +125,8 @@ const createServer = async (root = process.cwd()) => {
         .send(fs.readFileSync(`${root}/dist/client/index.html`));
     });
   }
+
+  app.use(errorHandler);
 
   return { app };
 };

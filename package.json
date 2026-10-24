@@ -1,6 +1,6 @@
 {
   "name": "shopify-express-boilerplate",
-  "version": "2026.10.14",
+  "version": "2026.10.24",
   "description": "Shopify Boilerplate Code written in React, Node, Express, MongoDB and GraphQL",
   "type": "module",
   "author": {
@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "NODE_ENV=dev nodemon server/index.js --ignore client/ --ignore dist/ ",
     "build": "vite build --config=./client/vite.config.js",
-    "start": "NODE_ENV=prod node server/index.js",
+    "start": "NODE_ENV=production node server/index.js",
     "-----> utils <-----": "",
     "update": "ncu -u",
     "pretty": "prettier --write .",
@@ -28,28 +28,31 @@
     "-----> Reserved Scripts <-----": "",
     "preserve": "npm run build"
   },
+  "overrides": {
+    "body-parser": "^2.4.0"
+  },
   "dependencies": {
     "@shopify/polaris": "^13.9.5",
     "@shopify/shopify-api": "^15.0.1",
     "compression": "^1.8.2",
     "cors": "^2.8.6",
     "cryptr": "^6.4.0",
-    "dotenv": "^18.0.7",
+    "dotenv": "^18.0.9",
     "express": "^5.3.0",
-    "mongoose": "^9.11.2",
+    "mongoose": "^9.11.4",
     "raviger": "^5.3.0",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "serve-static": "^2.2.1"
   },
   "devDependencies": {
     "@iarna/toml": "^2.2.5",
-    "@shopify/polaris-types": "^1.1.0",
+    "@shopify/polaris-types": "^2.0.0",
     "@vitejs/plugin-react": "^6.1.2",
     "concurrently": "^10.0.6",
     "nodemon": "^3.1.14",
     "npm-check-updates": "^23.1.1",
     "prettier": "^3.9.10",
-    "vite": "^8.3.4"
+    "vite": "^8.3.5"
   }
 }

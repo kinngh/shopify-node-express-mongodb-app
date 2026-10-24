@@ -35,7 +35,7 @@ const fetchOfflineSession = async (shop) => {
   await sessionHandler.storeSession(refreshedSession);
 
   return refreshedSession;
-};;
+};
 
 /**
  * Provides methods to create clients for offline access.

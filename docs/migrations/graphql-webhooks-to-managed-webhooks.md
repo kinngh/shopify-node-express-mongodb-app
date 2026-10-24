@@ -14,6 +14,20 @@ Managed Webhooks are configured via your TOML file. If you have been using the r
 
 - Moving to managed webhooks doesn't remove GraphQL webhooks that your app would have registered earlier and these need to be removed manually.
 
+## GDPR webhooks
+
+GDPR callbacks have moved from `server/controllers/gdpr.js` into separate files under `server/webhooks/gdpr/`. They use the existing `(topic, shop, webhookRequestBody, webhookId, apiVersion)` signature, with `webhookRequestBody` containing the verified JSON string. Their imports and cases are fixed in `server/webhooks/_index.js`, outside the generated custom webhook sections.
+
+| Previous URL                       | New URL                                     |
+| ---------------------------------- | ------------------------------------------- |
+| `/api/gdpr/customers_data_request` | `/api/webhooks/gdpr/customers_data_request` |
+| `/api/gdpr/customers_redact`       | `/api/webhooks/gdpr/customers_redact`       |
+| `/api/gdpr/shop_redact`            | `/api/webhooks/gdpr/shop_redact`            |
+
+Move any custom GDPR processing into the matching callback. The shared route reads the raw body and validates it with `shopify.webhooks.validate` before dispatching; no installed session is required. The separate GDPR route and `verifyHmac` middleware are removed.
+
+Run `npm run update:config` or `bun run update:config` as usual to update the URLs in the existing `[webhooks.privacy_compliance]` configuration.
+
 ## Read More
 
 - https://shopify.dev/docs/apps/build/webhooks/customize

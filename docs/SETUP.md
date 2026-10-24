@@ -63,10 +63,10 @@ This is an in-depth guide on using this repo. This goes over getting the base re
   - Run `npm run update:config` to generate `shopify.app.toml` files and upload your config to Shopify.
     - ABSOLUTELY DO NOT MODIFY YOUR TOML FILES BY HAND. USE YOUR ENV INSTEAD.
   - A common _gotcha_ is ensuring you are using the same URL in your `.env` and App Setup sections and any discrepancy will result in "URI not whitelisted" issue.
-  - GPDR handlers are available at `server/controllers/gdpr.js` and the URLs to register are:
-    - Customers Data Request: `https://<your-url>/api/gdpr/customers_data_request`
-    - Customers Redact: `https://<your-url>/api/gdpr/customers_redact`
-    - Shop Redact: `https://<your-url>/api/gdpr/shop_redact`
+  - GDPR callbacks are available in `server/webhooks/gdpr/` and use the shared webhook handler. The URLs registered through `[webhooks.privacy_compliance]` are:
+    - Customers Data Request: `https://<your-url>/api/webhooks/gdpr/customers_data_request`
+    - Customers Redact: `https://<your-url>/api/webhooks/gdpr/customers_redact`
+    - Shop Redact: `https://<your-url>/api/webhooks/gdpr/shop_redact`
   - App Proxy routes are setup to allow accessing data from your app directly from the store. An example proxy route has been setup and is available at `server/index.js` at `//MARK:- App Proxy routes` and the routes are available in `server/routes/app_proxy/`. First you need to setup your base urls. Here's how to get it working:
     - Subpath Prefix: `apps`
     - Subpath: `express-proxy`

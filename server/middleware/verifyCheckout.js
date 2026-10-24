@@ -1,5 +1,4 @@
 import shopify from "../../utils/shopify.js";
-import validateJWT from "../../utils/validateJWT.js";
 
 /**
  * @param {import('express').Request} req - Express request object
@@ -14,14 +13,21 @@ const verifyCheckout = async (req, res, next) => {
     }
 
     const authHeader = req.headers["authorization"];
-    if (!authHeader) {
-      throw Error("No authorization header found");
+    const match =
+      typeof authHeader === "string" && authHeader.match(/^Bearer (\S+)$/);
+    if (!match) {
+      throw Error("No valid bearer token found.");
     }
 
-    const payload = validateJWT(authHeader.split(" ")[1]);
+    const payload = await shopify.session.decodeSessionToken(match[1]);
 
-    let shop = shopify.utils.sanitizeShop(payload.dest.replace("https://", ""));
+    if (!Number.isFinite(payload.exp) || !Number.isFinite(payload.nbf)) {
+      throw Error("Session token is missing required timestamps.");
+    }
 
+    const shop =
+      typeof payload.dest === "string" &&
+      shopify.utils.sanitizeShop(payload.dest.replace(/^https:\/\//, ""));
     if (!shop) {
       throw Error("No shop found, not a valid request");
     }
@@ -29,10 +35,8 @@ const verifyCheckout = async (req, res, next) => {
     res.locals.user_shop = shop;
 
     next();
-  } catch (e) {
-    console.error(
-      `---> An error happened at verifyCheckout middleware: ${e.message}`
-    );
+  } catch {
+    console.error("---> An error happened at verifyCheckout middleware.");
     return res.status(401).send({ error: "Unauthorized call" });
   }
 };

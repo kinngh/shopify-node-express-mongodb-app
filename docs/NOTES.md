@@ -19,6 +19,7 @@
 ### Routing
 
 - A basic router is setup at `server/routes/index.js` so you can create your routes and combine them there without having to worry about figuring out where to add in the routers.
+- GDPR callbacks live in `server/webhooks/gdpr/` and use the regular webhook handler at `/api/webhooks/gdpr/*`.
 
 ---
 

@@ -48,7 +48,10 @@ const isInitialLoad = async (req, res, next) => {
     }
     next();
   } catch (e) {
-    console.error(`---> An error occured in isInitialLoad`, e);
+    console.error(
+      "---> An error occurred in isInitialLoad.",
+      e?.constructor?.name || "Error"
+    );
     return res.status(403).send({ error: true });
   }
 };

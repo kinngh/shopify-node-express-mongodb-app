@@ -648,30 +648,19 @@ async function writeToApi() {
  * To update this file, run \`npm run update:config\` or \`bun run update:config\`
  */\n\n`;
 
-    // Start with a fresh file containing shopify import first
-    let newFileContent =
-      topComment + 'import shopify from "../../utils/shopify.js";\n';
-
-    // Add other imports from webhook handlers if they exist
-    if (webhookImports) {
-      const uniqueImports = [...new Set(webhookImports)];
-      uniqueImports.forEach((importStatement) => {
-        const formattedImportStatement = importStatement.replace(
-          "../server/webhooks",
-          "."
-        );
-        newFileContent += formattedImportStatement + "\n";
-      });
-    }
-
-    // Get the rest of the file content after the imports
-    const mainContent = webhookHandlerFileContent.replace(
-      /^([\s\S]*?^import[^\n]*\n)+/m,
-      ""
+    // Preserve the fixed GDPR imports and cases when regenerating custom hooks.
+    webhookHandlerFileContent = webhookHandlerFileContent.replace(
+      /\/\*\*[\s\S]*?\*\/\s*/,
+      topComment
     );
 
-    // Combine everything
-    webhookHandlerFileContent = newFileContent + mainContent;
+    const generatedImports = [...new Set(webhookImports || [])]
+      .map((statement) => statement.replace("../server/webhooks", "."))
+      .join("\n");
+    webhookHandlerFileContent = webhookHandlerFileContent.replace(
+      /\/\/WEBHOOK IMPORTS\n[\s\S]*?\/\/WEBHOOK IMPORTS END/,
+      `//WEBHOOK IMPORTS\n${generatedImports}\n//WEBHOOK IMPORTS END`
+    );
 
     // Check for duplicate topics
     const topicCounts = {};

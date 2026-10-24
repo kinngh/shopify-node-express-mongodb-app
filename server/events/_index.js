@@ -39,10 +39,10 @@ const eventHandler = async (req, res) => {
   } catch (e) {
     console.error(
       `---> Error while registering ${topic} webhook for ${shop}`,
-      e
+      e?.constructor?.name || "Error"
     );
     if (!res.headersSent) {
-      return res.status(500).send(e.message);
+      return res.status(500).send({ error: "Event processing failed" });
     }
   }
 };
